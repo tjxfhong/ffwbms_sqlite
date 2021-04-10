@@ -1,0 +1,92 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_verify.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+	<script type="text/javascript" src="../access/js/layerdate/pc.laydate.js"></script>
+
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/editor_api.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_upfile_sort_db,upfile_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+            <a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">上传文件管理</a> - 
+			<a href="upfile_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$upfile_db["sname"]}--></a> - <a href="javascript:;">上传文件编辑</a>
+        </div>
+        <div class="right_cont">
+           <form class="ffwbms_form" style="line-height: 2.5rem;" enctype="multipart/form-data" action="upfile_editok.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}-->&id=<!--{$get['id']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" id="upfileedit" method="post">
+			<!--{ffwbms ffm_upfile_db,vtemp,"id=".$get["id"]}-->
+			<!--{/*ffwbms_see $vtemp*/}-->
+			<input type="hidden" name="id" id="id" value="<!--{$vtemp['id']}-->" />
+			<input type="hidden" name="pid" id="pid" value="<!--{$get['pid']}-->" />
+			<input type="hidden" name="fext" id="fext" value="<!--{$vtemp['fext']}-->" />
+			<input type="hidden" name="uid" id="uid" value="<!--{$vtemp['uid']}-->" />
+            <p>上传文件标题：</p><input type="text" id="ftit" name="ftit" maxlength="100" value="<!--{$vtemp['ftit']}-->" />
+		    <p>上传文件说明：</p>
+			<script id="ftxt" name="ftxt" type="text/plain" style="max-width:1024px;height:200px;"><!--{$vtemp["ftxt"]}--></script>
+		    <p>上传文件下载密码：</p><input type="text" class="ffwbms_text " name="fpwd" id="fpwd" maxlength="20" value="<!--{$vtemp['fpwd']}-->" />
+		    <p style="color: #ff0000; font-weight: bold;">上传文件图片不可修改，只可以删除后重新上传！</p>
+            <p>是否可用：
+            <input class="ffwbms_radio " type="radio" name="ifyn" id="ifyn2" value="2" checked="checked" <!--{if $vtemp["ifyn"]==2}--> checked<!--{/if}-->/><label for="ifyn2"class="ffwbms_radio-label radGroup4 ml-80">正常</label>
+            <input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn1" value="1"<!--{if $vtemp["ifyn"]==1}--> checked<!--{/if}--> /><label for="ifyn1"class="ffwbms_radio-label radGroup5">暂停</label></p>
+		    </form>
+		    <button type="submit" class="add" onclick="upfileedit()">确认编辑</button>
+		  
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function () {
+		var ftxt = UE.getEditor('ftxt',{
+			toolbars: [
+        		[
+					'source', 'undo', 'redo', 'bold','italic','underline','fontfamily','fontsize','forecolor','backcolor',
+					'justifyleft', //居左对齐
+        			'justifyright', //居右对齐
+        			'justifycenter', //居中对齐
+        			'justifyjustify', //两端对齐
+				]
+    		],
+			autoHeightEnabled: true,
+			autoFloatEnabled: true}); // 实例化编辑器
+	});
+	
+	function upfileedit(){
+		var ftit = $.trim($("#ftit").val());
+		if (IsNotEmpty(ftit) == false) {
+			layer.alert("上传文件标题不能为空！",{icon: 2});
+			return false;
+		}
+
+		$("#upfileedit").submit()
+	}
+</script>
+</html>

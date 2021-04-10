@@ -1,0 +1,9 @@
+<!--{/*查询商品货号是否存在*/}-->
+<!--{if $get["id"]==""}-->
+<!--{/*ffwbms ffm_goods_gserial_query,vtemp,"uid=0|gserial=".$get["gs"]*/}-->
+<!--{ffwbms ffm_goods_gserial_query,vtemp,"gserial=".$get["gs"]}-->
+<!--{else}-->
+<!--{/*ffwbms ffm_goods_gserial_query,vtemp,"uid=0|gserial=".$get["gs"]."|id!=".$get["id"]*/}-->
+<!--{ffwbms ffm_goods_gserial_query,vtemp,"gserial=".$get["gs"]."|id!=".$get["id"]}-->
+<!--{/if}-->
+<!--{$vtemp["id"]}-->

@@ -1,0 +1,130 @@
+<!--{if getcookie(uid)==""}-->
+    <!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="../access/css/admin_style.css"/>
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+</head>
+
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_ad_sort_db,adsort_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+			<a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - 
+			<a href="javascript:;">广告管理</a> - <a href="javascript:;"><!--{$adsort_db["sname"]}--></a>
+        </div>
+        <div class="right_cont">
+            <div class="artlist">
+				<button type="button" class="adbtn listadd" onclick="ad()">新增广告</button>
+            	<table class="dxt">
+            		<tr>
+						<th>序号</th>
+						<th>广告名称</th>
+						<th>开始时间</th>
+						<th>结束时间</th>
+						<th>操作</th>
+					</tr>
+					<!--{ffwbms ffm_ad_pg_list,art,"tid=".$get["pid"]."|pg=".$get["pg"]."|ps=10"}-->
+					<!---{ffwbms_see $art}-->
+					<!--{loop $art["0"] $ary}-->
+            		<tr>
+						<td><!--{$ary["id"]}--></td>
+						<td><a href="ad_edit.html?id=<!--{$ary['id']}-->&pid=<!--{$ary['tid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$ary["aname"]}--></a></td>
+						<td class="ary_astart"><!--{$ary["astart"]}--></td>
+						<td class="ary_astop"><!--{$ary["astop"]}--></td>
+						<!--{$aa=$ary["id"]}-->
+						<td><button type="button" class="list_delbtn" onclick="addel('<!--{$aa}-->')">删除</button></td>
+					</tr>
+					<!--{/loop}-->
+				</table>
+				<!--{if $art['1']['pages']>1}-->
+                <div class="pages">
+                    <!--{if $art['1']['curr']>1}-->
+                    <a href="ad_pglist.html?pid=<!--{$get['pid']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->">首页</a>
+                    <!--{/if}-->
+
+                    <!--{loop $art["1"]['p_list'] $ary}-->
+                    <a href="ad_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->">
+                        <!--{$ary}-->
+                    </a>
+                    <!--{/loop}-->
+
+                    <a href="javascript:;" class="acitve">
+                        <!--{$art['1']['curr']}-->
+                    </a>
+
+                    <!--{loop $art["1"]['n_list'] $ary}-->
+                    <a href="ad_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->">
+                        <!--{$ary}-->
+                    </a>
+                    <!--{/loop}-->
+
+                    <!--{if $art['1']['curr']<$art['1']['pages']}-->
+                    <a href="ad_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$art['1']['pages']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->">尾页</a>
+					<!--{/if}-->
+					
+                </div>
+                <!--{/if}-->
+            </div>
+		
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+	$(".ary_astart").each(function(){
+		var o = new Date($(this).html());
+		var year = o.getFullYear();//年
+		var month = o.getMonth();//月
+		var day = o.getDate();//日
+		var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+		$(this).html(n);
+	});
+	$(".ary_astop").each(function(){
+		var o = new Date($(this).html());
+		var year = o.getFullYear();//年
+		var month = o.getMonth();//月
+		var day = o.getDate();//日
+		var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+		$(this).html(n);
+	});
+
+
+	function ad(){
+		location.href = "ad_add.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+	}
+	function addel(id){
+        layer.open({
+            content:"确认删除此广告吗?", 
+            btn: ['确定','放弃'] ,
+            yes: function(index){ // 确定
+				window.location.href="ad_delok.html?id="+id+"&pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+			},
+			no: function(index){ // 放弃
+                layer.close(index)
+            }
+        });
+	}
+</script>
+</html>

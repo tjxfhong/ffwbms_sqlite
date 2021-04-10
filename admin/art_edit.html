@@ -1,0 +1,149 @@
+<!--{if getcookie(uid)==""}-->
+    <!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!--{if $post!=""}-->
+	<!--{$post["scdt"]=""}-->
+	<!--{$post["amdt"]=""}-->
+	<!--{ffwbms ffm_art_edit,vtemp,"id=".$get["id"]}-->
+	<!--{if $get['developer']=='1'}--><!--{$developer='&developer=1'}--><!--{else}--><!--{$developer=''}--><!--{/if}-->
+	<!--{ffwbms_redirect 307,aaa,"art_pglist.html?pid=".$get['pid']."&pg=".$get['pg'].$developer."&eq=".$get['eq']}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+
+	
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_verify.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_upfileimg.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+	<script type="text/javascript" src="../access/js/layerdate/pc.laydate.js"></script>
+
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/editor_api.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_art_sort_db,sort_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+            <a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">文章管理</a> - 
+			<a href="art_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$sort_db["sname"]}--></a> - 
+			<a href="javascript:;">编辑文章</a>
+        </div>
+        <div class="right_cont">
+           <form class="ffwbms_form" style="line-height: 2.5rem;" enctype="multipart/form-data" action="art_edit.html?id=<!--{$get['id']}-->&pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" id="articled" method="post">
+				<!--{ffwbms ffm_art_db,vtemp,"id=".$get["id"]}-->
+				<!--{/*ffwbms_see $vtemp*/}-->
+				<input name="pid" type="hidden" id="pid" value="<!--{$vtemp['pid']}-->" />
+				<input type="hidden" name="uid" id="uid" value="<!--{$vtemp['uid']}-->" />
+				<input type="hidden" name="atyp" id="atyp" value="<!--{$vtemp['atyp']}-->" />
+				<p>文章标题：</p><input type="text" id="atit" name="atit" maxlength="100" ffwbms_verify="true" data-ffv="nonull" value="<!--{$vtemp['atit']}-->" />
+				<p>短标题：</p><input type="text" id="stit" name="stit" maxlength="20" value="<!--{$vtemp['stit']}-->" />
+				<p>作者：</p><input type="text" id="auth"name="auth" maxlength="50" value="<!--{$vtemp['auth']}-->" />
+				<p>引用来源：</p><input type="text" id="sour" name="sour" maxlength="50" value="<!--{$vtemp['sour']}-->" />
+				<p>标题图：</p>
+				<div class="upfileimg">
+					<div class="upimg">
+							<p>主图1</p>
+							<!--{if $vtemp['img1']==""}-->
+							<a id="img1" href="javascript:;" class="ffwbms_upfile">
+								选择文件<input type="file" name="img1" />
+							</a>
+							<div class="imgshow">
+								
+							</div>
+							<!--{else}-->
+							<button type="button" data-id="img1" onClick="ffwbms_delupimg(this)">删除图片1</button>
+							<div class="imgshow">
+								<img src="<!--{$vtemp['img1']}-->" />
+							</div>
+							<!--{/if}-->
+					</div>
+					<div class="upimg">
+							<p>主图2</p>
+							<!--{if $vtemp['img2']==""}-->
+							<a id="img2" href="javascript:;" class="ffwbms_upfile">
+								选择文件<input type="file" name="img2" />
+							</a>
+							<div class="imgshow">
+								
+							</div>
+							<!--{else}-->
+							<button type="button" data-id="img2" onClick="ffwbms_delupimg(this)">删除图片2</button>
+							<div class="imgshow">
+								<img src="<!--{$vtemp['img2']}-->" />
+							</div>
+							<!--{/if}-->
+					</div>
+					<div class="upimg">
+							<p>主图3</p>
+							<!--{if $vtemp['img3']==""}-->
+							<a id="img3" href="javascript:;" class="ffwbms_upfile">
+								选择文件<input type="file" name="img3" />
+							</a>
+							<div class="imgshow">
+								
+							</div>
+							<!--{else}-->
+							<button type="button" data-id="img3" onClick="ffwbms_delupimg(this)">删除图片3</button>
+							<div class="imgshow">
+								<img src="<!--{$vtemp['img3']}-->" />
+							</div>
+							<!--{/if}-->
+					</div>
+				</div>
+				<p>关键字：</p><input type="text" id="akeys" name="akeys" maxlength="50" value="<!--{$vtemp['akeys']}-->" />
+				<p>描述：</p><input type="text" id="aabs" name="aabs" maxlength="250" value="<!--{$vtemp['aabs']}-->" />
+				<p>正文：</p><script id="atxt" name="atxt" type="text/plain" style="max-width:1024px;height:500px;"><!--{$vtemp["atxt"]}--></script>
+				<p style="margin-top: 0.5rem;">有效时间：<input style="width:150px; margin-right: 6rem;" type="text" name="indt" id="indt" class="laydate-icon" readonly onclick="laydate()" value="<!--{$vtemp['indt']}-->" /></p>
+				<p style="margin-top: 0.5rem;">是否可用：
+				<input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn2" value="2" <!--{if $vtemp['ifyn']==2}--> checked<!--{/if}-->/><label for="ifyn2" class="ffwbms_radio-label radGroup4">正常</label>
+				<input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn1" value="1" <!--{if $vtemp['ifyn']==1}--> checked<!--{/if}--> /><label for="ifyn1" class="ffwbms_radio-label radGroup5">暂停</label></p>
+           </form>
+		   <button type="button" class="add" onclick="artedit()">确认编辑</button>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+	var o = new Date($("#indt").val());	
+	var year = o.getFullYear();
+	var month = o.getMonth();//月
+	var day = o.getDate();//日
+	var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+	$("#indt").val(n);
+
+	$(document).ready(function () {
+		var atxt = UE.getEditor('atxt'); // 实例化编辑器
+	});
+
+	function artedit(){
+		var atit = $.trim($("#atit").val());
+		if (IsNotEmpty(atit) == false) {
+			layer.alert("文章标题不能为空！",{icon: 2});
+			return false;
+		}
+		$("#articled").submit()
+	}
+</script>
+</html>

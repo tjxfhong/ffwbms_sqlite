@@ -1,0 +1,1025 @@
+@charset "utf-8";
+@font-face {
+	font-family: 'FontFFwbms';
+	src: url('fonts/ffwbms.eot');
+	src: url('fonts/ffwbms.eot') format('embedded-opentype'), 
+		 url('fonts/ffwbms.woff2') format('woff2'), 
+		 url('fonts/ffwbms.woff') format('woff'), 
+		 url('fonts/ffwbms.ttf') format('truetype'), 
+		 url('fonts/ffwbms.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+/*rem: 相对长度单位。相对于根元素(即html元素)font-size计算值的倍数*/
+html{font-size: 16px;}
+.ff, .ffwbms-font {
+	display: inline-block;
+	font: normal normal normal 16px/1 FontFFwbms;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+:root{
+	--color-1: #234969; /*页面背景色*/
+	--color-2: #234969; /*主文字色 2*/
+	--color-3: #234969; /*边框色 3*/
+	--color-4: #234969; /*标题色 4*/
+	--color-5: #234969; /*指向变色 5*/
+	--color-6: #f0efeb; /*配色 6*/
+	--color-7: #36488c; /*配色 7*/
+	--color-8: #234969; /*配色 8*/
+	--color-9: #282828; /*配色 9*/
+	--breakpoint-xs: 360px;
+	--breakpoint-sm: 576px;
+	--breakpoint-md: 768px;
+	--breakpoint-lg: 992px;
+	--breakpoint-xl: 1200px;
+}
+/*减少浏览器在默认行高，边距和标题字体大小等方面的不一致性*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0; padding: 0; border: 0;
+	font-size: 100%;
+	font: inherit; /*继承*/
+	line-height: 1.5rem;
+	vertical-align: baseline; /*垂直对齐：基线*/
+}
+a{text-decoration:none;} /*去掉下划线*/
+
+/* HTML5 重置旧浏览器显示影响 */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body { line-height: 1;}
+ol, ul { list-style: none;}
+blockquote, q { quotes: none;}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse; /*边界折叠：折叠*/
+	border-spacing: 0;
+}
+.t-a-left{text-align: left;}
+.t-a-center{text-align: center;}
+.t-a-right{text-align: right;}
+.color-1{color: var(color-1);}
+.color-2{color: var(color-2);}
+.color-3{color: var(color-3);}
+.color-4{color: var(color-4);}
+.color-5{color: var(color-5);}
+.color-6{color: var(color-6);}
+.color-7{color: var(color-7);}
+.color-8{color: var(color-8);}
+.color-9{color: var(color-9);}
+
+/*单线表格*/
+.dxt{ font-size: 1rem; text-align: left; border-collapse: collapse; border-style:solid; border-color: #B0C8EA; border: 1px; margin:1rem auto;}
+.dxt th,.dxt td{ border: 1px solid #B0C8EA; padding:0.5rem; line-height:1.5rem; font-weight:normal; text-align:left;}
+.dxt th.t,.dxt td.t{ font-weight:bold; text-align:center; text-indent:0px; color:#666;}
+.dxt tr:hover{background-color: #d4d4d4;}
+
+/*上传文件图片*/
+.upfileimg{margin: 0.5rem; overflow: hidden;}
+.upimg{float: left; margin: 0.5rem 0.5rem; border: 1px solid #eee;}
+.upimg p{line-height: 2.5rem; margin: 0 0 0 0.5rem;}
+.upimg a{float: right; margin-top: -2.25rem; padding: 0.5rem 0.3rem; border: none; width: 50%;}
+.upimg button{float: right;margin-top: -2.25rem; background-color: #D0EEFF; color: #0b82bc; width: 50%;}
+.upimg button:hover{background-color: #AADFFD; color: #004974;}
+.upimg .imgshow{width: 280px; max-height: 200px; text-align: center;}
+.upimg .imgshow img{max-width: 280px; max-height: 200px}
+
+/* 页码 */
+.pages{width: 100%;height: auto; margin-top: .714286rem; margin-bottom: 10px; text-align: center;}
+.pages .acitve{background-color: #e5ecf2;color: #000000;}
+.pages .page{ margin: 0 .714286rem; display: inline-block/*内联块*/; width: auto; height: 2rem; background-color: #727171;border-radius: 2px;text-align: center;line-height: 2rem; color: #ffffff;text-decoration: none;padding: 0 .714286rem;margin: 0 .285714rem;}
+.pages .page:hover{background-color: #e5ecf2;color: #000000;}
+.pages a{ margin: 0 .714286rem; display: inline-block; width: auto; height: 2rem; background-color: #727171;border-radius: 2px;text-align: center;line-height: 2rem; color: #ffffff;text-decoration: none;padding: 0 .714286rem;margin: 0 .285714rem;}
+.pages a:hover{background-color: #e5ecf2;color: #000000;}
+.pages .notes{ margin: 0 .714286rem; display: inline-block; width: auto; height: 2rem; background-color: #727171;border-radius: 2px;text-align: center;line-height: 2rem; color: #ffffff;text-decoration: none;padding: 0 .714286rem;margin: 0 .285714rem;}
+
+/*左侧导航菜单，width:270px
+</script>*/
+.leftnav ul{width: 100%; overflow: hidden;}
+.leftnav ul::-webkit-scrollbar{display: none;}
+.leftnav li{ margin-left: 1rem; width: calc(100% - 1rem); height: auto; border-bottom: 1px solid #f5f6fa;}
+/*#124bcc*/
+/*.leftnav ul li .active f{transform: rotate(180deg)旋转(180度);}*/
+.leftnav a f{display: inline-block; line-height: 2rem; margin-right: 0.5rem; float: right;}
+.leftnav a{display: inline-block;width: calc(100% - 0.5rem);height: 2.5rem;font-size: 1rem;color: #666666;padding-left: 0.5rem;line-height: 2.5rem;border-bottom: 1px solid #f5f6fa;text-decoration: none;}
+/*.leftnav a.rot{font-size: 1.1rem;color: #f5f6fa;background-color: #007ae1;}
+.leftnav a.rot.active{background-color: #f5f6fa;color: #007ae1;}*/
+
+.leftnav a.active{background-color: #f5f6fa;color: #007ae1;}
+.leftnav a:hover{background-color: #f5f6fa;color: #007ae1;}
+.s_nav_ico{display: none;}
+.l_nav{display: block; box-shadow:/*阴影*/20px 0 20px -20px #d3d7e9;}
+
+/*登录注册*/
+.horizon-vertical-center-box{position: relative; width: 100%; height: 100vh; margin: 0px auto; overflow: hidden;}
+.horizon-vertical-center-box .logreg{width: 460px; position: absolute; margin-left: -231px; left:50%; top:50%; border: 1px solid #d9dadb; background-color: #f8f9fa; border-radius: 5px; line-height: 1.5rem;}
+.horizon-vertical-center-box .logreg h3{width: 100%; border-bottom: 1px solid #d9dadb; text-align: center; font-size: 18px; font-weight: bold; background-color: #f7f7f7; border-radius: 5px 5px 0 0; line-height: 3rem;}
+.horizon-vertical-center-box .logreg h4{width: 100%; border-top: 1px solid #d9dadb; box-sizing: border-box; text-align: center; letter-spacing: 4px; font-size: 18px; margin-top: 15px; background-color: #f7f7f7; border-radius: 0 0 5px 5px; color: #6c6c6c; line-height: 2.5rem;}
+.horizon-vertical-center-box .logreg h4 a{color: #6c6c6c;}
+.horizon-vertical-center-box .logreg .ffwbms_form{line-height: 2.5rem; padding: 1.5rem 1rem 0 1rem; text-align: center;}
+.horizon-vertical-center-box .logreg .ffwbms_form label{width: 100%; display: block; line-height: 3.5rem;}
+.horizon-vertical-center-box .logreg .ffwbms_form a{color: #6c6c6c;}
+.horizon-vertical-center-box .logreg .ffwbms_form input{font-size: 1.125rem; line-height: 2rem; font-weight: bold; width: calc(100% - 7rem); float: right; margin-top: 0.5rem;}
+.horizon-vertical-center-box .logreg button[type="button"]{ line-height: 2rem; margin: 0.5rem auto 0rem auto;}
+
+/*根据显示器分辨率，不同处理*/
+.container{
+	width: 100%;
+	/* padding-right: 25px;
+	padding-left: 25px; */
+	margin-right: auto;
+	margin-left: auto
+}
+
+/*小显示器*/
+@media screen and  (max-width: 1200px) {
+	.container{
+		max-width: 1140px
+	}
+}
+
+/*平板PRO*/
+@media screen and  (max-width: 992px) {
+	.container{
+		max-width: 960px
+	}
+}
+
+/*平板*/
+@media screen and  (max-width: 768px) {
+	.container{
+		max-width: 720px;
+		margin: 45px auto;
+	}
+	.s_nav_ico{display: block;}
+	.l_nav{display: none;}
+	#ToolBarHead {display: block;}
+	#ToolBarFoot {display: block;}
+}
+
+/*手机*/
+@media screen and  (max-width: 576px) { /*当屏幕尺寸小于576px时，应用下面的CSS样式*/
+	.container {
+		max-width: 540px
+	}
+}
+
+/*小手机*/
+@media screen and  (max-width: 360px) { /*当屏幕尺寸小于360px时，应用下面的CSS样式*/
+	.container {
+		max-width: 540px
+	}
+}
+
+/*头脚固定工具条，永远固定在页面头部和底部不随滚动而滚动*/
+#ToolBarHead { position:fixed/*固定*/; top:0px; width:100%; height: 3.714286rem; text-align:center; z-index:99; display: none;}
+#ToolBarFoot { position:fixed; bottom:0px; width:100%; height: 3.214286rem; text-align:center; z-index:99; display: none;}
+
+/*Flex*/
+/*flex：定义布局为盒模型*/
+.flex{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}
+/*flex：自动换行*/
+.flex-wrap{flex-wrap: wrap; }
+/*flex：自动换行并拉开*/
+.flex-wsa{flex-wrap: wrap;justify-content: space-around; }
+/*flex-v：盒模型垂直布局*/
+.flex-v{-webkit-box-orient:vertical;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}
+/*flex-1：子元素占据剩余的空间*/
+.flex-1{-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;}
+/*flex-align-center：子元素垂直居中*/
+.flex-align-center{-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;}
+/*flex-pack-center：子元素水平居中*/
+.flex-pack-center{-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;}
+/*flex-pack-justify：子元素两端对齐*/
+.flex-pack-justify{-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;}
+
+/*表单*/
+.ffwbms_form{ margin:0; padding:0;}
+/*文本输入框*/
+.ffwbms_text,.ffwbms_form input[type="text"]{
+    outline-style: none ;
+    border: 1px solid #ccc; /* 边框 */
+    border-radius: 0.5rem; /* 圆角 */
+    padding: 0.2rem 0.3rem; /* 内空 */
+    width:calc(100% - 0.6rem - 2px);/* 宽 */
+    font-size: 1rem; /* 字体大小 */
+    font-family: "Microsoft soft", "FontFFwbms"; /* 字体 */
+}
+/*数字输入框*/
+.ffwbms_number,.ffwbms_form input[type="number"]{
+    outline-style: none ;
+    border: 1px solid #ccc; /* 边框 */
+    border-radius: 0.5rem; /* 圆角 */
+    padding: 0.2rem 0.3rem; /* 内空 */
+    width:calc(100% - 0.6rem - 2px);/* 宽 */
+    font-size: 1rem; /* 字体大小 */
+    font-family: "Microsoft soft", "FontFFwbms"; /* 字体 */
+	text-align:right;
+	-moz-appearance: textfield; /* 在firefox下移除input[number]的上下箭头 */
+}
+.ffwbms_number::-webkit-outer-spin-button,.ffwbms_number::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: none !important; /* 移除input[number]的上下箭头 */
+	margin: 0;
+}
+/*密码输入框*/
+.ffwbms_password,.ffwbms_form input[type="password"]{
+    outline-style: none ;
+    border: 1px solid #ccc; /* 边框 */
+    border-radius: 0.5rem; /* 圆角 */
+    padding: 0.2rem 0.3rem; /* 内空 */
+    width:calc(100% - 0.6rem - 2px);/* 宽 */
+    font-size: 1rem; /* 字体大小 */
+    font-family: "Microsoft soft", "FontFFwbms"; /* 字体 */
+}
+/*提交，清空，按钮*/
+button,.ffwbms_button,.ffwbms_reset,.ffwbms_submit,.ffwbms_form input[type="button"],.ffwbms_form input[type="reset"],.ffwbms_form input[type="submit"]{
+    -webkit-appearance: none; /* 修改按钮默认定义 */
+	box-sizing: inherit; /* 修改按钮默认定义 */
+    outline-style: none ;
+    border:0;
+    border-radius: 0.5rem;
+    padding: 0.3rem 0.3rem;
+    width:calc(100% - 0.6rem);/*10em;*/
+    font-size: 1rem; /* 设置字体大小 */
+    font-family: "Microsoft soft", "FontFFwbms";
+	text-align:center;
+	color:#337ab7;
+	background:#c7c7c7;
+	cursor:pointer;
+}
+button:hover,.ffwbms_button:hover,.ffwbms_reset:hover,.ffwbms_submit:hover,.ffwbms_form input[type="button"]:hover,.ffwbms_form input[type="reset"]:hover,.ffwbms_form input[type="submit"]:hover{
+	background:#337ab7; color: #fff;
+}
+/* 搜索输入框 */
+.ffwbms_search,.ffwbms_form input[type="search"]{
+    outline-style: none ;
+    border: 1px solid #ccc; /* 边框 */
+    border-radius: 0.5rem; /* 圆角 */
+    padding: 0.2rem 0.3rem; /* 内空 */
+    width:calc(100%);/* 宽 */
+    font-size: 1rem; /* 字体大小 */
+    font-family: "Microsoft soft", "FontFFwbms"; /* 字体 */
+}
+.ffwbms_search:before,.ffwbms_form input[type="search"]:before{
+	font-family:wingdings; /* 这里是软件自动补全的 */
+	content: "\0040";
+	color:yellow;
+}
+
+/* 文件域
+例：
+	<a href="javascript:;" class="ffwbms_upfile">选择文件
+    	<input type="file" name="" id="">
+	</a>
+ */
+.ffwbms_upfile {
+	position: relative;
+	/* display: inline-block; */
+	display: block;
+	background: #D0EEFF;
+	border: 1px solid #99D3F5;
+	border-radius: 0.5rem;
+	padding: 0.4rem 1rem;
+	overflow: hidden;
+	color: #1E88C7;
+	text-decoration: none;
+	text-align:center;
+	line-height: 1rem;
+	width:calc(100% - 2rem - 2px);
+	font-family: "Microsoft soft", "FontFFwbms";
+}
+.ffwbms_upfile input[type="file"] {
+	position: absolute;
+	font-size: 1rem;
+	right: 0;
+	top: 0;
+	opacity: 0;
+	width: 100%;
+}
+.ffwbms_upfile:hover {
+	background: #AADFFD;
+	border-color: #78C3F3;
+	color: #004974;
+	text-decoration: none;
+}
+/* checkbox处理
+用法： checkbox的ID和label的for名字对应
+例：
+	<input type="checkbox" name="checkboxG1" id="checkboxG1" />
+    <label for="checkboxG1" class="checkbox-label">Option 1</label>
+*/
+.ffwbms_checkbox,.ffwbms_form input[type=checkbox]{
+	position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+}
+.ffwbms_checkbox + label.ffwbms_checkbox-label,.ffwbms_form input[type=checkbox] + label.ffwbms_checkbox-label {
+	display:inline-block;
+	padding-left:1.8rem;
+	height:1.5rem; 
+	line-height:1.5rem;
+	font-size:1rem;
+	background: url(data:image/png;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcBAMAAACAI8KnAAAAFVBMVEUAAAD6vg/6vxD6vhD6vxD/wRX6vg8kMMAoAAAABnRSTlMAmcWj9yRP4yxWAAAAK0lEQVQY02MISkMCqgwqhoJwIOzEkMyABMwYEpG5YqNcsrloAYsW7GiRAgBYzxiTxWw0ywAAAABJRU5ErkJggg==) no-repeat left;
+	background-attachment: left;/*设置背景图像是固定的*/
+	background-size: auto 100%;
+	-moz-background-size:  auto 100%;
+	-webkit-background-size:  auto 100%;
+	vertical-align:middle;
+	cursor:pointer;
+}
+.ffwbms_checkbox:checked + label.ffwbms_checkbox-label,.ffwbms_form input[type=checkbox]:checked + label.ffwbms_checkbox-label {
+	background: url(data:image/png;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAM1BMVEX6vxD/wRX5vg8oKCiGaxyffhqPchucexqVdxuUdhu0jBfFmRVTRyPClxbLnRTpsxHvtxCvTveZAAAAAnRSTlPFJPwdCuIAAABiSURBVCjPzdM5DsAgDABBEocckOv/r43TsJItXLPtCExh0pTmTkqYCyMaBt8As5xd3ETkAZ2tnHS2dGbmZmC5rIFFx2AGq6hi5tr912YgitnXHphDVQxs3XXYTWBxAwu/wwcFywb156RCtwAAAABJRU5ErkJggg==) no-repeat left;
+	background-size: auto 100%;
+	-moz-background-size:  auto 100%;
+	-webkit-background-size:  auto 100%;
+}
+label.ffwbms_checkbox-label {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+/* radio处理
+用法： radio的ID和label的for名字对应
+例：
+	<input type="radio" name="radioBoxG" id="radioBoxG1" value="0">
+		<label for="radioBoxG1" class="ffwbms_radio-label"> 空</label>
+	
+<input type="checkbox" name="checkboxG1" id="checkboxG1" />
+    <label for="checkboxG1" class="checkbox-label">Option 1</label>
+*/
+.ffwbms_radio,.ffwbms_form input[type=radio] {
+	position:absolute;
+	z-index:-1000;
+	left:-1000px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	height:1px;
+	width:1px;
+	margin:-1px;
+	padding:0;
+	border:0;
+}
+.ffwbms_radio + label.ffwbms_radio-label,.ffwbms_form input[type=radio] + label.ffwbms_radio-label {
+	display:inline-block;
+	padding-left:1.8rem;
+	height:1.5rem; 
+	line-height:1.5rem;
+	font-size:1rem;
+	background: url(data:image/png;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATBAMAAACAfiv/AAAAMFBMVEUAAADV1dXCwsLIyMjPz8/IyMjIyMjGxsbHx8e7u7va2trFxcXDw8Pu7u7h4eHHx8eNXZlIAAAADXRSTlMA9hX17+2MZkQH/YEyZIrQmgAAAG1JREFUCNdjAIIZ1RUTGMBAzURKxEwBxGIKvHv37sUYEPP827tA8F4BKBh3FwTuBTEwsMneBQMxBobJdyHg8gSGFijzSgNDIZR5sYBhF5R5awOyKEItkgkIc1FsY9CHuOEAkMkDdlkQqnsRvgAAyC5owO2u7LoAAAAASUVORK5CYII=) no-repeat left;
+	background-attachment: left;/*设置背景图像是固定的*/
+	background-size: auto 100%;
+	-moz-background-size:  auto 100%;
+	-webkit-background-size:  auto 100%;
+	vertical-align:middle;
+	cursor:pointer;
+}
+.ffwbms_radio:checked + label.ffwbms_radio-label,.ffwbms_form input[type=radio]:checked + label.ffwbms_radio-label {
+	background: url(data:image/png;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAAQlBMVEUAAADV1dXCwsLIyMjPz8/IyMjIyMjGxsbHx8e7u7va2trFxcXDw8Pu7u70lgHq6urwxX/ypy/h4eHg4ODHx8fyrDuJiVHSAAAADXRSTlMA9hX17+2MZkQH/YEyZIrQmgAAAIdJREFUGNN1kFkSwyAMQzH7EkhYcv+rFo2H0g/6fvB4ZBtJMMG75HwQG2mVpkhaWfltGbozuMlc3LpGy4s+JKt63jSDpiXUTy31QUF2XlTY9RbwYqcKwmuoCgOl9sJhtBamYtiJFOdbFrOO6aQ77TvdPf0PPlredMPmRt/WxgrhJxf5J79Tzh+OxwzfTLrvhQAAAABJRU5ErkJggg==) no-repeat left;
+	background-size: auto 100%;
+	-moz-background-size:  auto 100%;
+	-webkit-background-size:  auto 100%;
+}
+label.ffwbms_radio-label {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+/* 下拉列表 */
+.ffwbms_select{
+	width:calc(100% - 2px);
+	height:1.8rem;
+	line-height:1.8rem;
+	position: relative;
+	overflow:hidden;
+	border:1px solid #ccc; 
+	-moz-border-radius: 0.5rem; /* Gecko browsers */ 
+	-webkit-border-radius: 0.5rem; /* Webkit browsers */ 
+	border-radius:0.5rem; 
+} 
+.ffwbms_select:before {/* 下箭头 */
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	border: 1rem solid transparent;
+	border-top-color: #ccc;
+	top: 0.6rem;
+	right: 0.4rem;
+	font-size:0.8rem;
+	cursor: pointer;
+	z-index: -2;
+}
+.ffwbms_select select {
+	padding:0.2rem;
+	background:transparent;
+	width:100%;
+	font-size:1rem;
+	border:none;
+	height:1.8rem;
+	-webkit-appearance: none; /*for Webkit browsers*/ 
+}
+.ffwbms_select option {
+	-webkit-appearance:none; /*去除系统默认的样式*/
+	-moz-appearance: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);   /* 点击去除高亮的颜色*/
+	padding: 0;
+    margin:0;
+    float:left;
+	height: 1.5rem;
+	min-height: 1.5rem;
+    /*padding: 10px 0;/*当时解决输入框光标顶满input框的问题是这么解决的 如果设置了行高就会顶满没有行高的话光标高度=文字的font-size */
+    border: none;
+    outline: none;
+    padding-left: 1rem;
+    color: #66afe9;/*ok*/
+    background-color: #fff;/*ok*//*当input框禁止输入的时候会有一个灰色的底色 项目需要我设置了 白色底 跟页面背景一个颜色。*/
+}
+
+/* 多行文本 */
+.ffwbms_textarea,.ffwbms_form textarea{
+    border: 1px solid #ccc; /* 边框 */
+    border-radius: 0.5rem; /* 圆角 */
+    padding: 0.2rem 0.3rem; /* 内空 */
+    width:calc(100% - 0.6rem - 2px);/* 宽 */
+	height: 10rem;
+	line-height:1.5rem;
+	font-size:1rem;
+	font-family: "Microsoft soft", "FontFFwbms";
+}
+
+/*焦点边框点击发光*/
+.ffwbms_text:focus,.ffwbms_form input[type="text"]:focus,
+.ffwbms_password:focus,.ffwbms_form input[type="password"]:focus,
+.ffwbms_textarea:focus,.ffwbms_form textarea:focus
+{
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 0.5em rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 0.5em rgba(102,175,233,.6)
+}/**/
+
+
+/* FFWBMSFONT字体处理 */
+/* 旋转快 */
+.ff-spin {
+	-webkit-animation: ff-spin 2s infinite linear;
+	animation: ff-spin 2s infinite linear;
+}
+/* 旋转慢 */
+.ff-pulse {
+	-webkit-animation: ff-spin 1s infinite steps(8);
+	animation: ff-spin 1s infinite steps(8);
+}
+@-webkit-keyframes ff-spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}
+@keyframes ff-spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}
+
+.ff-rotate-90 {
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+	-webkit-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+.ff-rotate-180 {
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+	-webkit-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+.ff-rotate-270 {
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+	-webkit-transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	transform: rotate(270deg);
+}
+.ff-flip-horizontal {
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
+	-webkit-transform: scale(-1, 1);
+	-ms-transform: scale(-1, 1);
+	transform: scale(-1, 1);
+}
+.ff-flip-vertical {
+	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
+	-webkit-transform: scale(1, -1);
+	-ms-transform: scale(1, -1);
+	transform: scale(1, -1);
+}
+:root .ff-rotate-90, /* 右转90度 */
+:root .ff-rotate-180, /* 右转180度 */
+:root .ff-rotate-270, /* 右转270度 */
+:root .ff-flip-horizontal, /* 水平镜像 */
+:root .ff-flip-vertical { /* 垂直镜像 */
+	filter: none;
+}
+/* 字符垂直居中 */
+.ff-stack {
+	position: relative;
+	display: inline-block;
+	width: 2rem;
+	height: 2rem;
+	line-height: 2rem;
+	vertical-align: middle;
+}
+.ff-stack-1x,
+.ff-stack-2x {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	text-align: center;
+}
+.ff-stack-1x {
+	line-height: inherit;
+}
+.ff-stack-2x {
+	font-size: 2rem;
+}
+/* 白色 */
+.ff-inverse {
+  color: #ffffff;
+}
+/* 定义读取ICO字符 */
+.ff-F007:before,.ff-music:before {
+	content: "\F007"; /*音乐*/
+}
+.ff-f009:before,.ff-envelope-w:before {
+	content: "\f009";/*信封(白)*/
+}
+.ff-f00b:before,.ff-envelope:before {
+	content: "\f00b";/*信封*/
+}
+.ff-f00d:before,.ff-heart-w:before {
+	content: "\f00d";/*心(白)*/
+}
+.ff-f00e:before,.ff-heart:before {
+	content: "\f00e";/*心*/
+}
+.ff-f00f:before,.ff-star-w:before {
+	content: "\f00f";/*五角星(白)*/
+}
+.ff-f011:before,.ff-star-h:before {
+	content: "\f011";/*五角星(半白)*/
+}
+.ff-f012:before,.ff-star:before {
+	content: "\f012";/*五角星*/
+}
+.ff-f013:before,.ff-user:before {
+	content: "\f013";/*个人 fa-user-plus fa-user-times */
+}
+.ff-f014:before,.ff-user-c-w:before {
+	content: "\f014";/*个人-圆(白)*/
+}
+.ff-f015:before,.ff-user-c:before {
+	content: "\f015";/*个人-圆*/
+}
+.ff-f016:before,.ff-group:before {
+	content: "\f016";/*组*/
+}
+.ff-f017:before,.ff-female-doll:before {
+	content: "\f017";/*女-人形*/
+}
+.ff-f018:before,.ff-male-doll:before {
+	content: "\f018";/*男-人形*/
+}
+.ff-f019:before,.ff-female-sign:before {
+	content: "\f019";/*女-标志*/
+}
+.ff-f01a:before,.ff-male-sign:before {
+	content: "\f01a";/*男-标志*/
+}
+.ff-f01b:before,.ff-wheelchair:before {
+	content: "\f01b";/*轮椅*/
+}
+.ff-f01c:before,.ff-arrow-left:before {
+	content: "\f01c";/*箭头-左*/
+}
+.ff-f01d:before,.ff-arrow-right:before {
+	content: "\f01d";/*箭头-右*/
+}
+.ff-f01e:before,.ff-arrow-upper:before {
+	content: "\f01e";/*箭头-上*/
+}
+.ff-f01f:before,.ff-arrow-lower:before {
+	content: "\f01f";/*箭头-下*/
+}
+.ff-f020:before,.ff-triangle-left:before {
+	content: "\f020";/*三角-左*/
+}
+.ff-f021:before,.ff-triangle-right:before {
+	content: "\f021";/*三角-右*/
+}
+.ff-f022:before,.ff-triangle-upper:before {
+	content: "\f022";/*三角-上*/
+}
+.ff-f023:before,.ff-triangle-lower:before {
+	content: "\f023";/*三角-下*/
+}
+.ff-f024:before,.ff-triangle-upper-c:before {
+	content: "\f024";/*三角-中上*/
+}
+.ff-f025:before,.ff-triangle-lower-c:before {
+	content: "\f025";/*三角-中下*/
+}
+.ff-f026:before,.ff-double-left:before {
+	content: "\f026";/*双线-左*/
+}
+.ff-f027:before,.ff-double-right:before {
+	content: "\f027";/*双线-右*/
+}
+.ff-f028:before,.ff-double-upper:before {
+	content: "\f028";/*双线-上*/
+}
+.ff-f029:before,.ff-double-lower:before {
+	content: "\f029";/*双线-下*/
+}
+.ff-f02a:before,.ff-solid-left:before {
+	content: "\f02a";/*单线-左*/
+}
+.ff-f02b:before,.ff-solid-right:before {
+	content: "\f02b";/*单线-右*/
+}
+.ff-f02c:before,.ff-solid-upper:before {
+	content: "\f02c";/*单线-上*/
+}
+.ff-f02d:before,.ff-solid-lower:before {
+	content: "\f02d";/*单线-下*/
+}
+.ff-f02e:before,.ff-thick-upper:before {
+	content: "\f02e";/*粗线-上*/
+}
+.ff-f02f:before,.ff-thick-lower:before {
+	content: "\f02f";/*粗线-下*/
+}
+.ff-f030:before,.ff-plus:before {
+	content: "\f030";/*加*/
+}
+.ff-f031:before,.ff-minus:before {
+	content: "\f031";/*减*/
+}
+.ff-f032:before,.ff-search:before {
+	content: "\f032";/*放大镜*/
+}
+.ff-f033:before,.ff-search-plus:before {
+	content: "\f033";/*放大*/
+}
+.ff-f034:before,.ff-search-minus:before {
+	content: "\f034";/*缩小*/
+}
+.ff-f035:before,.ff-ok:before {
+	content: "\f035";/*确认*/
+}
+.ff-f036:before,.ff-close:before {
+	content: "\f036";/*放弃*/
+}
+.ff-f037:before,.ff-ok-o:before {
+	content: "\f037";/*确认*/
+}
+.ff-f038:before,.ff-close-o:before {
+	content: "\f038";/*放弃*/
+}
+.ff-f039:before,.ff-disables:before {
+	content: "\f039";/*失效*/
+}
+.ff-f03a:before,.ff-question:before {
+	content: "\f03a";/*疑问*/
+}
+.ff-f03b:before,.ff-info:before {
+	content: "\f03b";/*信息*/
+}
+.ff-f03c:before,.ff-exclamation:before {
+	content: "\f03c";/*感叹*/
+}
+.ff-f03d:before,.ff-chest-card:before {
+	content: "\f03d";/*胸牌*/
+}
+.ff-f03e:before,.ff-id-card-w:before {
+	content: "\f03e";/*证件(白)*/
+}
+.ff-f03f:before,.ff-id-card:before {
+	content: "\f03f";/*证件*/
+}
+.ff-f040:before,.ff-upvote:before {
+	content: "\f040";/*点赞*/
+}
+.ff-f041:before,.ff-downvote:before {
+	content: "\f041";/*拍砖*/
+}
+.ff-f042:before,.ff-entry:before {
+	content: "\f042";/*进入*/
+}
+.ff-f043:before,.ff-exit:before {
+	content: "\f043";/*退出*/
+}
+.ff-f044:before,.ff-cloud:before {
+	content: "\f044";/*云*/
+}
+.ff-f045:before,.ff-upload:before {
+	content: "\f045";/*上传*/
+}
+.ff-f046:before,.ff-download:before {
+	content: "\f046";/*下载*/
+}
+.ff-f047:before,.ff-computer:before {
+	content: "\f047";/*电脑*/
+}
+.ff-f048:before,.ff-notebook:before {
+	content: "\f048";/*笔记本*/
+}
+.ff-f049:before,.ff-phone-tablet:before {
+	content: "\f049";/*平板电脑*/
+}
+.ff-f04a:before,.ff-mobile-phone:before {
+	content: "\f04a";/*手机*/
+}
+.ff-f04b:before,.ff-shopping-cart:before {
+	content: "\f04b";/*购物车*/
+}
+.ff-f04c:before,.ff-add-cart:before {
+	content: "\f04c";/*加入购物车*/
+}
+.ff-f04d:before,.ff-delivery:before {
+	content: "\f04d";/*送货*/
+}
+.ff-f04e:before,.ff-like:before {
+	content: "\f04e";/*喜欢*/
+}
+.ff-f04f:before,.ff-dislike:before {
+	content: "\f04f";/*不喜欢*/
+}
+.ff-f050:before,.ff-Maximization:before {
+	content: "\f050";/*窗口最大化*/
+}
+.ff-f051:before,.ff-minimize:before {
+	content: "\f051";/*窗口最小化*/
+}
+.ff-f052:before,.ff-reduction:before {
+	content: "\f052";/*窗口还原*/
+}
+.ff-f053:before,.ff-window-close:before {
+	content: "\f053";/*窗口关闭*/
+}
+.ff-f054:before,.ff-window-close-w:before {
+	content: "\f054";/*窗口关闭(白)*/
+}
+.ff-f055:before,.ff-arrows-v:before {
+	content: "\f055";/*窗口垂直拉伸*/
+}
+.ff-f056:before,.ff-arrows-h:before {
+	content: "\f056";/*窗口水平拉伸*/
+}
+.ff-f057:before,.ff-arrows:before {
+	content: "\f057";/*窗口移动*/
+}
+.ff-f058:before,.ff-earphone:before {
+	content: "\f058";/*耳机*/
+}
+.ff-f059:before,.ff-volume-off:before {
+	content: "\f059";/*声音关闭*/
+}
+.ff-f05a:before,.ff-volume:before {
+	content: "\f05a";/*声音*/
+}
+.ff-f05b:before,.ff-microphone:before {
+	content: "\f05b";/*麦克风*/
+}
+.ff-f05c:before,.ff-micro-slash:before {
+	content: "\f05c";/*麦克风关闭*/
+}
+.ff-f05d:before,.ff-unlock:before {
+	content: "\f05d";/*解锁*/
+}
+.ff-f05e:before,.ff-lock:before {
+	content: "\f05e";/*加锁*/
+}
+.ff-f05f:before,.ff-streaming:before {
+	content: "\f05f";/*流媒体*/
+}
+.ff-f060:before,.ff-spinner:before {
+	content: "\f060";/*旋转器*/
+}
+.ff-f061:before,.ff-refresh:before {
+	content: "\f061";/*刷新*/
+}
+.ff-f062:before,.ff-line-chart:before {
+	content: "\f062";/*面积统计图*/
+}
+.ff-f063:before,.ff-trend-chart:before {
+	content: "\f063";/*走势统计图*/
+}
+.ff-f064:before,.ff-bar-chart:before {
+	content: "\f064";/*条形统计图*/
+}
+.ff-f065:before,.ff-pie-chart:before {
+	content: "\f065";/*饼状统计图*/
+}
+.ff-f066:before,.ff-file:before {
+	content: "\f066";/*页*/
+}
+.ff-f067:before,.ff-book:before {
+	content: "\f067";/*书*/
+}
+.ff-f068:before,.ff-folder:before {
+	content: "\f068";/*文件夹*/
+}
+.ff-f069:before,.ff-folder-open:before {
+	content: "\f069";/*文件夹(打开)*/
+}
+.ff-f06a:before,.ff-image:before {
+	content: "\f06a";/*图片*/
+}
+.ff-f06b:before,.ff-recorder:before {
+	content: "\f06b";/*录像机*/
+}
+.ff-f06c:before,.ff-camera:before {
+	content: "\f06c";/*照相机*/
+}
+.ff-f06d:before,.ff-print:before {
+	content: "\f06d";/*打印机*/
+}
+.ff-f06e:before,.ff-bluetooth-w:before {
+	content: "\f06e";/*蓝牙(白)*/
+}
+.ff-f06f:before,.ff-bluetooth:before {
+	content: "\f06f";/*蓝牙*/
+}
+.ff-f070:before,.ff-ascending:before {
+	content: "\f070";/*升序*/
+}
+.ff-f071:before,.ff-descending:before {
+	content: "\f071";/*降序*/
+}
+.ff-f072:before,.ff-filter:before {
+	content: "\f072";/*过滤*/
+}
+.ff-f073:before,.ff-qr-code:before {
+	content: "\f073";/*二维码*/
+}
+.ff-f074:before,.ff-bar-code:before {
+	content: "\f074";/*条型码*/
+}
+.ff-f075:before,.ff-tag:before {
+	content: "\f075";/*标签*/
+}
+.ff-f076:before,.ff-flag-tag:before {
+	content: "\f076";/*旗帜标签*/
+}
+.ff-f077:before,.ff-flag-tag-w:before {
+	content: "\f077";/*旗帜标签(白)*/
+}
+.ff-f078:before,.ff-position:before {
+	content: "\f078";/*位置*/
+}
+.ff-f079:before,.ff-earth:before {
+	content: "\f079";/*地球*/
+}
+.ff-f07a:before,.ff-tool:before {
+	content: "\f07a";/*工具*/
+}
+.ff-f07b:before,.ff-set:before {
+	content: "\f07b";/*设置*/
+}
+.ff-f07c:before,.ff-see:before {
+	content: "\f07c";/*看*/
+}
+.ff-f07d:before,.ff-see-no:before {
+	content: "\f07d";/*不看*/
+}
+.ff-f07e:before,.ff-bell:before {
+	content: "\f07e";/*铃铛*/
+}
+.ff-f07f:before,.ff-bell-no:before {
+	content: "\f07f";/*铃铛禁止*/
+}
+.ff-f080:before,.ff-navicon:before {
+	content: "\f080";/*导航*/
+}
+.ff-f081:before,.ff-list:before {
+	content: "\f081";/*列表*/
+}
+.ff-f082:before,.ff-signal:before {
+	content: "\f082";/*信号*/
+}
+.ff-f083:before,.ff-wifi-i:before {
+	content: "\f083";/*WIFI(斜)*/
+}
+.ff-f084:before,.ff-wifi:before {
+	content: "\f084";/*WIFI*/
+}
+.ff-f085:before,.ff-eyedropper:before {
+	content: "\f085";/*取色滴管*/
+}
+.ff-f086:before,.ff-diamond:before {
+	content: "\f086";/*钻石*/
+}
+.ff-f087:before,.ff-birthday:before {
+	content: "\f087";/*生日蛋糕*/
+}
+.ff-f088:before,.ff-calendar:before {
+	content: "\f088";/*日历*/
+}
+.ff-f089:before,.ff-gift:before {
+	content: "\f089";/*礼品*/
+}
+.ff-f08a:before,.ff-hot:before {
+	content: "\f08a";/*热*/
+}
+.ff-f08b:before,.ff-telephone:before {
+	content: "\f08b";/*电话*/
+}
+.ff-f08c:before,.ff-clock:before {
+	content: "\f08c";/*时钟*/
+}
+.ff-f08d:before,.ff-play:before {
+	content: "\f08d";/*播放*/
+}
+.ff-f08e:before,.ff-garbage-can-w:before {
+	content: "\f08e";/*垃圾桶(白)*/
+}
+.ff-f08f:before,.ff-garbage-can:before {
+	content: "\f08f";/*垃圾桶*/
+}
+.ff-f090:before,.ff-home:before {
+	content: "\f090";/*主页*/
+}
+.ff-f091:before,.ff-language:before {
+	content: "\f091";/*语言*/
+}
+.ff-f092:before,.ff-go-back:before {
+	content: "\f092";/*后退*/
+}
+.ff-f093:before,.ff-share:before {
+	content: "\f093";/*分享*/
+}
+.ff-f094:before,.ff-undo:before {
+	content: "\f094";/*取消*/
+}
+.ff-f095:before,.ff-circle-w:before {
+	content: "\f095";/*圆圈(白)*/
+}
+.ff-f096:before,.ff-circle:before {
+	content: "\f096";/*圆圈*/
+}
+.ff-f097:before,.ff-edit:before {
+	content: "\f097";/*编辑*/
+}
+.ff-f098:before,.ff-share-square:before {
+	content: "\f098";/*分享(方)*/
+}
+.ff-f099:before,.ff-check:before {
+	content: "\f099";/*选择*/
+}
+.ff-f09a:before,.ff-credit-card:before {
+	content: "\f09a";/*信用卡*/
+}
+.ff-f09b:before,.ff-power:before {
+	content: "\f09b";/*电源开关*/
+}
+.ff-f09c:before,.ff-link:before {
+	content: "\f09c";/*链接*/
+}
+.ff-f09d:before,.ff-source-code:before {
+	content: "\f09d";/*源代码*/
+}
+

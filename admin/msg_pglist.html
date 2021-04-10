@@ -1,0 +1,128 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="../access/css/admin_style.css"/>
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script src="../access/js/layer/mobile/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_msg_sort_db,msgsort_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+			<a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">留言管理</a> - 
+			<a href="javascript:;"><!--{$msgsort_db["sname"]}--></a>
+        </div>
+        <div class="right_cont">
+            <div class="artlist">
+				<button type="button" class="linkbtn listadd" onclick="msgadd()">新增留言</button>
+            	<table class="dxt">
+            		<tr>
+						<th>序号</th>
+						<th>留言标题</th>
+						<th>留言人姓名</th>
+						<th>留言时间</th>
+						<th>操作</th>
+					</tr>
+					<!--{ffwbms ffm_msg_pg_list,link,"pid=".$get["pid"]."|raid=0|pg=".$get["pg"]."|ps=10"}-->
+					<!--{/*ffwbms_see $link*/}-->
+					<!--{loop $link["0"] $ary}-->
+						<tr>
+							<td><!--{$ary["id"]}--></td>
+							<td><a href="msg_re.html?id=<!--{$ary['id']}-->&pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$ary["mtit"]}--></a></td>
+							<td><!--{$ary["xinm"]}--></td>
+							<td class="ary_fbdt"><!--{$ary["fbdt"]}--></td>
+							<!--{$bb=$ary["id"]}-->
+							<td><button type="button" class="list_delbtn" onclick="msgdels('<!--{$bb}-->')">删除</button></td>
+						</tr>
+					<!--{/loop}-->
+				</table>
+				<!--{if $link['1']['pages']>1}-->
+                <div class="admin_page">
+                    <!--{if $link['1']['curr']>1}-->
+                    <a href="msg_pglist.html?pid=<!--{$get['pid']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">首页</a>
+                    <!--{/if}-->
+
+                    <!--{loop $link["1"]['p_list'] $ary}-->
+                    <a href="msg_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">
+                        <!--{$ary}-->
+                    </a>
+                    <!--{/loop}-->
+
+                    <a href="javascript:;" class="admin_pages pages_acitve">
+                        <!--{$link['1']['curr']}-->
+                    </a>
+
+                    <!--{loop $link["1"]['n_list'] $ary}-->
+                    <a href="msg_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">
+                        <!--{$ary}-->
+                    </a>
+                    <!--{/loop}-->
+
+                    <!--{if $link['1']['curr']<$link['1']['pages']}-->
+                    <a href="msg_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$link['1']['pages']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">尾页</a>
+					<!--{/if}-->
+					
+                </div>
+                <!--{/if}-->
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	
+	$(".ary_fbdt").each(function(){
+		var o = new Date($(this).html());
+		var year = o.getFullYear();//年
+		var month = o.getMonth();//月
+		var day = o.getDate();//日
+		var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+		$(this).html(n);
+
+
+
+		/*var o = new Date($(this).html());// 一般传入毫秒时间戳进行初始化
+		var n = o.format("yyyy-MM-dd hh:mm:ss");
+		$(this).html(n);*/
+	});
+
+	function msgadd(){
+		location.href="msg_add.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+	}
+	function msgdels(id){
+        layer.open({
+            content:"确认删除留言吗?", 
+            btn: ['确定','放弃'] ,
+            yes: function(index){ // 确定
+				window.location.href="msg_delok.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}-->&id="+id + "<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+			},
+			no: function(index){ // 放弃
+                layer.close(index)
+            }
+        });
+	}
+</script>
+</html>

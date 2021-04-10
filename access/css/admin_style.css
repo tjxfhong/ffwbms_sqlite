@@ -1,0 +1,146 @@
+*{font-size: 14px;}
+
+a{color: #666666;}
+.a-btn{display: block; width: 6.25rem; line-height: 2rem; margin: 1rem 0.5rem;}
+/*管理后台*/
+.nav_ico{display: none;}
+.l2nav{display: block; width: 270px; float: left; box-shadow:/*阴影*/20px 0 20px -20px #d3d7e9;}
+.navbar{width: 100%;background-color:#B0BEC5;overflow: auto;padding: 0;color: white;margin-bottom: 1.25rem;}
+/* .navbar .navimg{margin-top: 1.25rem;margin-left: 1.25rem;} */
+.navbar .navimg img{width: 50px !important;height: 50px !important;border-radius: 50%;margin-right: 20px;}
+.navbar h1{ font-size: 1.625em;margin-top: 0.5rem;}
+.navbar h1 a{ color: #fff;}
+.navbar h3{font-size: 1.25em;margin-top: 0.5rem;}
+.nav1{display: flex;}
+.navbar{width: 100% !important;}
+.nav_bar{line-height: 40px;display: flex;justify-content: space-between;padding:10px 20px;}
+/* .navimg,.navbar h3{margin: 0 !important;} */
+
+.navbar .nav{display: none;}
+.navbar .nav12{display: none;}
+.navbar .menu-notify{display: none;}
+
+.right{margin: 0 0 0 30px;float: left; width: 870px;}
+.right_nav{line-height: 2em;border-bottom: 1px solid #999;display: block;}
+.right_nav a,.right_nav span{font-size: 0.9rem; color: #8db9de;}
+.right_nav a:hover{color: #dea08d;}
+.ffwbms_form .formTable{width: 100%; border: 0;}
+.ffwbms_form .formTable td{line-height: 2.5em;}
+button,.ffwbms_button,.ffwbms_reset,.ffwbms_submit,.ffwbms_form input[type="button"],.ffwbms_form input[type="reset"],.ffwbms_form input[type="submit"]{color:light;background:gray-dark;}
+
+.right_cont{padding: 1em;}
+.right_cont{padding: 1em;}
+/* 分类页面的左边的列表距离右边内容的距离 */
+.sortform{margin: 2rem 0 0 2rem; line-height: 2.5rem;}
+.sortlist a:hover{background: #bad6ee;} 
+.sortlist a.curr{background: #bad6ee;} 
+.sortlist li{ overflow: hidden;  margin-left: 1rem;} 
+/* 列表页所有删除按钮的样式 */
+/*.list_delbtn{background-color: brown;}*/
+/* 所有列表页新增按钮样式 */
+/* .listadd{width: 6.25rem;background-color:#004974;} */
+/* 列表页 新增按钮样式 */
+.artbtn{margin-left: 12rem;width: 6.25rem;}
+.productbtn{margin-left: 16.5rem;width: 6.25rem;}
+.adbtn{margin-left: 9rem;width: 6.25rem;}
+.linkbtn{margin-left: 7.8rem;width: 6.25rem;}
+/* 上传文件列表*/
+.filels{width: 11rem; height: 9.5rem; text-align: center; border: 1px solid #ccc;}
+.filels img{width: 10rem; height: 7rem; margin-top: 0.2rem;}
+.filels h3{width: 100%; margin-top: 0.4rem;}
+.filels td{text-overflow: ellipsis; white-space: nowrap; overflow: hidden;}
+/* 所有分类页下的新增按钮样式 */
+.sortadd{width: 6.25rem; margin: 1rem 0.5rem;}
+.sortadd a{color: white;}
+/* 所有分类页下的确认新增按钮样式 */
+.sortcofirm{width: 6.25rem; margin: 1rem 0.5rem;}
+/* 所有分类页下的删除按钮样式 */
+.sortdel{width: 6.25rem; margin: 1rem 0.5rem;}
+/* 所有新增页面下的确认新增按钮 */
+.add{width: 15%;margin-top: 1.25rem;margin-left: 18.75rem;}
+.pwd{width: 15%;margin-left: 14.375rem;margin-top: 2.5rem;}
+/*分类管理*/
+
+.flips{margin-left: 31.5rem;margin-top: -0.9375rem;}
+/*手机*/
+@media screen and  (max-width: 414px) { /*当屏幕尺寸小于414px时，应用下面的CSS样式*/
+	.container {max-width: 376px;margin: 0;}
+	.s_nav_ico{display: block;}
+	.l_nav{display: none;}
+	.navbar{background-color: #004D40;width: 100%;}
+	.nav1{display: none;}
+	.navbar .menu-notify button{background-color: #004D40;width: 1.25rem;height: 1.25rem; margin-top: 1.25rem;}
+	.navbar .menu-notify button .nav{color: gainsboro;display: block;font-size: 1.5625rem; margin-top: -1.25rem;}
+	.navbar .nav12{display: block;}
+	.navbar .menu-notify{display: block;}
+	.container .right .right_nav{display: none;}
+	.add{width: 18%;margin-top: 1.25rem;margin-left: 8.75rem;}
+	/* 列表按钮样式 */
+	.linkbtn{margin-left: 0.125rem;}
+	.artbtn {margin-left: 1.625rem;}
+	.productbtn {margin-left: 6.375rem;}
+	.adbtn {margin-left: 1px;}
+	/* 分页显示样式 */
+	.right_cont .pages{margin-left: 6rem;margin-top: 2em;} 
+	.flips {margin-left: 19.4rem;margin-top: -0.9375rem;}
+	/* 设置表格的宽度 */
+	.dxt th{width: 8.125rem;}
+	
+	/* 设置修改密码页样式 */
+	.right_cont {padding: 1em;}
+	.pwd {width: 15%;}
+}
+@media screen and  (max-width: 576px) { /*当屏幕尺寸小于576px时，应用下面的CSS样式*/
+	.container {max-width: 540px;margin: 0;}
+	.s_nav_ico{display: block;}
+	.l_nav{display: none;}
+	.navbar{background-color: #004D40;width: 100%;}
+	.nav1{display: none;}
+	.navbar .menu-notify button{background-color: #004D40;width: 1.25rem;height: 1.25rem; margin-top: 1.25rem;}
+	.navbar .menu-notify button .nav{color: gainsboro;display: block;font-size: 1.5625rem; margin-top: -1.25rem;}
+	.navbar .nav12{display: block;}
+	.navbar .menu-notify{display: block;}
+	.container .right .right_nav{display: none;}
+	/* 列表按钮样式 */
+	.linkbtn{margin-left: 0.125rem;}
+	.artbtn {margin-left: 1.625rem;}
+	.productbtn {margin-left: 6.375rem;}
+	.adbtn {margin-left: 1px;}
+	/* 分页显示样式 */
+	.right_cont .pages{margin-left: 6rem;margin-top: 2em;} 
+	.flips {margin-left: 19.4rem;margin-top: -0.9375rem;}
+	/* 设置表格的宽度 */
+	.dxt th{width: 8.125rem;}
+	
+	/* 设置修改密码页样式 */
+	.right_cont {padding: 1em;}
+	.rpwd{margin-left: -7.5rem;}
+	.pwd {width: 15%;}
+}
+/*平板*/
+@media screen and  (max-width: 768px) {
+	#ToolBarHead {display: block;}
+	#ToolBarFoot {display: block;}
+    .container{width:100%; margin: 0;}
+	.s_nav_ico{display: block;}
+	.l2nav{display: none;}
+	
+	
+}
+
+
+/*平板PRO*/
+@media screen and  (max-width: 992px) {
+	.container{max-width: 960px;margin: 0;}
+	.s_nav_ico{display: block;}
+	.l2nav{display: none;}
+}
+
+/*小显示器*/
+@media screen and  (max-width: 1200px) {
+	.container{max-width: 1140px;margin: 0;}
+	.right{margin:0;float: none; width: 100%;}
+	.cleditorMain{width: 100% !important;}
+	.l2nav{position: absolute;background: #fff;z-index: 10;}
+}
+

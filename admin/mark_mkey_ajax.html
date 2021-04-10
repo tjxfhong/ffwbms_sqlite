@@ -1,0 +1,7 @@
+<!--{/*获得指定特殊标识的值*/}-->
+<!--{if $get["id"]==""}-->
+    <!--{ffwbms ffm_mark_mkey_query,vtemp,"mkey=".$get["mk"]}-->
+<!--{else}-->
+    <!--{ffwbms ffm_mark_mkey_query,vtemp,"mkey=".$get["mk"]."|id!=".$get["id"]}-->
+<!--{/if}-->
+<!--{$vtemp["id"]}-->

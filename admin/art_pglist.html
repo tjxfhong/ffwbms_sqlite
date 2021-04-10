@@ -1,0 +1,125 @@
+<!--{if getcookie(uid)==""}-->
+	<!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="../access/css/admin_style.css"/>
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+
+</head>
+
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_art_sort_db,sort_db,"id=".$get["pid"]}-->
+		<!--{/*ffwbms_see $sort_db*/}-->
+		<div class="right_nav">
+            当前位置：
+            <a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">文章管理</a> - <a href="javascript:;"><!--{$sort_db["sname"]}--></a>
+        </div>
+        <div class="right_cont">
+            <div class="artlist">
+				<!--{if $sort_db["styp"]==3}-->
+				<a class="ffwbms_button a-btn" href="art_edit_list_single.html?id=<!--{$sort_db['sart']}-->&pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->">编辑分类单页</a>
+				<!--{/if}-->
+				<a class="ffwbms_button a-btn" href="art_add.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" >新增文章</a>
+            	<table class="dxt">
+            		<tr>
+						<th>序号</th>
+						<th>文章标题</th>
+						<th>浏览次数</th>
+						<th>有效时间</th>
+						<th>操作</th>
+					</tr>
+					<!--{ffwbms ffm_art_pg_list,art,"pid=".$get["pid"]."|pg=".$get["pg"]."|ps=10"}-->
+					<!---{ffwbms_see $art}-->
+					<!--{loop $art["0"] $ary}-->
+						<tr>
+							<td><!--{$ary["id"]}--></td>
+							<td><a href="art_edit.html?id=<!--{$ary['id']}-->&pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$ary["atit"]}--></a></td>
+							<td><!--{$ary["acou"]}--></td>
+							<td class="ary_indt"><!--{$ary["indt"]}--></td>
+							<td><a class="ffwbms_button a-btn" style="margin: 0; line-height: 1.5rem;" href="javascript:;" onclick="artdel(<!--{$ary['id']}-->)" >删除</a></td>
+						</tr>
+					<!--{/loop}-->
+				</table>
+				<!--{if $art['1']['pages']>1}-->
+                <div class="pages">
+                    <!--{if $art['1']['curr']>1}-->
+                    <a href="art_pglist.html?pid=<!--{$get['pid']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->">首页</a>
+                    <!--{/if}-->
+
+                    <!--{loop $art["1"]['p_list'] $ary}-->
+                    <a href="art_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->">
+                        <!--{$ary}-->
+                    </a>
+                    <!--{/loop}-->
+
+                    <a href="javascript:;" class="acitve">
+                        <!--{$art['1']['curr']}-->
+                    </a>
+
+                    <!--{loop $art["1"]['n_list'] $ary}-->
+                    <a href="art_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->">
+                        <!--{$ary}-->
+                    </a>
+                    <!--{/loop}-->
+
+                    <!--{if $art['1']['curr']<$art['1']['pages']}-->
+                    <a href="art_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$art['1']['pages']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->">尾页</a>
+					<!--{/if}-->
+					
+                </div>
+                <!--{/if}-->
+            </div>
+        </div>
+    </div>
+	<script type="text/javascript">
+
+		$(".ary_indt").each(function(){
+			var o = new Date( $(this).html());
+			var year = o.getFullYear();//年
+			var month = o.getMonth();//月
+			var day = o.getDate();//日
+			var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+			$(this).html(n);
+		});
+		
+		function editsingle(){
+			location.href="art_edit_list_single.html?id=<!--{$sort_db['sart']}-->&pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+		}
+
+		function artdel(id){
+			layer.open({
+				content:"确认删除文章吗?", 
+				btn: ['确定','放弃'] ,
+				yes: function(index){ // 确定
+					window.location.href="art_delok.html?id=" + id + "&pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+				},
+				no: function(index){ // 放弃
+					layer.close(index)
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>

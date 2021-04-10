@@ -1,0 +1,11 @@
+* {
+	font-size: 16px;
+}
+
+.leftnav {
+	width: calc(18.75rem - 4rem - 2px);
+	margin: 1rem;
+	border: 1px solid rgb(18, 189, 95);
+	overflow: hidden;
+}
+

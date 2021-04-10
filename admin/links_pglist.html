@@ -1,0 +1,130 @@
+<!--{if getcookie(uid)==""}-->
+	<!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="../access/css/admin_style.css"/>
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script src="../access/js/layer/mobile/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_flink_sort_db,flink_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+			<a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">友情链接管理</a> - <a href="javascript:;"><!--{$flink_db["sname"]}--></a>
+        </div>
+        <div class="right_cont">
+            <div class="artlist">
+				<!--{$aa=$get['pid']}-->
+				<button type="button"  class="linkbtn listadd" onclick="linksadd('<!--{$aa}-->')">新增友情链接</button>
+            	<table class="dxt">
+            		<tr>
+						<th>序号</th>
+						<th>友情链接标题</th>
+						<th>启用时间</th>
+						<th>终止时间</th>
+						<th>操作</th>
+					</tr>
+					<!--{/*if $aa==10*/}-->
+					<!--{ffwbms ffm_flink_pg_list,link,"pid=".$get["pid"]."|pg=".$get["pg"]."|ps=10"}-->
+					<!--{/*/if*/}-->
+					<!--{/*ffwbms_see $link*/}-->
+					<!--{loop $link["0"] $ary}-->
+						<tr>
+							<td><!--{$ary["id"]}--></td>
+							<td><a href="links_edit.html?id=<!--{$ary['id']}-->&pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$ary["ltit"]}--></a></td>
+							<td class="ary_lstate"><!--{$ary["lstate"]}--></td>
+							<td class="ary_lstop"><!--{$ary["lstop"]}--></td>
+							<!--{$bb=$ary['id']}-->
+							<td><button type="button" class="list_delbtn" onclick="linldels('<!--{$bb}-->')">删除</button></td>
+						</tr>
+					<!--{/loop}-->
+				</table>
+				<!--{if $art['1']['pages']>1}-->
+                <div class="admin_page">
+                    <!--{if $art['1']['curr']>1}-->
+                    <a href="art_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">首页</a>
+                    <!--{/if}-->
+
+                    <!--{loop $art["1"]['p_list'] $ary}-->
+                    <a href="art_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">
+                        <!--{$ary}-->
+                    </a>
+                    <!--{/loop}-->
+
+                    <a href="javascript:;" class="admin_pages pages_acitve">
+                        <!--{$art['1']['curr']}-->
+                    </a>
+
+                    <!--{loop $art["1"]['n_list'] $ary}-->
+                    <a href="art_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">
+                        <!--{$ary}-->
+                    </a>
+                    <!--{/loop}-->
+
+                    <!--{if $art['1']['curr']<$art['1']['next']}-->
+                    <a href="art_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$art['1']['pages']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">尾页</a>
+					<!--{/if}-->
+					
+                </div>
+                <!--{/if}-->
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+	$(".ary_lstate").each(function(){
+		var o = new Date($(this).html());
+		var year = o.getFullYear();//年
+		var month = o.getMonth();//月
+		var day = o.getDate();//日
+		var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+		$(this).html(n);
+	});
+	$(".ary_lstop").each(function(){
+		var o = new Date($(this).html());
+		var year = o.getFullYear();//年
+		var month = o.getMonth();//月
+		var day = o.getDate();//日
+		var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+		$(this).html(n);
+	});
+
+	function linksadd(pid){
+		location.href="links_add.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+	}
+	function linldels(id){
+        layer.open({
+            content:"确认删除友情链接吗?", 
+            btn: ['确定','放弃'] ,
+            yes: function(index){ // 确定
+				window.location.href="links_delok.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}-->&id="+id + "<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+			},
+			no: function(index){ // 放弃
+                layer.close(index)
+            }
+        });
+	}
+</script>
+</html>

@@ -1,0 +1,113 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title>虚拟主机管理 - 网站上传文件管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="../access/css/admin_style.css"/>
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script src="../access/js/layer/mobile/layer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../access/ffwbms/ffwbms.js/ffwbms_upfileimg.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_upfile_sort_db,upfile_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+			<a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">虚拟主机管理</a>
+			 - <a href="javascript:;">虚拟主机列表</a>
+        </div>
+        <div class="right_cont">
+			<!--{if $get['pg']==""}--><!--{$get['pg']=1}--><!--{/if}-->
+			<button type="button"  class="linkbtn listadd mb-20" onclick="sv_vhadd('<!--{$aa}-->')">新增虚拟主机</button>
+				<!--{ffwsvmanage getvhostlist,vtemp,"json=1|pg=".$get['pg']}-->
+				<!--{/*ffwbms_see $vtemp*/}-->
+				<table class="dxt filels">
+				<tr>
+					<td style="width: 7rem;">虚拟主机名</td>
+					<td style="width: 9rem;">网站说明</td>
+					<td style="width: 9rem;">网站停止时间</td>
+					<td style="width: 5rem;">网站状态</td>
+					<td style="width: 5rem;">数据库驱动</td>
+					<td style="width: 3rem;">动作</td>
+				</tr>
+				<!--{loop $vtemp["0"] $ary}-->
+				<tr>
+					<td style="width: 7rem;"><a href="sv_vhedit.html?vhn=<!--{$ary['vhostname']}-->&pg=<!--{$get['pg']}-->&developer=1&eq=<!--{$get['eq']}-->"><!--{$ary["vhostname"]}--></a></td>
+					<td style="width: 9rem;"><!--{$ary['explain']}--></td>
+					<td style="width: 9rem;"><!--{$ary['endtime']}--></td>
+					<td style="width: 5rem;"><!--{$ary['suspend']}--></td>
+					<td style="width: 5rem;"><!--{$ary['dbdriver']}--></td>
+					<td style="width: 3rem;"><!--{$vhostname=$ary['vhostname']}--><span class="ffwbms_button" onclick="sv_vhdel('<!--{$vhostname}-->')">删除</span></td>
+				</tr>
+				<!--{/loop}-->
+			</table>
+			<!--{if $vtemp['1']['pages']>1}-->
+			<div class="pages">
+				<!--{if $vtemp['1']['curr']>1}-->
+				<a href="sv_vhlist.html?pg=1&developer=1&eq=<!--{$get['eq']}-->">首页</a>
+				<!--{/if}-->
+
+				<!--{loop $vtemp["1"]['p_list'] $ary}-->
+				<a href="sv_vhlist.html?pg=<!--{$ary}-->&developer=1&eq=<!--{$get['eq']}-->">
+					<!--{$ary}-->
+				</a>
+				<!--{/loop}-->
+
+				<a href="javascript:;" class="acitve">
+					<!--{$vtemp['1']['curr']}-->
+				</a>
+
+				<!--{loop $vtemp["1"]['n_list'] $ary}-->
+				<a href="sv_vhlist.html?pg=<!--{$ary}-->&developer=1&eq=<!--{$get['eq']}-->">
+					<!--{$ary}-->
+				</a>
+				<!--{/loop}-->
+
+				<!--{if $vtemp['1']['curr']<$vtemp['1']['pages']}-->
+				<a href="sv_vhlist.html?pg=<!--{$vtemp['1']['pages']}-->&developer=1&eq=<!--{$get['eq']}-->">尾页</a>
+				<!--{/if}-->
+			</div>
+			<!--{/if}-->
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	function sv_vhadd(pid){
+		location.href="sv_vhadd.html?pg=<!--{$get['pg']}-->&developer=1&eq=<!--{$get['eq']}-->";
+	}
+	function sv_vhdel(vhn){
+		var getTimestamp=new Date().getTime();
+		layer.open({
+            content:"确认删除此文件吗?", 
+            btn: ['确定','放弃'] ,
+            yes: function(index){ // 确定
+				window.location.href="sv_vhdelok.html?vhn="+vhn+"&pg=<!--{$get['pg']}-->&developer=1&eq=<!--{$get['eq']}-->&timestamp="+getTimestamp; // 加上时间戳 避免浏览器缓存
+			},
+			no: function(index){ // 放弃
+                layer.close(index)
+            }
+        });
+	}
+</script>
+</html>

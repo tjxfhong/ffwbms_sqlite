@@ -1,0 +1,233 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="../access/css/admin_style.css"/>
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script src="../access/js/layer/mobile/layer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../access/ffwbms/ffwbms.js/ffwbms_verify.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../access/ffwbms/ffwbms.js/ffwbms_upfileimg.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+        <div class="right_nav">
+            当前位置：
+            <a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">产品分类管理</a>
+        </div>
+        <div class="right_cont">
+            <div class="sortlist" style="float: left;">
+            	<ul>
+					<h3 class="mt-50">产品分类列表</h3>
+					<!--{ffwbms ffm_mall_gsort_list,vtemp,"pid=".$get['pid']."|id>1230"}-->
+					<!--{/*ffwbms_see $vtemp*/}-->
+					<!--{loop $vtemp $ary}-->
+					<!--{$aa=$ary["id"]}-->
+					<li class="ml-10 mt-25">
+						<a href="javascript:;" id="gsedit" onclick="gsedit('<!--{$aa}-->','1')"><!--{$ary["sname"]}--></a>
+
+						<ul>
+							<!--{ffwbms ffm_mall_gsort_list,vtemp2,"pid=".$ary["id"]}-->
+							<!--{loop $vtemp2 $ary2}-->
+							<li>
+								<!--{$bb=$ary2["id"]}-->
+								<a href="javascript:;" id="del" onclick="gsedit('<!--{$bb}-->','1')">
+									<!--{$ary2["sname"]}-->
+								</a>
+
+								<ul>
+									<!--{ffwbms ffm_mall_gsort_list,vtemp3,"pid=".$ary2["id"]}-->
+									<!--{loop $vtemp3 $ary3}-->
+									<li>
+										<!--{$cc=$ary3["id"]}-->
+										<a href="javascript:;" id="del" onclick="gsedit('<!--{$cc}-->','0')">
+											<!--{$ary3["sname"]}-->
+										</a>
+									</li>
+									<!--{/loop}-->
+									<!--{$vtemp3=""}-->
+								</ul>
+
+							</li>
+							<!--{/loop}-->
+							<!--{$vtemp2=""}-->
+						</ul>
+					</li>
+					<!--{/loop}-->
+            	</ul>
+				注：分类下有子分类时，<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不可以在此分类下管<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;理商品
+            </div>
+            <div class="sortform" style="float: left;">				
+				<button type="button" class="sortadd" id="newadd" onclick="gsadd()">新增根分类</button>
+				<button type="button" class="sortadd" id="newsub" style="display: none;" onclick="gssub()">新增子分类</button>
+				<form enctype="multipart/form-data" action="product_sort_addok.html?pid=<!--{$get['pid']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" method="post" id="goodlist">
+					<input name="id" type="hidden" id="id" value="0" />
+					<input name="pid" type="hidden" id="pid" value="<!--{$get['pid']}-->" />
+					<input name="uid" type="hidden" id="uid" value="0" />
+					<div>
+						<p>分类名：</p>
+						<input class="ffwbms_text mt-15" type="text" name="sname" id="sname" maxlength="50" ffwbms_verify="true" data-ffv="nonull" />
+					</div>
+					<div>
+						<p>短分类名：</p>
+						<input class="ffwbms_text mt-15" type="text" name="mname" id="mname" maxlength="20"/>
+					</div>
+					<div>
+						<p>产品分类图片：</p>
+						<span id="gsimgspan">
+						<a href="javascript:;" class="ffwbms_upfile">选择文件
+							<input type="file" name="gsimg"/>
+						</a></span><br />
+					</div>
+					<div>
+						<p>是否可用：</p>
+						<input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn1" value="1" /><label for="ifyn1"
+							class="ffwbms_radio-label radGroup1">暂停</label>
+						<input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn2" checked="checked" value="2"/><label for="ifyn2"
+							class="ffwbms_radio-label radGroup1">正常</label>
+					</div>
+				</form>
+            	<button type="button" class="sortcofirm" id="goodbtn" onclick="goodbtn()">确认新增</button>
+            	<button type="button" class="sortdel" onclick="pdel()">删除分类</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+	var pid = "<!--{$get['pid']}-->";
+	//提交产品分类
+	function goodbtn(){
+		if(IsNotEmpty($.trim($("#sname").val()))){
+			$("#goodlist").submit()
+		}else{
+			layer.open({content: '分类名，不能为空！'});
+		}
+	}
+	//新增产品分类
+	function gsadd(){
+		$("#newsub").hide();
+		document.getElementById("goodbtn").innerText="确认新增"
+		$("#id").val(0)
+		$("#pid").val(pid)
+		$("#uid").val(0)
+		$("#sname").val("")	
+		$("#mname").val("")	
+		$("#gsimgspan").html(s)
+		var s = '<a href="javascript:;" class="ffwbms_upfile">选择文件';
+			s+= '<input type="file" name="gsimg"/></a>';
+		$("#gsimgspan").html(s)
+		for (var i = 1; i < 3; i++) {
+			$("#ifyn" + i).get(0).checked = false;
+		}
+		$("#ifyn2").get(0).checked = true;
+		$("#goodlist").attr("action","product_sort_addok.html?pid=<!--{$get['pid']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->")
+	}
+	// 新增子分类
+	function gssub(){
+		var pid = $("#id").val();
+		$("#pid").val(pid);
+		$("#id").val(0);
+		$("#sname").val("");
+		$("#mname").val("");	
+		$("#gsimg").val("");
+		$("#ifyn1").val("2");
+
+		$('#gsimgshow').remove();
+		$('#gsimgdelbtn').remove();
+		var s = '<a href="javascript:;" class="ffwbms_upfile">选择文件';
+		s+= '<input type="file" name="gsimg"/></a>';
+		$("#gsimgspan").html(s);
+
+		document.getElementById("goodbtn").innerText="确认新增";
+		$("#goodlist").attr("action","product_sort_addok.html?pid=<!--{$get['pid']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->");
+	}
+
+	//编辑产品分类
+	function gsedit(id,sub){
+		// 是否可增加子分类
+		if(sub==1){
+			$("#newsub").show();
+		}else{
+			$("#newsub").hide();
+		}
+		document.getElementById("goodbtn").innerText="确认编辑"
+		var htmlobj=$.ajax({url:"product_sort_db_ajax.html?id="+id,async:false,cache:false});
+		//alert(htmlobj.responseText);
+		var dataObj=$.parseJSON(htmlobj.responseText);
+		//alert(dataObj.sname)
+		$("#id").val(dataObj.id)
+		$("#pid").val(dataObj.pid)
+		$("#uid").val(0)
+		$("#sname").val(dataObj.sname)	
+		$("#mname").val(dataObj.mname)	
+		$("#gsimgspan").html("")
+		if(dataObj.gsimg==""){
+			var s = '<a href="javascript:;" class="ffwbms_upfile">选择文件';
+				s+= '<input type="file" name="gsimg"/></a>';
+			$("#gsimgspan").html(s)
+		}else{
+			var s = '<img id="gsimgshow" style="width:250px; height:180px" src="'+dataObj.gsimg+'" />';
+				s+= '<button id="gsimgdelbtn" onClick="imgact(\'gsimg\')" style=" width:100px; padding:10px 5px; margin:-35px 0 0 30px;">删除图片</button>';
+			$("#gsimgspan").html(s)
+		}
+		for (var i = 1; i < 3; i++) {
+			$("#ifyn" + i).get(0).checked = false;
+		}
+		if(dataObj.ifyn==1)$("#ifyn1").get(0).checked = true;;
+		if(dataObj.ifyn==2)$("#ifyn2").get(0).checked = true;;
+		$("#goodlist").attr("action","product_sort_editok.html?pid=<!--{$get['pid']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->")
+	}
+	//删除产品
+	function pdel(){
+		var id = $("#id").val();
+		if(id==0){
+			layer.open({content: '未选择分类，不能删除！'});
+			return false;
+		}
+        layer.open({
+            content:"确认删除产品分类吗?", 
+            btn: ['确定','放弃'] ,
+            yes: function(index){ // 确定
+				var htmlobj = $.ajax({ url: "product_sort_issort_ajax.html?id=" + id , async: false, cache: false });
+				if($.trim(htmlobj.responseText)==0){
+					var htmlobj = $.ajax({ url: "product_sort_isart_ajax.html?id=" + id, async: false, cache: false });
+					//alert(htmlobj.responseText);
+					if($.trim(htmlobj.responseText)==0){
+						window.location.href = "product_sort_delok.html?<!--{if $get['developer']=='1'}-->developer=1&<!--{/if}-->pid=<!--{$get['pid']}-->&id=" + id + "&eq=<!--{$get['eq']}-->";
+					}else{
+						layer.open({content: '分类下有产品，不能删除分类！'});
+					}
+				}else{
+					layer.open({content: '分类下有子分类，不能删除分类！'});
+				}
+			},
+			no: function(index){ // 放弃
+                layer.close(index)
+            }
+        });
+	}
+</script>
+</html>

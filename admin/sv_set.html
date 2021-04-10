@@ -1,0 +1,87 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title>服务器设置 - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_verify.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+</head>
+<body class="container">
+	<!--{if $post!=""}-->
+	<!--{ffwbms_see $post}-->
+	<!--{ffwsvmanage setconfig,vtemp,"json=1"}-->
+	<!--{ffwbms_see $vtemp}-->
+	<!--{/if}-->
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<div class="right_nav">
+            当前位置：
+			<a href="index.html?developer=1">后台首页</a> - <a href="javascript:;">服务器管理</a> - 
+			<a href="javascript:;">服务器设置</a>
+        </div>
+        <div class="right_cont">
+			<!--{ffwsvmanage getconfig,vtemp,"json=1"}-->
+			<!--{/*ffwbms_see $vtemp*/}-->
+            <form class="ffwbms_form" style="line-height: 2.5rem;" action="sv_set.html?developer=1&eq=<!--{$get['eq']}-->" method="post" id="svform">
+           	<p style="line-height: 2.5rem;"><span>服务器地址：</span>
+				<input style="width: 20rem;" type="text" id="ltit" name="serveraddress" maxlength="30" value="<!--{$vtemp['serveraddress']}-->" /></p>
+		    <p style="line-height: 2.5rem;"><span>服务器端口：</span>
+				<input style="width: 10rem;" type="text" id="lurl" name="serverport" maxlength="5" value="<!--{$vtemp['serverport']}-->" ffwbms_verify="true" data-ffv="integer"/></p>
+			<p style="margin-top: 0.5rem; line-height: 2.5rem;">HTTPS应用：
+				<input class="ffwbms_radio " type="radio" name="scheme" id="http1" value="http" <!--{if $vtemp["scheme"]=="http"}-->checked="checked"<!--{/if}-->/><label for="ifyn1"class="ffwbms_radio-label radGroup4 ml-80">HTTP</label>
+				<input class="ffwbms_radio" type="radio" name="scheme" id="http2" value="https" <!--{if $vtemp["scheme"]=="https"}-->checked="checked"<!--{/if}-->/><label for="ifyn2"class="ffwbms_radio-label radGroup5">HTTPS</label></p>
+		    <p style="line-height: 2.5rem;"><span>HTTPS端口：</span>
+				<input style="width: 10rem;" type="text" id="llogo" name="httpsport" maxlength="5" value="<!--{$vtemp['httpsport']}-->" ffwbms_verify="true" data-ffv="integer" /></p>
+            </form>
+		    <button type="button" class="add" style="margin-left: 10rem" onclick="submitform()">确认修改</button>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+	function submitform(){
+		//console.log($("input[name=serverport]").val());
+		//console.log($("input[name=serverport]").attr("data-ffv"));
+		var re =ffwbms_verify($.trim($("input[name=serverport]").val()),$("input[name=serverport]").attr("data-ffv"));
+		//console.log(re); // [val: true, name: "整数数字", note: "整数数字格式不对，只可以是0-9的任意组合"]
+		if(re["val"]==false){
+			layer.open({
+				content: "服务器端口应该为"+re["name"]+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+			});
+			return false;
+		}
+
+		var re =ffwbms_verify($.trim($("input[name=httpsport]").val()),$("input[name=httpsport]").attr("data-ffv"));
+		if(re["val"]==false){
+			layer.open({
+				content: "服务器HTTPS端口应该为"+re["name"]+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+			});
+			return false;
+		}
+
+		//console.log("submit");
+		$("#svform").submit()
+	}
+</script>
+</html>

@@ -1,0 +1,111 @@
+<!--{if getcookie(uid)==""}-->
+	<!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="../access/css/admin_style.css"/>
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+
+</head>
+
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_mark_sort_db,mark_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+			<a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">特殊标识管理</a> - <a href="javascript:;"><!--{$mark_db["sname"]}--></a>
+        </div>
+        <div class="right_cont">
+            <div class="artlist" style="text-align: left;">
+				<!--{$aa=$get['pid']}-->
+				<!--{if $get["developer"]=="1"}--><a class="ffwbms_button a-btn" href="mark_add.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" >新增特殊标识</a><!--{/if}-->
+				<table class="dxt" style="margin: 0;">
+            		<tr>
+						<th>序号</th>
+						<th>标识名</th>
+						<th>标识值</th>
+						<!--{if $get["developer"]=="1"}--><th>操作</th><!--{/if}-->
+					</tr>
+					<!--{if $get["developer"]=="1"}-->
+						<!--{ffwbms ffm_mark_pg_list,mark,"pid=".$get["pid"]."|pg=".$get["pg"]."|ps=10"}-->
+					<!--{else}-->
+						<!--{ffwbms ffm_mark_pg_list,mark,"pid=".$get["pid"]."|pg=".$get["pg"]."|ps=10|isdeve=0"}-->
+					<!--{/if}-->
+					<!--{/*ffwbms_see $mark*/}-->
+					<!--{loop $mark["0"] $ary}-->
+						<tr>
+							<td><!--{$ary["id"]}--></td>
+							<td><a href="mark_edit.html?id=<!--{$ary['id']}-->&pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$ary["mkey"]}--></a></td>
+							<td ><!--{$ary["mval"]}--></td>
+							<!--{$bb=$ary['id']}-->
+							<!--{if $get["developer"]=="1"}--><td><button type="button" class="list_delbtn" onclick="markdels('<!--{$bb}-->')">删除</button></td><!--{/if}-->
+						</tr>
+					<!--{/loop}-->
+				</table>
+				<!--{if $mark['1']['pages']>1}-->
+                <div class="admin_page">
+                    <!--{if $mark['1']['curr']>1}-->
+                    <a href="mark_pglist.html?pid=<!--{$get['pid']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">首页</a>
+                    <!--{/if}-->
+
+                    <!--{loop $mark["1"]['p_list'] $ary}-->
+                    <a href="mark_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">
+                        <!--{$ary}-->
+                    </a>
+                    <!--{/loop}-->
+
+                    <a href="javascript:;" class="admin_pages pages_acitve">
+                        <!--{$mark['1']['curr']}-->
+                    </a>
+
+                    <!--{loop $mark["1"]['n_list'] $ary}-->
+                    <a href="mark_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">
+                        <!--{$ary}-->
+                    </a>
+                    <!--{/loop}-->
+
+                    <!--{if $mark['1']['curr']<$mark['1']['next']}-->
+                    <a href="mark_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$mark['1']['pages']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">尾页</a>
+					<!--{/if}-->
+					
+                </div>
+                <!--{/if}-->
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+	function markdels(id){
+        layer.open({
+            content:"确认删除此标识吗?", 
+            btn: ['确定','放弃'] ,
+            yes: function(index){ // 确定
+			    window.location.href="mark_delok.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}-->&id="+id + "<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+		    },
+            no: function(index){ // 放弃
+                layer.close(index)
+            }
+        });
+	}
+</script>
+</html>

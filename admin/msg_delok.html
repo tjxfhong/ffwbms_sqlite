@@ -1,0 +1,7 @@
+<!--{/*留言删除OK*/}-->
+<!--{ffwbms ffm_msg_del,vtemp,"id=".$get["id"]}-->
+<!--{ffwbms ffm_msg_db,vtemp,"raid=".$get["id"]}--><!--{/*获得回复号*/}-->
+<!--{ffwbms ffm_msg_del,vtemp,"id=".$vtemp["id"]}-->
+<script language="JavaScript">
+	window.location.href="msg_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"
+</script>

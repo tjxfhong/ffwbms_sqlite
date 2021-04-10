@@ -1,0 +1,349 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title>服务器设置 - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_verify.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+	<script type="text/javascript" src="../access/js/layerdate/pc.laydate.js"></script>
+</head>
+<body class="container">
+	<!--{if $post!=""}-->
+	<!--{/*ffwbms_see $post*/}-->
+	<!--{ffwsvmanage editvhost,vtemp,"json=1|vhn=".$get['vhn']}-->
+	<!--{ffwbms_see $vtemp}-->
+	<!--{/if}-->
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<div class="right_nav">
+            当前位置：
+			<a href="index.html?developer=1">后台首页</a> - <a href="javascript:;">服务器管理</a> - 
+			<a href="sv_vhlist.html?pg=<!--{$get['pg']}-->&developer=1&eq=<!--{$get['eq']}-->">虚拟主机列表</a> - 
+			<a href="javascript:;">编辑虚拟主机</a>
+        </div>
+        <div class="right_cont">
+			<!--{ffwsvmanage getvhost,vtemp,"json=1|vhn=".$get['vhn']}-->
+			<!--{/*ffwbms_see $vtemp*/}-->
+			<!--{/*
+			    "documentRoot":"C:/work/golang/ffWebServer/website/ffwish.com",
+				"database":"C:/work/golang/ffWebServer/website/ffwish.com/db",
+				"dbdriver":"sqlite",
+				"dbname":"ffwbms.ffs",
+				"dbusername":"",
+				"dbport":"",
+				"errorlog":"error.log",
+				"domain":["test1.com","www.test1.com","aaa.test1.com"],
+				"customlog":"access.log",
+				"suspend":"enable",
+				"serveradmin":"yourname@test1.com",
+				"iscomp":"1",
+				"sourimg":"0",
+				"comps":["1000","300"],
+				"compq":"75",
+				"dbcharset":"utf8",
+				"dbpassword":"",
+				"endtime":"2022-07-30",
+				"dbprotocol":"",
+				"dbaddress":"",
+				"explain":"这是网站一",
+				"serverpass":"password"
+			*/}-->
+            <form class="ffwbms_form" action="sv_vhedit.html?vhn=<!--{$get['vhn']}-->&pg=<!--{$get['pg']}-->&developer=1&eq=<!--{$get['eq']}-->" method="post" id="svform">
+           	<style>
+				.ffwbms_form p {line-height: 2.5rem;}
+				.ffwbms_form p span{display: block; width: 8rem; float: left; line-height: 2rem; text-align: right;}
+				.ffwbms_form input[type="text"]{width: calc(100% - 9rem);}
+
+			</style>
+			<p><span>网站说明：</span>
+				<input type="text" name="explain" maxlength="100" value="<!--{$vtemp['explain']}-->" ffwbms_verify="true" data-ffv="nonull" /></p>
+			<p><span>用户名：</span>
+				<input type="text" id="ltit" name="serveradmin" maxlength="100" value="<!--{$vtemp['serveradmin']}-->" ffwbms_verify="true" data-ffv="username" /></p>
+		    <p><span>密码：</span>
+				<input type="text" id="lurl" name="serverpass" maxlength="20" value="<!--{$vtemp['serverpass']}-->" ffwbms_verify="true" data-ffv="password"/></p>
+			<p><span>到期时间：</span>
+				<input style="width:150px;" type="text" name="endtime" class="laydate-icon" readonly onclick="laydate()" value="<!--{$vtemp['endtime']}-->" />
+			<p style="margin-top: 0.5rem; line-height: 2.5rem;"><span>网站状态：</span>
+				<input class="ffwbms_radio" type="radio" name="suspend" id="suspend1" value="enable" <!--{if $vtemp["suspend"]=="enable"}-->checked="checked"<!--{/if}-->/>
+					<label style="margin-right: 1rem;" for="suspend1"class="ffwbms_radio-label radGroup4">正常</label>
+				<input class="ffwbms_radio" type="radio" name="suspend" id="suspend2" value="disabled" <!--{if $vtemp["suspend"]=="disabled"}-->checked="checked"<!--{/if}-->/>
+					<label style="margin-right: 1rem;" for="suspend2"class="ffwbms_radio-label radGroup5">暂停</label></p>
+			<p><span>域名组：</span>
+				<textarea name="domain" style="width: 10rem; height: 5rem;"><!--{loop $vtemp['domain'] $ary}-->
+<!--{$ary}--><!--{/loop}--></textarea></p>
+			<p id="cpset" style="margin-top: 0.5rem; line-height: 2.5rem;">是否压缩图片：
+				<input class="ffwbms_radio" type="radio" name="iscomp" id="iscomp1" value="1" <!--{if $vtemp["iscomp"]=="1"}-->checked="checked"<!--{/if}-->/>
+					<label style="margin-right: 1rem;" for="iscomp1"class="ffwbms_radio-label radGroup4">压缩</label>
+				<input class="ffwbms_radio" type="radio" name="iscomp" id="iscomp2" value="0" <!--{if $vtemp["iscomp"]=="0"}-->checked="checked"<!--{/if}-->/>
+					<label style="margin-right: 1rem;" for="iscomp2"class="ffwbms_radio-label radGroup5">不压缩</label></p>
+			<span id="cpset2" <!--{if $vtemp["iscomp"]!="1"}-->style="display: none;"<!--{/if}-->>
+				<p style="margin-top: 0.5rem; line-height: 2.5rem;">是否保留原图：
+					<input class="ffwbms_radio" type="radio" name="sourimg" id="sourimg1" value="1" <!--{if $vtemp["sourimg"]=="1"}-->checked="checked"<!--{/if}-->/>
+						<label style="margin-right: 1rem;" for="sourimg1"class="ffwbms_radio-label radGroup4">保留</label>
+					<input class="ffwbms_radio" type="radio" name="sourimg" id="sourimg2" value="0" <!--{if $vtemp["sourimg"]=="0"}-->checked="checked"<!--{/if}-->/>
+						<label style="margin-right: 1rem;" for="sourimg2"class="ffwbms_radio-label radGroup5">不保留</label></p>
+				<p><span>图片宽数组：</span>
+					<textarea name="comps" style="width: 10rem; height: 5rem;"><!--{loop $vtemp['comps'] $ary}-->
+<!--{$ary}--><!--{/loop}--></textarea></p>
+				<p><span>图片压缩质量：</span>
+					<input class="ffwbms_radio" type="radio" name="compq" id="compq1" value="60" <!--{if $vtemp["compq"]=="60"}-->checked="checked"<!--{/if}-->/>
+						<label style="margin-right: 1rem;" for="compq1"class="ffwbms_radio-label radGroup4">60</label>
+					<input class="ffwbms_radio" type="radio" name="compq" id="compq2" value="75" <!--{if $vtemp["compq"]=="75"}-->checked="checked"<!--{/if}-->/>
+						<label style="margin-right: 1rem;" for="compq2"class="ffwbms_radio-label radGroup4">75</label>
+					<input class="ffwbms_radio" type="radio" name="compq" id="compq3" value="90" <!--{if $vtemp["compq"]=="90"}-->checked="checked"<!--{/if}-->/>
+						<label style="margin-right: 1rem;" for="compq3"class="ffwbms_radio-label radGroup4">90</label>
+					<input class="ffwbms_radio" type="radio" name="compq" id="compq4" value="100" <!--{if $vtemp["compq"]=="100"}-->checked="checked"<!--{/if}-->/>
+						<label style="margin-right: 1rem;" for="compq4"class="ffwbms_radio-label radGroup5">100</label></p>
+			</span>
+			<p><span>网站根目录：</span>
+				<input type="text" name="documentroot" maxlength="100" value="<!--{$vtemp['documentroot']}-->" ffwbms_verify="true" data-ffv="nonull" /></p>
+			<p><span>数据库目录：</span>
+				<input type="text" name="database" maxlength="100" value="<!--{$vtemp['database']}-->" ffwbms_verify="true" data-ffv="nonull" /></p>
+			<p id="dbset"><span>数据库驱动：</span>
+				<input class="ffwbms_radio" type="radio" name="dbdriver" id="dbdriver1" value="sqlite" <!--{if $vtemp["dbdriver"]=="sqlite"}-->checked="checked"<!--{/if}-->/>
+					<label style="margin-right: 1rem;" for="dbdriver1"class="ffwbms_radio-label radGroup4">sqlite</label>
+				<input class="ffwbms_radio" type="radio" name="dbdriver" id="dbdriver2" value="mysql" <!--{if $vtemp["dbdriver"]=="mysql"}-->checked="checked"<!--{/if}-->/>
+					<label style="margin-right: 1rem;" for="dbdriver2"class="ffwbms_radio-label radGroup4">mysql</label>
+				<input class="ffwbms_radio" type="radio" disabled name="dbdriver" id="dbdriver3" value="postgresql" <!--{if $vtemp["dbdriver"]=="postgresql"}-->checked="checked"<!--{/if}-->/>
+					<label style="margin-right: 1rem;" for="dbdriver3"class="ffwbms_radio-label radGroup4">postgresql</label></p>
+			<p><span>数据库名：</span>
+				<input type="text" name="dbname" maxlength="50" value="<!--{$vtemp['dbname']}-->" ffwbms_verify="true" data-ffv="nonull" /></p>
+			<p><span>数据字符编码：</span>
+				<input type="text" name="dbcharset" maxlength="10" value="<!--{$vtemp['dbcharset']}-->" ffwbms_verify="true" data-ffv="nonull" /></p>
+			<span id="dbset2" <!--{if $vtemp["dbdriver"]=="sqlite"}-->style="display: none;"<!--{/if}-->>
+				<p><span>数据库用户名：</span>
+					<input type="text" name="dbusername" maxlength="50" value="<!--{$vtemp['dbusername']}-->" ffwbms_verify="true" data-ffv="nonull" /></p>
+				<p><span>数据库用户密码：</span>
+					<input type="text" name="dbpassword" maxlength="20" value="<!--{$vtemp['dbpassword']}-->" ffwbms_verify="true" data-ffv="nonull" /></p>
+				<p><span>数据库连接协议：</span>
+					<input type="text" name="dbprotocol" maxlength="10" value="<!--{$vtemp['dbprotocol']}-->" ffwbms_verify="true" data-ffv="nonull" /></p>
+				<p><span>数据库地址：</span>
+					<input type="text" name="dbaddress" maxlength="100" value="<!--{$vtemp['dbaddress']}-->" ffwbms_verify="true" data-ffv="nonull" /></p>
+				<p><span>数据库端口：</span>
+					<input type="text" name="dbport" maxlength="5" value="<!--{$vtemp['dbport']}-->" ffwbms_verify="true" data-ffv="nonull" /></p>
+			</span>
+			<input type="hidden" name="errorlog" value="<!--{$vtemp['errorlog']}-->" />
+			<input type="hidden" name="customlog" value="<!--{$vtemp['customlog']}-->" />
+			<!--{/*
+				// 服务器管理员用户名 redb["serveradmin"] = "yourname@domain.com"
+				// 服务器管理员密码 redb["serverpass"] = "password"
+				// 网站停止时间 redb["endtime"] = "2021-01-01"
+				// 网站状态，enable表示启用，disabled表示停用 redb["suspend"] = "disabled"
+				// 域名组，多个域名用,分隔  redb["domain"] = sliceT
+				// 是否压缩图片，1=是，0或其它=否 redb["iscomp"] = "1"
+				// 是否保留原图，1=是，0或其它=否，iscomp=1时有效 redb["sourimg"] = "0"
+				// 要压缩的宽的数组，例：["1000","300"]，iscomp=1时有效 redb["comps"] = sliceT
+				// 压缩图片的质量，0-100，默认75，[60,75,90,100]，iscomp=1时有效 redb["compq"] = "75"
+				// 网站根目录 redb["documentroot"] = ""
+				// 文件数据库所在的目录，SQLITE时，存放数据库文件的位置 redb["database"] = ""
+				// 数据库驱动，支持的数据库有：mysql、sqlite、postgresql，默认=sqlite redb["dbdriver"] = "sqlite"
+				// 数据库名，mysql、sqlite时有效，默认=ffwbms.ffs redb["dbname"] = "ffwbms.ffs"
+				// 数据库字符编码，默认=utf8 redb["dbcharset"] = "utf8"
+				// 数据库用户名，mysql时有效 redb["dbusername"] = "username"
+				// 数据库用户密码，mysql时有效 redb["dbpassword"] = "password"
+				// 数据库连接协议，默认=tcp，mysql时有效  redb["dbprotocol"] = "tcp"
+				// 数据库服务器地址或IP，mysql时有效 redb["dbaddress"] = "localhost"
+				// 数据库服务器端口，默认=3306，mysql时有效 redb["dbport"] = "3306"
+				// 错误日志文件，放入logs目录下 redb["errorlog"] = "localhost"
+				// 访问日志文件，放入logs目录下 redb["customlog"] = "localhost"
+				// 网站说明 redb["explain"] = "localhost"
+			*/}-->
+			</form>
+		    <!--{if $vtemp!=""}--><button type="button" class="add" style="margin-left: 10rem" onclick="submitform()">确认修改</button><!--{/if}-->
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+	//<!--{/*绑定是否压缩图片*/}-->
+	$("#cpset input[type='radio']").change(function(){
+		//console.log($(this).val());
+		if($(this).val()=="1"){
+			$("#cpset2").show();
+		}else{
+			$("#cpset2").hide();
+		}
+	});
+	//<!--{/*绑定数据库驱动*/}-->
+	$("#dbset input[type='radio']").change(function(){
+		//console.log($(this).val());
+		if($(this).val()=="sqlite"){
+			$("#dbset2").hide();
+		}else{
+			$("#dbset2").show();
+		}
+	});
+	
+	function submitform(){
+		//<!--{/*网站说明*/}-->
+		var re =ffwbms_verify($.trim($("input[name=explain]").val()),$("input[name=explain]").attr("data-ffv"));
+		if(re["val"]==false){
+			layer.open({
+				content: "网站说明"+re["name"]+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+			});
+			return false;
+		}
+		//<!--{/*网站管理用户名*/}-->
+		var re =ffwbms_verify($.trim($("input[name=serveradmin]").val()),$("input[name=serveradmin]").attr("data-ffv"));
+		if(re["val"]==false){
+			layer.open({
+				content: "网站管理用户名"+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+			});
+			return false;
+		}
+		//<!--{/*网站管理密码*/}-->
+		var re =ffwbms_verify($.trim($("input[name=serverpass]").val()),$("input[name=serverpass]").attr("data-ffv"));
+		if(re["val"]==false){
+			layer.open({
+				content: "网站管理密码"+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+			});
+			return false;
+		}
+		//<!--{/*域名组*/}-->
+		var domain = $.trim($("textarea[name=domain]").html())
+		if (IsEmpty(domain)){
+			layer.open({
+				content: "域名组不可为空"+"<br><br>"+"域名组输入时，每个域名一行，请修改正确后再提交！"
+			});
+			return false;
+		}else{
+			var array = domain.split("\n");//获取内容按\n分割成数组
+			//console.log(domain);
+			//if (array[2-1]!=undefined){
+			//	console.log(array[2-1]);
+			//}
+			//console.log(array.length);
+			var s = "";
+			for (i = 0; i < array.length; i++) {
+				if(i>0){
+					s += ","
+				}
+				s += $.trim(array[i])
+			}
+			//console.log(s);
+			$("textarea[name=domain]").html(s)
+		}
+		//<!--{/*图片宽数组*/}-->
+		var comps = $.trim($("textarea[name=comps]").html())
+		if (IsEmpty(comps)){
+			$("textarea[name=comps]").html("1000")
+			return false;
+		}else{
+			var array =comps.split("\n");//获取内容按\n分割成数组
+			var s = "";
+			for (i = 0; i < array.length; i++) {
+				if(i>0){
+					s += ","
+				}
+				s += $.trim(array[i])
+			}
+			$("textarea[name=comps]").html(s)
+		}
+		//<!--{/*网站根目录*/}-->
+		var re =ffwbms_verify($.trim($("input[name=documentroot]").val()),$("input[name=documentroot]").attr("data-ffv"));
+		if(re["val"]==false){
+			layer.open({
+				content: "网站根目录"+re["name"]+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+			});
+			return false;
+		}
+		//<!--{/*数据库目录*/}-->
+		var re =ffwbms_verify($.trim($("input[name=database]").val()),$("input[name=database]").attr("data-ffv"));
+		if(re["val"]==false){
+			layer.open({
+				content: "数据库目录"+re["name"]+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+			});
+			return false;
+		}
+		//<!--{/*数据库名*/}-->
+		var re =ffwbms_verify($.trim($("input[name=dbname]").val()),$("input[name=dbname]").attr("data-ffv"));
+		if(re["val"]==false){
+			layer.open({
+				content: "数据库名"+re["name"]+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+			});
+			return false;
+		}
+		//<!--{/*数据字符编码*/}-->
+		var re =ffwbms_verify($.trim($("input[name=dbcharset]").val()),$("input[name=dbcharset]").attr("data-ffv"));
+		if(re["val"]==false){
+			layer.open({
+				content: "数据字符编码"+re["name"]+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+			});
+			return false;
+		}
+		//<!--{/*数据库驱动*/}-->
+		var dbset = $("input[name='dbdriver']:checked").val();
+		if(dbset=="sqlite"){
+			$("input[name=dbusername]").val("")
+			$("input[name=dbpassword]").val("")
+			$("input[name=dbprotocol]").val("")
+			$("input[name=dbaddress]").val("")
+			$("input[name=dbport]").val("")
+		}else{
+			//<!--{/*数据库用户名*/}-->
+			var re =ffwbms_verify($.trim($("input[name=dbusername]").val()),$("input[name=dbusername]").attr("data-ffv"));
+			if(re["val"]==false){
+				layer.open({
+					content: "数据库用户名"+re["name"]+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+				});
+				return false;
+			}
+			//<!--{/*数据库用户密码*/}-->
+			var re =ffwbms_verify($.trim($("input[name=dbpassword]").val()),$("input[name=dbpassword]").attr("data-ffv"));
+			if(re["val"]==false){
+				layer.open({
+					content: "数据库用户密码"+re["name"]+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+				});
+				return false;
+			}
+			//<!--{/*数据库连接协议*/}-->
+			var re =ffwbms_verify($.trim($("input[name=dbprotocol]").val()),$("input[name=dbprotocol]").attr("data-ffv"));
+			if(re["val"]==false){
+				layer.open({
+					content: "数据库连接协议"+re["name"]+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+				});
+				return false;
+			}
+			//<!--{/*数据库地址*/}-->
+			var re =ffwbms_verify($.trim($("input[name=dbaddress]").val()),$("input[name=dbaddress]").attr("data-ffv"));
+			if(re["val"]==false){
+				layer.open({
+					content: "数据库地址"+re["name"]+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+				});
+				return false;
+			}
+			//<!--{/*数据库端口*/}-->
+			var re =ffwbms_verify($.trim($("input[name=dbport]").val()),$("input[name=dbport]").attr("data-ffv"));
+			if(re["val"]==false){
+				layer.open({
+					content: "数据库端口"+re["name"]+"<br><br>"+re["note"]+"<br><br>不能提交，请修改正确后再提交！"
+				});
+				return false;
+			}
+		}
+		//alert("提交")
+		$("#svform").submit()
+	}
+</script>
+</html>

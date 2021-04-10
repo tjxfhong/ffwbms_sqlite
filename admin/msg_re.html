@@ -1,0 +1,96 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_verify.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_upfileimg.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+	<script type="text/javascript" src="../access/js/layerdate/pc.laydate.js"></script>
+
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/editor_api.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_msg_sort_db,msgsort_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+            <a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">留言管理</a> - 
+			<a href="msg_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$msgsort_db["sname"]}--></a> - <a href="javascript:;">留言回复</a>
+        </div>
+        <div class="right_cont">
+			<!--{ffwbms ffm_msg_db,vtemp,"id=".$get["id"]}-->
+			<!--{ffwbms ffm_msg_db,re_vtemp,"raid=".$vtemp["id"]}-->
+			<!--{/*ffwbms_see $vtemp["id"]*/}-->
+			<!--{/*ffwbms_see $re_vtemp*/}-->
+			<form enctype="multipart/form-data" action="<!--{if $re_vtemp['id']==''}-->msg_readdok<!--{else}-->msg_reeditok<!--{/if}-->.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}-->&id=<!--{$get['id']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" id="remsgedit" method="post">
+			<input type="hidden" name="id" id="id" value="<!--{if $re_vtemp['id']==''}-->0<!--{else}--><!--{$re_vtemp[['id']}--><!--{/if}-->" />
+			<input type="hidden" name="pid" id="pid" value="0" />
+			<input type="hidden" name="uid" id="uid" value="<!--{getcookie['uid']}-->" />
+			<input type="hidden" name="raid" id="raid" value="<!--{$vtemp['id']}-->" />
+			<input type="hidden" name="fbdt" id="fbdt" value="" />
+			<input type="hidden" name="sta3" id="sta3" value="" />
+			<input type="hidden" name="mcou" id="mcou" value="0" />
+			<input type="hidden" name="ifyn" id="ifyn" value="0" />
+			<!--{/*原文显示*/}-->
+		   	<p>留言标题：<!--{$vtemp["mtit"]}--></p>
+		   	<p>留言邮箱：<!--{$vtemp["mail"]}--></p>
+		   	<p>留言手机：<!--{$vtemp["mobi"]}--></p>
+		   	<p>留言单位：<!--{$vtemp["danw"]}--></p>
+		   	<p>留言人姓名：<!--{$vtemp["xinm"]}--></p>
+			<p>留言时间：<span id="mfbdt"><!--{$vtemp["fbdt"]}--></span></p>
+			<p>留言正文：</p>
+			<div style="border: 1px solid #B0C8EA;line-height: 1.5rem; text-indent: 2rem;"><!--{$vtemp["mtxt"]}--></div>
+			
+		   	<p>回复正文：</p>
+			   <script id="mtxt" name="mtxt" type="text/plain" style="max-width:1024px;height:200px;"><!--{$re_vtemp["mtxt"]}--></script>  
+			</form>
+			<!--{$bb=$vtemp['id']}-->
+			<button type="button"  class="linkbtn listadd" onclick="msgedit('<!--{$bb}-->')">编辑留言</button>
+			<button type="submit" class="add" onclick="remsgedit()">确认回复</button>
+		  
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+	var now = new Date($("#mfbdt").html()); // 一般传入毫秒时间戳进行初始化
+	var nowStr = now.format("yyyy-MM-dd hh:mm:ss");
+	$("#mfbdt").html(nowStr);
+
+	$(document).ready(function () {
+		var mtxt = UE.getEditor('mtxt'); // 实例化编辑器
+	});
+
+	function msgedit(){
+		location.href="msg_edit.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}-->&id=<!--{$get['id']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+	}
+	function remsgedit(){
+		$("#remsgedit").submit()
+	}
+</script>
+</html>

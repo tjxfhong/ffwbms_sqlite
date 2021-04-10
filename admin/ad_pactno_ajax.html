@@ -1,0 +1,7 @@
+<!--{/*查询广告合同号是否存在*/}-->
+<!--{if $get["id"]==""}-->
+<!--{ffwbms ffm_ad_pactno_query,vtemp,"pactno=".$get["gs"]}-->
+<!--{else}-->
+<!--{ffwbms ffm_ad_pactno_query,vtemp,"pactno=".$get["gs"]."|id!=".$get["id"]}-->
+<!--{/if}-->
+<!--{$vtemp["id"]}-->

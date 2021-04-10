@@ -1,0 +1,23 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="../access/js/jquery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+	<title>商品删除OK</title>
+</head>
+
+<body>
+	<!--{ffwbms ffm_mall_del,vtemp,"id=".$get['id']}-->
+	<!--{ffwbms_see $get}-->
+	<script language="Javascript">
+		window.location.href = "product_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"
+	</script>
+</body>
+</html>

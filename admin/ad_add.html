@@ -1,0 +1,138 @@
+<!--{if getcookie(uid)==""}-->
+    <!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!--{if $post!=""}-->
+	<!--{$post["uid"]=getcookie(uid)}-->
+	<!--{$post["ashow"]="0"}-->
+	<!--{$post["aclick"]="0"}-->
+	<!--{$post["sta1"]="0"}-->
+	<!--{$post["sta2"]="0"}-->
+	<!--{$post["sta3"]="0"}-->
+	<!--{$post["sta4"]="0"}-->
+	<!--{ffwbms ffm_ad_add,vtemp,""}-->
+	<!--{if $get['developer']=='1'}--><!--{$developer="&developer=1"}--><!--{else}--><!--{$developer=""}--><!--{/if}-->
+	<!--{ffwbms_redirect 307,aaa,"ad_pglist.html?pg=".$get['pg']."&pid=".$get['pid'].$developer."&eq=".$get['eq']}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_verify.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_upfileimg.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+	<script type="text/javascript" src="../access/js/layerdate/pc.laydate.js"></script>
+
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/editor_api.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+	
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_ad_sort_db,adsort_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+			<a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">广告管理</a> - 
+			<a href="ad_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$adsort_db["sname"]}--></a> - <a href="javascript:;">广告增加</a>
+        </div>
+        <div class="right_cont">
+           <form class="ffwbms_form" style="line-height: 2.5rem;" enctype="multipart/form-data" action="ad_add.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" id="ad" method="post">
+			   <input name="tid" type="hidden" value="<!--{$get['pid']}-->" />
+			   <input name="uid" type="hidden" value="0" />
+			   <p>广告合同号：</p><input type="text" id="pactno" ffwbms_verify="true" data-ffv="nonull" name="pactno" maxlength="50" />
+			   <p>广告名称：</p><input type="text" id="aname" name="aname" maxlength="50" ffwbms_verify="true" data-ffv="nonull" />
+				<p>广告标题：</p><input type="text" id="atitle"  name="atitle" maxlength="50"/>
+				<p>广告图片：
+				<div class="upfileimg">
+					<div class="upimg">
+							<p>广告图片：</p>
+							<!--{if $vtemp['aimg']==""}-->
+							<a id="aimg" href="javascript:;" class="ffwbms_upfile">
+								选择文件<input type="file" name="aimg" />
+							</a>
+							<div class="imgshow">
+								
+							</div>
+							<!--{else}-->
+							<button type="button" data-id="aimg" onClick="ffwbms_delupimg(this)">删除图片</button>
+							<div class="imgshow">
+								<img src="<!--{$vtemp['aimg']}-->" />
+							</div>
+							<!--{/if}-->
+					</div>
+				</div></p>
+				<p>广告跳转地址：</p><input type="text" id="" name="aurl" maxlength="50" />
+				<p>正文：</p>
+				<script id="ahtml" name="ahtml" type="text/plain" style="max-width:1024px;height:500px;"></script>
+				<p style="margin-top: 0.5rem;">开始时间：
+					<input style="width:150px; margin-right: 6rem;" type="text" name="astart" id="astart" class="laydate-icon" readonly onclick="laydate()" value="" />
+					<span>结束时间：</span>
+					<input style="width:150px; margin-right: 6rem;" type="text" name="astop" id="astop" class="laydate-icon" readonly onclick="laydate()" value="" />
+				<p style="margin-top: 0.5rem;">是否可用：
+				<input class="ffwbms_radio " type="radio" name="ifyn" id="radio4" value="2" checked="checked"/><label for="radio4"class="ffwbms_radio-label radGroup4 ml-80">正常</label>
+				<input class="ffwbms_radio" type="radio" name="ifyn" id="radio5" value="1" /><label for="radio5"class="ffwbms_radio-label radGroup5">暂停</label></p>
+           </form>
+		   <button type="button" class="add" onclick="add()">确认新增</button>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+	var o = new Date();
+	var year = o.getFullYear();//年
+	var month = o.getMonth();//月
+	var day = o.getDate();//日
+	var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+	$("#astart").val(n);
+	var o = new Date();
+	var year = o.getFullYear()+1;//年
+	var month = o.getMonth();//月
+	var day = o.getDate();//日
+	var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+	$("#astop").val(n);
+
+	$(document).ready(function () {
+		var ahtml = UE.getEditor('ahtml'); // 实例化编辑器
+	});
+
+	function add(){
+		var aname = $.trim($("#aname").val());
+		if (IsNotEmpty(aname) == false) {
+			layer.open({content: '广告名称不能为空！'});
+			return false;
+		}
+		var pactno = $.trim($("#pactno").val());
+		if (IsNotEmpty(pactno) == false) {
+			layer.open({content: '广告合同号不能为空！'});
+			return false;
+		}
+		// 获得广告合同号是否存在，存在则不能增加，保证广告合同号的唯一性
+		var gs = $.trim($('#pactno').val());
+		var htmlobj=$.ajax({url:"ad_pactno_ajax.html?gs="+gs,async:false,cache:false});
+		if(IsNotEmpty($.trim(htmlobj.responseText))){
+			layer.open({content: '广告合同号不能重复！'});
+			return false;
+		}
+
+		$("#ad").submit()
+	}
+</script>
+</html>

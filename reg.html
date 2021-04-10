@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>注册新用户</title>
+	<link rel="stylesheet" href="access/ffwbms/ffwbms.css">
+	<script src="access/js/jquery-3.5.1.js" charset="utf-8"></script>
+	<script src="access/js/layer/mobile/layer.js" charset="utf-8"></script>
+	<script src="access/ffwbms/ffwbms.js/ffwbms_verify.js" charset="utf-8"></script>
+</head>
+<body>
+<!--{if $post!=""}-->
+	<!--{/*ffwbms_see $post
+	"uname":"admin1",
+    "pword":"ffwbms168",
+    "pword2":"ffwbms168",
+    "email":"13013001301@qq.com"
+	*/}-->
+	<!--{$uname=$post["uname"]/*提交的用户名*/}-->
+	<!--{$u2s9=$post["pword"]/*提交的登录密码*/}-->
+	<!--{$u2s15=$post["email"]/*提交的注册邮箱*/}-->
+	<!--{ffwbms_uuid ffrandstr,uuidstr,"length=6"/*随机字符串*/}-->
+	<!--{$post["sid"]=103/*普通用户*/}-->
+	<!--{$post["pid0"]=0}-->
+	<!--{$post["pid1"]=0}-->
+	<!--{$post["pid2"]=0}-->
+	<!--{$post["pid3"]=0}-->
+	<!--{$post["regdt"]=""}-->
+	<!--{$post["regip"]=""}-->
+	<!--{/*$post["stopdt"]=""到期时间*/}-->
+	<!--{$post["sta4"]=$uuidstr/*邮件验证随机字符串*/}-->
+	<!--{$post["ifyn"]=1/**/未验证}-->
+	<!--{ffwbms ffa_user_reg,vtemp,""/*增加用户，返回{"msg":"Record added successfully. (1236)","id":"1236"}*/}-->
+	<!--{/*ffwbms_see $vtemp*/}-->
+	<!--{$id=$vtemp["id"]/*新增加的用户号*/}-->
+	<!--{if $vtemp["id"]>0}-->
+		
+		<!--{$post=""}-->
+		<!--{$post["uid"]=$id}-->
+		<!--{$post["sname"]="网站名称"}-->
+		<!--{$post["domain"]=""}-->
+		<!--{$post["auth"]=""}-->
+		<!--{$post["scdt"]=""}-->
+		<!--{$post["amdt"]=""}-->
+		<!--{$post["ifyn"]=2}-->
+		<!--{/*ffwbms_see $post*/}-->
+		<!--{ffwbms ffa_user_reg_config,vtemp,""/*增加用户网站设置*/}-->
+		
+		<!--{$post=""}-->
+		<!--{$post["s"]=$id}-->
+		<!--{$post["s1"]=$uname}-->
+		<!--{$post["i11"]=9}-->
+		<!--{/*ffwbms_see $post*/}-->
+		<!--{ffwbms ffa_user_reg_uconn1,vtemp,""/*增加用户详细表一*/}-->
+		<!--{/*ffwbms_see $vtemp*/}-->
+		
+		<!--{$post=""}-->
+		<!--{$post["s"]=$id}-->
+		<!--{$post["s9"]=$u2s9}-->
+		<!--{$post["s15"]=u2s15}-->
+		<!--{/*ffwbms_see $post*/}-->
+		<!--{ffwbms ffa_user_reg_uconn2,vtemp,""/*增加用户详细表二*/}-->
+		<!--{/*ffwbms_see $vtemp*/}-->
+		<div class="horizon-vertical-center-box">
+			<div class="logreg" style=" margin-top: -130px;">
+				<h3>
+					注册用户成功
+				</h3>
+				<div class="ffwbms_form">
+					注册用户成功，<strong id="second_show">5</strong>秒后返回首页<br>
+					<script type="text/javascript">
+						var timeout = 5;
+						function showError() {
+							document.getElementById("second_show").innerHTML = timeout;
+							timeout--;
+							if (timeout == 0) {
+								window.location.href = "/";
+							} else {
+								setTimeout("showError()", 1000);
+							}
+						}
+						showError();
+					</script>
+					<a href="login.html">用户登录</a><span style="margin: 0 1rem;">|</span><a href="/">返回首页</a>
+				</div>
+				<h4>&copy; <!--{$wset["currY"]}--> <a href="/">FFWBMS.COM</a></h4>
+			</div>
+		</div>
+	<!--{else}-->
+	<div class="horizon-vertical-center-box">
+		<div class="logreg" style=" margin-top: -130px;">
+			<h3>
+				注册用户错误
+			</h3>
+			<div class="ffwbms_form">
+				<!--{$vtemp["msg"]}--><br>
+				<a href="reg.html">用户注册</a><span style="margin: 0 1rem;">|</span><a href="/">返回首页</a>
+			</div>
+			<h4>&copy; <!--{$wset["currY"]}--> <a href="/">FFWBMS.COM</a></h4>
+		</div>
+	</div>
+	<!--{/if}-->
+<!--{/*上面是登录界面提交后的处理动作*/ else /*下面是登录界面*/}-->
+	<div class="horizon-vertical-center-box">
+		<div class="logreg" style=" margin-top: -222px;">
+			<h3>注册新用户</h3>
+			<form class="ffwbms_form" action="reg.html" method="post" id="regform">
+				<label for="usr">用户名<input type="text" class="focus" name="uname" id="uname" placeholder="请输入用户名" ffwbms_verify="true" data-ffv="username"></label>
+				<label for="pwd">登录密码<input type="password" class="focus" name="pword" id="pword" ffwbms_verify="true" data-ffv="password"></label>
+				<label for="pwd2">重复密码<input type="password" class="focus" name="pword2" id="pword2" ></label>
+				<label for="mail">验证邮箱<input type="text" class="focus" name="email" id="email"placeholder="请输入邮箱，接收注册验证邮件用" ffwbms_verify="true" data-ffv="email"></label>
+				<button class="block" type="button" id="subm" onclick="yz()">注册</button>
+				<a href="login.html">用户登录</a><span style="margin: 0 1rem;">|</span><a href="/">返回首页</a>
+			</form>
+			<h4>
+				&copy; <!--{$wset["currY"]}--> <a href="/">FFWBMS.COM</a>
+			</h4>
+		</div>
+	</div>
+<!--{/if}-->
+</body>
+<script>
+	function yz() {
+		var thit;
+		var re;
+		thit = $("#uname");
+		re =ffwbms_verify($.trim(thit.val()),"nonull");
+        if(!re["val"]){
+			show_ffwbms_verify_popup("登录帐号不可为空！") // 返回提示
+			return false;
+        }else{
+			re =ffwbms_verify($.trim(thit.val()),thit.attr("data-ffv"));
+			if(!re["val"]){
+				show_ffwbms_verify_popup(re["note"]) // 返回提示
+				return false;
+			}
+		}
+		var htmlobj=$.ajax({url:"ajax_queryusername.html?n="+$.trim(thit.val()),async:false});
+    	if($.trim(htmlobj.responseText)!=""){
+			show_ffwbms_verify_popup("用户名“"+$.trim(thit.val())+"”已存在，不可注册，请重新设置！") // 返回提示
+			return false;
+		}
+
+
+		thit = $("#pword");
+		re =ffwbms_verify($.trim(thit.val()),"nonull");
+        if(!re["val"]){
+			show_ffwbms_verify_popup("登录密码不可为空！") // 返回提示
+			return false;
+        }else{
+			re =ffwbms_verify($.trim(thit.val()),thit.attr("data-ffv"));
+			if(!re["val"]){
+				show_ffwbms_verify_popup(re["note"]) // 返回提示
+				return false;
+			}
+		}
+
+		thit = $("#pword2");
+		re =ffwbms_verify($.trim($("#pword2").val()),"nonull");
+        if($.trim($("#pword").val())!=$.trim($("#pword2").val())){
+			show_ffwbms_verify_popup("二次密码不同，请重新输入！") // 返回提示
+			return false;
+		}
+
+		thit = $("#email");
+		re =ffwbms_verify($.trim(thit.val()),"nonull");
+        if(!re["val"]){
+			show_ffwbms_verify_popup("注册邮箱需要接收注册确认邮件，不可为空！") // 返回提示
+			return false;
+        }else{
+			re =ffwbms_verify($.trim(thit.val()),thit.attr("data-ffv"));
+			if(!re["val"]){
+				show_ffwbms_verify_popup(re["note"]) // 返回提示
+				return false;
+			}
+		}
+		var htmlobj=$.ajax({url:"ajax_queryuseremail.html?n="+$.trim(thit.val()),async:false});
+    	if($.trim(htmlobj.responseText)!=""){
+			console.log(htmlobj.responseText);
+			show_ffwbms_verify_popup("每个邮箱地址只能注册一个帐号，此邮箱地址已使用，请换一个邮箱地址或去找回密码。") // 返回提示
+			return false;
+		}
+		$("#regform").submit()
+	}
+</script>
+</html>

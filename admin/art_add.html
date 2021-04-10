@@ -1,0 +1,138 @@
+<!--{if getcookie(uid)==""}-->
+    <!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!--{if $post!=""}-->
+	<!--{if $get['developer']=='1'}--><!--{$developer='&developer=1'}--><!--{else}--><!--{$developer=''}--><!--{/if}-->
+	<!--{$post["uid"]="0"}-->
+	<!--{$post["atyp"]="0"}-->
+	<!--{$post["raid"]="0"}-->
+	<!--{$post["acou"]="0"}-->
+	<!--{$post["scdt"]=""}-->
+	<!--{$post["amdt"]=""}-->
+	<!--{$post["sta1"]="0"}-->
+	<!--{$post["sta2"]="0"}-->
+	<!--{$post["sta3"]="0"}-->
+	<!--{$post["sta4"]="0"}-->
+	<!--{$post["sta5"]="0"}-->
+	<!--{$post["sta6"]="0"}-->
+	<!--{$post["sta7"]="0"}-->
+	<!--{$post["sta8"]="0"}-->
+	<!--{ffwbms ffm_art_add,vtemp,""}-->
+	<!--{ffwbms_redirect 307,aaa,"art_pglist.html?pid=".$get['pid']."&pg=".$get['pg'].$developer."&eq=".$get['eq']}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+
+	
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_verify.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_upfileimg.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+	<script type="text/javascript" src="../access/js/layerdate/pc.laydate.js"></script>
+
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/editor_api.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_art_sort_db,sort_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+            <a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">文章管理</a> - 
+			<a href="art_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$sort_db["sname"]}--></a> - <a href="javascript:;">增加新文章</a>
+        </div>
+        <div class="right_cont">
+           <form class="ffwbms_form" style="line-height: 2.5rem;" enctype="multipart/form-data" action="art_add.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" method="post" id="articled">
+				<input name="pid" type="hidden" id="pid" value="<!--{$get['pid']}-->" />
+				<p>文章标题：</p><input type="text" id="atit" name="atit" maxlength="100" ffwbms_verify="true" data-ffv="nonull" />
+				<p>短标题：</p><input type="text" id="stit" name="stit" maxlength="20" />
+				<p>作者：</p><input type="text" id="auth"name="auth" maxlength="50" />
+				<p>引用来源：</p><input type="text" id="sour" name="sour" maxlength="50" />
+				<p>标题图：</p>
+				<div class="upfileimg">
+					<div class="upimg">
+							<p>主图1</p>
+							<a id="img1" href="javascript:;" class="ffwbms_upfile">
+								选择文件<input type="file" name="img1" />
+							</a>
+							<div class="imgshow">
+								
+							</div>
+					</div>
+					<div class="upimg">
+							<p>主图2</p>
+							<a id="img2" href="javascript:;" class="ffwbms_upfile">
+								选择文件<input type="file" name="img2" />
+							</a>
+							<div class="imgshow">
+								
+							</div>
+					</div>
+					<div class="upimg">
+							<p>主图3</p>
+							<a id="img3" href="javascript:;" class="ffwbms_upfile">
+								选择文件<input type="file" name="img3" />
+							</a>
+							<div class="imgshow">
+								
+							</div>
+					</div>
+				</div>
+			
+				<p>关键字：</p><input type="text" id="akeys" name="akeys" maxlength="50" />
+				<p>描述：</p><input type="text" id="aabs" name="aabs" maxlength="250" />
+				<p>正文：</p>
+				<script id="atxt" name="atxt" type="text/plain" style="max-width:1024px;height:500px;"></script>
+				<p style="margin-top: 0.5rem;">有效时间：<input style="width:150px; margin-right: 6rem;" type="text" name="indt" id="indt" class="laydate-icon" readonly onclick="laydate()" value="" /></p>
+				<p style="margin-top: 0.5rem;">是否可用：
+				<input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn2" value="2" checked="checked"/><label for="ifyn2"class="ffwbms_radio-label radGroup4 ml-80">正常</label>
+				<input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn1" value="1" /><label for="ifyn1"class="ffwbms_radio-label radGroup5">暂停</label></p>
+           </form>
+		   <button type="button" class="add" onclick="artd()">确认新增</button>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+	var o = new Date();
+	var year = o.getFullYear()+10;//年
+	var month = o.getMonth();//月
+	var day = o.getDate();//日
+	var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+	$("#indt").val(n);
+
+	$(document).ready(function () {
+		var atxt = UE.getEditor('atxt'); // 实例化编辑器
+	});
+	
+	function artd(){
+		var atit = $.trim($("#atit").val());
+		if (IsNotEmpty(atit) == false) {
+			layer.open({content: '文章标题不能为空！'});
+			return false;
+		}
+
+		$("#articled").submit()
+	}
+</script>
+</html>

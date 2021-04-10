@@ -1,0 +1,119 @@
+<!--{if getcookie(uid)==""}-->
+	<!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!--{if $post!=""}-->
+	<!--{$post["sta1"]="0"}-->
+	<!--{$post["sta2"]="0"}-->
+	<!--{$post["sta3"]="0"}-->
+	<!--{$post["sta4"]="0"}-->
+	<!--{ffwbms ffm_flink_edit,vtemp,""}-->
+	<!--{if $get['developer']=='1'}--><!--{$developer="&developer=1"}--><!--{else}--><!--{$developer=""}--><!--{/if}-->
+	<!--{ffwbms_redirect 307,aaa,"links_pglist.html?pg=".$get['pg']."&pid=".$get['pid'].$developer."&eq=".$get['eq']}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_verify.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_upfileimg.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+	<script type="text/javascript" src="../access/js/layerdate/pc.laydate.js"></script>
+</head>
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_flink_sort_db,flink_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+            <a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">友情链接管理</a> - 
+			<a href="links_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$flink_db["sname"]}--></a> - <a href="javascript:;">友情链接编辑</a>
+        </div>
+        <div class="right_cont">
+           <form class="ffwbms_form" style="line-height: 2.5rem;" enctype="multipart/form-data" action="links_edit.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}-->&id=<!--{$get['id']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" id="linkedit" method="post">
+			<!--{ffwbms ffm_flink_db,vtemp,"id=".$get["id"]}-->
+			<!--{/*ffwbms_see $vtemp*/}-->
+			<input type="hidden" name="id" id="id" value="<!--{$vtemp['id']}-->" />
+			<input type="hidden" name="pid" id="pid" value="<!--{$get['pid']}-->" />
+			<input type="hidden" name="uid" id="uid" value="<!--{$vtemp['uid']}-->" />
+           <p>友情链接标题：</p><input type="text" id="ltit" name="ltit" maxlength="100" ffwbms_verify="true" data-ffv="nonull" value="<!--{$vtemp['ltit']}-->" />
+		   <p>友情链接URL：</p><input type="text" id="lurl" name="lurl" maxlength="100" value="<!--{$vtemp['lurl']}-->" />
+		   <p>友情链接提示串：</p><input type="text" id="lhint" name="lhint" maxlength="100" value="<!--{$vtemp['lhint']}-->" />
+		   <p>友情链接LOGO(远程)：</p><input type="text" placeholder="友情链接LOGO(远程图片地址)"  class="ffwbms_text " name="llogo" id="llogo" value="<!--{$vtemp['llogo']}-->" />
+		   <!--{/*如果llogo为空，则使用llogoimg图片*/}-->
+		   		<!--{if $vtemp['llogo']!=""}-->
+						<img style="width:250px; height:180px" src="<!--{$vtemp['llogo']}-->" />
+				<!--{/if}-->
+		    <p>友情链接上传图片：
+		    <div class="upfileimg">
+				<div class="upimg">
+						<p>友情链接图片</p>
+						<!--{if $vtemp['llogoimg']==""}-->
+						<a id="llogoimg" href="javascript:;" class="ffwbms_upfile">
+							选择文件<input type="file" name="llogoimg" />
+						</a>
+						<div class="imgshow">
+							
+						</div>
+						<!--{else}-->
+						<button type="button" data-id="llogoimg" onClick="ffwbms_delupimg(this)">删除图片</button>
+						<div class="imgshow">
+							<img src="<!--{$vtemp['llogoimg']}-->" />
+						</div>
+						<!--{/if}-->
+				</div>
+			</div></p>
+			<p style="margin-top: 0.5rem;">友情链接启用时间：
+				<input style="width:120px; margin-right: 3rem;" type="text" name="lstate" id="lstate" class="laydate-icon" readonly onclick="laydate()" value="<!--{$vtemp['lstate']}-->" />
+				<span>友情连接停止时间：</span>
+				<input style="width:120px; margin-right: 3rem;" type="text" name="lstop" id="lstop" class="laydate-icon" readonly onclick="laydate()" value="<!--{$vtemp['lstop']}-->" /></p>
+            <p>是否可用：
+            <input class="ffwbms_radio " type="radio" name="ifyn" id="ifyn2" value="2" checked="checked" <!--{if $vtemp["ifyn"]==2}--> checked<!--{/if}-->/><label for="ifyn2"class="ffwbms_radio-label radGroup4 ml-80">正常</label>
+            <input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn1" value="1"<!--{if $vtemp["ifyn"]==1}--> checked<!--{/if}--> /><label for="ifyn1"class="ffwbms_radio-label radGroup5">暂停</label></p>
+		    </form>
+		    <button type="submit" class="add" onclick="linkedit()">确认编辑</button>
+		  
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	var o = new Date($("#lstate").val());
+	var year = o.getFullYear();//年
+	var month = o.getMonth();//月
+	var day = o.getDate();//日
+	var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+	$("#lstate").val(n);
+	var o = new Date($("#lstop").val());
+	var year = o.getFullYear()+1;//年
+	var month = o.getMonth();//月
+	var day = o.getDate();//日
+	var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+	$("#lstop").val(n);
+
+	function linkedit(){
+		var ltit = $.trim($("#ltit").val());
+		if (IsNotEmpty(ltit) == false) {
+			layer.open({content: '友情链接标题不能为空！'});
+			return false;
+		}
+
+		$("#linkedit").submit()
+	}
+</script>
+</html>

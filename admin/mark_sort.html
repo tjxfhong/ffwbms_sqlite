@@ -1,0 +1,143 @@
+<!--{if getcookie(uid)==""}-->
+	<!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp["keywords"]}-->">
+    <meta name="description" content="<!--{$seo_vtemp["description"]}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="../access/css/admin_style.css"/>
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script src="../access/ffwbms/ffwbms.js/ffwbms_verify.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../access/js/layer/mobile/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+        <div class="right_nav">
+            当前位置：
+            <a href="index.html?<!--{if $get['developer']=='1'}-->developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">特殊标识分类管理</a>
+        </div>
+        <div class="right_cont">
+            <div class="sortlist" style="float: left;">
+            	<ul>
+					<h3 class="mt-50">特殊标识分类列表</h3>
+					<!--{ffwbms ffm_mark_sort_list,vtemp,"id>1200"}-->
+					<!--{/*ffwbms_see $vtemp*/}-->
+					<!--{loop $vtemp $ary}-->
+					<li class="ml-10 mt-15">
+						<!--{$aa=$ary["id"]}-->
+						<a href="javascript:;" onclick="edit('<!--{$aa}-->')">
+							<!--{$ary["sname"]}-->
+						</a>
+					</li>
+					<!--{/loop}-->
+            	</ul>
+            </div>
+            <div class="sortform" style="float: left;">
+            	<button type="button" class="sortadd" onclick="markadd()">新增分类</button>
+				<form action="mark_sort_addok.html?<!--{if $get['developer']=='1'}-->developer=1&<!--{/if}-->eq=<!--{$get['eq']}-->" method="post" id="marksortform">
+					<input name="id" id="id" type="hidden" value="0" />
+					<input name="pid" id="pid" type="hidden" value="0" />
+					<input name="uid" id="uid" type="hidden" value="0" />
+					<div>
+						<p>特殊标识分类名：</p>
+						<input class="ffwbms_text" type="text" name="sname" id="sname" maxlength="50" ffwbms_verify="true" data-ffv="nonull" />
+					</div>
+					<div>
+						<p>是否可用：</p>
+						<input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn1"  value="1" /><label for="ifyn1"
+							class="ffwbms_radio-label radGroup1">暂停</label>
+						<input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn2"  checked="checked" value="2"/><label for="ifyn2"
+							class="ffwbms_radio-label radGroup1">正常</label>
+					</div>
+				</form>	
+            	<button type="button" class="sortcofirm" id="btn" class="" onclick="mark()">确认新增</button>
+            	<button type="button" class="sortdel" onclick="markdel()">删除分类</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+	//分类提交
+	function mark(){
+		var verify_ok = true;
+		// 循环验证
+		$('input[ffwbms_verify="true"]').each(function(){
+			var re =ffwbms_verify($.trim($(this).val()),$(this).attr("data-ffv"));
+			if(re["val"]==false){
+				$(this).css("border-color","#e53935");
+				//提示
+				layer.open({
+					content: re["note"]
+				});
+				verify_ok = false;
+			}
+		});
+
+		if(verify_ok){
+			var btn = document.getElementById("btn").innerText = "确认新增"
+			$("#marksortform").submit()
+		}
+	}
+	//新增分类
+	function markadd() {
+		document.getElementById("btn").innerText = "确认新增"
+		$("#id").val(0)
+		$("#pid").val(0)	
+		$("#uid").val(0)	
+		$("#sname").val("")	
+		$("#ifyn1").get(0).checked = false;
+		$("#ifyn2").get(0).checked = true;
+		$("#marksortform").attr("action","mark_sort_addok.html?<!--{if $get['developer']=='1'}-->developer=1&<!--{/if}-->id="+id + "&eq=<!--{
+			$get['eq']}-->")
+	}
+	//编辑分类
+	function edit(id) {
+		document.getElementById("btn").innerText = "确认编辑"
+		var htmlobj = $.ajax({ url: "mark_sort_db_ajax.html?id=" + id, async: false, cache: false });
+		//alert(htmlobj.responseText);
+		var dataObj = $.parseJSON(htmlobj.responseText);
+		//alert(dataObj.sname)
+		$("#id").val(dataObj.id)
+		$("#pid").val(dataObj.pid)	
+		$("#pid").val(dataObj.uid)
+		$("#sname").val(dataObj.sname)	
+		if(dataObj.ifyn==1)$("#ifyn1").get(0).checked = true;else $("#ifyn1").get(0).checked = false;
+		if(dataObj.ifyn==2)$("#ifyn2").get(0).checked = true;else $("#ifyn2").get(0).checked = false;
+		$("#marksortform").attr("action","mark_sort_editok.html?<!--{if $get['developer']=='1'}-->developer=1&<!--{/if}-->id="+id + "&eq=<!--{$get['eq']}-->")
+	}
+	function markdel() {
+		var id = $("#id").val();
+		if(id==0){
+			layer.open({content:'未选择分类，不能删除！'});
+			return false;
+		}
+		layer.open({content:"确认删除特殊标识分类吗?", btn: ['确定','放弃'] ,yes: function(index){ // 确定
+			var htmlobj = $.ajax({ url: "mark_sort_isad_ajax.html?<!--{if $get['developer']=='1'}-->developer=1&<!--{/if}-->id=" + id + "&eq=<!--{$get['eq']}-->", async: false, cache: false });
+			if($.trim(htmlobj.responseText)==0){
+				window.location.href = "mark_sort_delok.html?<!--{if $get['developer']=='1'}-->developer=1&<!--{/if}-->id=" + id + "&eq=<!--{$get['eq']}-->"
+			}else{
+				layer.open({content: '特殊标识下有数据，不能删除特殊标识分类！'});
+				layer.close(index)
+			}
+		} });
+	}
+</script>
+</html>

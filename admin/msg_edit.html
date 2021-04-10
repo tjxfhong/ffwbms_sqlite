@@ -1,0 +1,80 @@
+<!--{if getcookie(uid)==""}-->
+	<!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_verify.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_upfileimg.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+	<script type="text/javascript" src="../access/js/layerdate/pc.laydate.js"></script>
+
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/editor_api.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_msg_sort_db,msgsort_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+            <a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">留言管理</a> - 
+			<a href="msg_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$msgsort_db["sname"]}--></a> - <a href="javascript:;">留言编辑</a>
+        </div>
+        <div class="right_cont">
+           <form class="ffwbms_form" style="line-height: 2.5rem;" enctype="multipart/form-data" action="msg_editok.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}-->&id=<!--{$get['id']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" id="linkedit" method="post">
+			<!--{ffwbms ffm_msg_db,vtemp,"id=".$get["id"]}-->
+			<!--{/*ffwbms_see $vtemp*/}-->
+			<input type="hidden" name="id" id="id" value="<!--{$vtemp['id']}-->" />
+		   	<input type="hidden" name="pid" id="pid" value="<!--{$vtemp['pid']}-->" />
+		   	<input type="hidden" name="uid" id="uid" value="<!--{$vtemp['uid']}-->" />
+		   	<input type="hidden" name="raid" id="raid" value="<!--{$vtemp['raid']}-->" />
+		   	<p>留言标题：</p><input type="text" id="mtit" name="mtit" maxlength="100" value="<!--{$vtemp['mtit']}-->"/>
+		   	<p>留言邮箱：</p><input type="text" id="mail" name="mail" maxlength="100" value="<!--{$vtemp['mail']}-->"/>
+		   	<p>留言手机：</p><input type="text" id="mobi" name="mobi" maxlength="100" value="<!--{$vtemp['mobi']}-->"/>
+		   	<p>留言单位：</p><input type="text" id="danw" name="danw" maxlength="50" value="<!--{$vtemp['danw']}-->" />
+		   	<p>留言人姓名：</p><input type="text" id="xinm" name="xinm" maxlength="50" value="<!--{$vtemp['xinm']}-->" />
+		   	<p>留言正文：</p><script id="mtxt" name="mtxt" type="text/plain" style="max-width:1024px;height:200px;"><!--{$vtemp["mtxt"]}--></script>
+			<p>留言时间：<span id="fbdt"><!--{$vtemp["fbdt"]}--></span></p>
+           	<p>是否可用：
+           	<input class="ffwbms_radio " type="radio" name="ifyn" id="ifyn2" value="2" checked="checked" <!--{if $vtemp["ifyn"]==2}--> checked<!--{/if}-->/><label for="ifyn2"class="ffwbms_radio-label radGroup4 ml-80">正常</label>
+           	<input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn1" value="1"<!--{if $vtemp["ifyn"]==1}--> checked<!--{/if}--> /><label for="ifyn1"class="ffwbms_radio-label radGroup5">暂停</label></p>
+		   	</form>
+			<button type="submit" class="add" onclick="linkedit()">确认编辑</button>
+		  
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function () {
+		var mtxt = UE.getEditor('mtxt'); // 实例化编辑器
+	});
+	
+	var now = new Date($("#fbdt").html()); // 一般传入毫秒时间戳进行初始化
+	var nowStr = now.format("yyyy-MM-dd hh:mm:ss");
+	$("#fbdt").html(nowStr);
+
+	function linkedit(){
+		$("#linkedit").submit()
+	}
+</script>
+</html>

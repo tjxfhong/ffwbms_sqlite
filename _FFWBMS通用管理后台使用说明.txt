@@ -1,0 +1,81 @@
+https://github.com/tjxfhong/ffwbms_sqlite.git
+默认用户名：admin
+默认登录密码：ffwbms168，可后台修改
+
+网站开发者使用时，URL增加：developer=1，即可进行分类等的管理
+	例：http://127.0.0.1/admin/index.html?developer=1
+	如果要修改管理用户权限，参见源码进行修改
+
+文章显示，产品显示，广告显示时处理计数：
+
+文章显示时，浏览次数加一，使用方法：
+<!--{if $temp["acou"]==""}-->
+<!--{$acou =1}-->
+<!--{else}-->
+<!--{ $acou = $temp["acou"] + 1 }-->
+<!--{/if}-->
+<script type="text/javascript">
+	// 浏览次数加一
+	var htmlobj = $.ajax({
+		type: "POST",
+		url: "ajax_art_edit_acou.html?id=<!--{$get['id']}-->",
+		data: { acou: "<!--{$acou}-->" },
+		success: function (result) { htmlobj = result },
+		async: false,
+		cache: false
+	})
+</script>
+
+产品显示时，浏览次数加一，使用方法：
+<!--{if $temp["gcou"]==""}-->
+<!--{$gcou =1}-->
+<!--{else}-->
+<!--{ $gcou = $temp["gcou"] + 1 }-->
+<!--{/if}-->
+<script type="text/javascript">
+	// 浏览次数加一
+	var htmlobj = $.ajax({
+		type: "POST",
+		url: "ajax_goods_edit_acou.html?id=<!--{$get['id']}-->",
+		data: { gcou: "<!--{$gcou}-->" },
+		success: function (result) { htmlobj = result },
+		async: false,
+		cache: false
+	})
+</script>
+
+用户注册时，用户名不可重复及合法化处理例：
+var uname = $.trim($("#user").val());
+if (IsNotEmpty(uname) == false) {
+	alert("用户名不能为空！");
+	return false;
+}
+if (IsUserName(uname) == false) {
+	alert("用户名不符合规范，正确的用户名应该是，6到16位（字母，数字，下划线，减号，首字符只可以为字母）！");
+	return false;
+}
+var htmlobj = $.ajax({ url: "ajax_queryusername.html?n=" + uname, async: false, cache: false });
+if ($.trim(htmlobj.responseText) != "map[]") {
+	alert("用户名已存在，不能注册，请重新输入用户名！");
+	return false;
+}
+
+用户注册时，手机号不可重复处理例：
+var mobile = $.trim($("#phone").val());
+var htmlobj=$.ajax({url:"ajax_queryusermobile.html?n="+mobile,async:false,cache:false});
+if($.trim(htmlobj.responseText)!="map[]"){
+	alert("手机号已存在，不能注册，请重新输入用户名！");
+	return false;
+}
+
+用户注册时，电子邮箱不可重复处理例：
+var email = $.trim($("#email").val());
+var htmlobj=$.ajax({url:"ajax_queryuseremail.html?n="+email,async:false,cache:false});
+if($.trim(htmlobj.responseText)!="map[]"){
+	alert("邮箱地址已存在，不能注册，请重新输入用户名！");
+	return false;
+}
+
+特殊标识使用例：
+<!--{ffwbms ffa_mark_val,vtemp,"mkey=ss"/*获得指定特殊标识名的值，ss为标识名*/}-->
+<!--{$vtemp["mval"]}-->

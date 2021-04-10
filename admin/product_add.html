@@ -1,0 +1,181 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_verify.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_upfileimg.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+	<script type="text/javascript" src="../access/js/layerdate/pc.laydate.js"></script>
+
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/editor_api.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="../access/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_mall_gsort_db,gsort_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+            <a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">产品管理</a> - 
+			<a href="product_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$gsort_db["sname"]}--></a> - <a href="javascript:;">增加产品</a>
+        </div>
+        <div class="right_cont">
+           <form class="ffwbms_form" style="line-height: 2.5rem;" enctype="multipart/form-data" action="product_addok.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" id="pform" method="post">
+				<input type="hidden" name="pid" id="pid" value="<!--{$get["pid"]}-->" />
+				<input type="hidden" name="uid" id="uid" value="0" />
+				<p style="margin-top: 0.5rem;"><span style="float: left;">筛选分类：</span>
+					<div class="ffwbms_select" style="width:140px; margin: 0 .5rem; float: left;"><select name="sr1" id="sr1">
+						<option value="0">未选择</option>
+						<!--{ffwbms ffm_mall_gsort_list,sr1,"pid=11"}--><!--{/*ffwbms_see $sr1*/}-->
+						<!--{loop $sr1 $a1}-->
+						<option value="<!--{$a1['id']}-->"><!--{$a1["sname"]}--></option>
+						<!--{/loop}--><!--{$sr1=""}--><!--{$a1=""}-->
+					</select></div>
+					<div class="ffwbms_select" style="width:140px; margin: 0 .5rem; float: left;"><select name="sr2" id="sr2">
+						<option value="0">未选择</option>
+						<!--{ffwbms ffm_mall_gsort_list,sr1,"pid=12"}--><!--{/*ffwbms_see $sr1*/}-->
+						<!--{loop $sr1 $a1}-->
+						<option value="<!--{$a1['id']}-->"><!--{$a1["sname"]}--></option>
+						<!--{/loop}--><!--{$sr1=""}--><!--{$a1=""}-->
+					</select></div>
+					<div class="ffwbms_select" style="width:140px; margin: 0 .5rem; float: left;"><select name="sr3" id="sr3">
+						<option value="0">未选择</option>
+						<!--{ffwbms ffm_mall_gsort_list,sr1,"pid=13"}--><!--{/*ffwbms_see $sr1*/}-->
+						<!--{loop $sr1 $a1}-->
+						<option value="<!--{$a1['id']}-->"><!--{$a1["sname"]}--></option>
+						<!--{/loop}--><!--{$sr1=""}--><!--{$a1=""}-->
+					</select></div>
+					<div class="ffwbms_select" style="width:140px; margin: 0 .5rem; float: left;"><select name="sr4" id="sr4">
+						<option value="0">未选择</option>
+						<!--{ffwbms ffm_mall_gsort_list,sr1,"pid=14"}--><!--{/*ffwbms_see $sr1*/}-->
+						<!--{loop $sr1 $a1}-->
+						<option value="<!--{$a1['id']}-->"><!--{$a1["sname"]}--></option>
+						<!--{/loop}--><!--{$sr1=""}--><!--{$a1=""}-->
+					</select></div>
+				</p><br>
+				<input type="hidden" name="gcou" id="gcou" value="0" />
+				<input type="hidden" name="scdt" id="scdt" value="" />
+				<input type="hidden" name="scip" id="scip" value="" />
+				<input type="hidden" name="amdt" id="amdt" value="" />
+				<input type="hidden" name="amip" id="amip" value="" />
+				<p>商品货号：</p><input type="text" id="gserial" name="gserial" maxlength="50" ffwbms_verify="true" data-ffv="nonull" />
+				<p>商品名称：</p><input type="text" id="gname" name="gname" maxlength="100" ffwbms_verify="true" data-ffv="nonull" />
+				<p>商品名称1：</p><input type="text" id="gname1" name="gname1" maxlength="100" value="<!--{$vtemp['gname1']}-->" />
+				<p>商品图片：</p>
+				<div class="upfileimg">
+					<div class="upimg">
+							<p>商品图片1</p>
+							<a id="gimg1" href="javascript:;" class="ffwbms_upfile">
+								选择文件<input type="file" name="gimg1" />
+							</a>
+							<div class="imgshow">
+								
+							</div>
+					</div>
+					<div class="upimg">
+							<p>商品图片2</p>
+							<a id="gimg2" href="javascript:;" class="ffwbms_upfile">
+								选择文件<input type="file" name="gimg2" />
+							</a>
+							<div class="imgshow">
+								
+							</div>
+					</div>
+					<div class="upimg">
+							<p>商品图片3</p>
+							<a id="gimg3" href="javascript:;" class="ffwbms_upfile">
+								选择文件<input type="file" name="gimg3" />
+							</a>
+							<div class="imgshow">
+								
+							</div>
+					</div>
+				</div>
+				<p>商品价格1：<input style="width:150px; margin-right: 6rem;" type="text" id="price1" name="price1" ffwbms_verify="true" data-ffv="number" />
+					商品价格2：<input style="width:150px;" type="text" id="price2" name="price2" ffwbms_verify="true" data-ffv="number" /></p>
+				<p style="margin-top: 0.5rem;">发布时间：
+					<input style="width:150px; margin-right: 6rem;" type="text" name="stdt" id="stdt" class="laydate-icon" readonly onclick="laydate()" value="" />
+					<span>结束时间：</span>
+					<input style="width:150px;" type="text" name="eddt" id="eddt" class="laydate-icon" readonly onclick="laydate()" value="" /></p>
+				<p>商品关键字：</p><input type="text" id="gkey" name="gkey" maxlength="255"/>
+				<p>商品描述：</p><input type="text" id="gdesc" name="gdesc" maxlength="255"/>
+				<p>商品详情：</p>
+				<script id="gtxt" name="gtxt" type="text/plain" style="max-width:1024px;height:500px;"></script>
+				<p style="margin-top: 0.5rem;">是否下架：
+				<input class="ffwbms_radio " type="radio" name="sta4" id="ifyn2" value="2" checked="checked"/><label for="ifyn2"class="ffwbms_radio-label radGroup4 ml-80">发布</label>
+				<input class="ffwbms_radio" type="radio" name="sta4" id="ifyn1" value="1" /><label for="ifyn1"class="ffwbms_radio-label radGroup5">暂停</label></p>
+           </form>
+		   <button type="button" class="add" onclick="goodbtn()">确认新增</button>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	
+	var o = new Date();
+	var year = o.getFullYear();//年
+	var month = o.getMonth();//月
+	var day = o.getDate();//日
+	var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+	$("#stdt").val(n);
+	var o = new Date();
+	var year = o.getFullYear()+1;//年
+	var month = o.getMonth();//月
+	var day = o.getDate();//日
+	var n = ""+ year +"-"+ ((month + 1) > 9 ? (month + 1) : "0" + (month + 1)) +"-"+ (day > 9 ? day : ("0" + day));
+	$("#eddt").val(n);
+
+	$(document).ready(function () {
+		var gtxt = UE.getEditor('gtxt'); // 实例化编辑器
+	});
+
+	function goodbtn(){
+		var gname = $.trim($("#gname").val());
+		var gserial = $.trim($("#gserial").val());
+		if (IsNotEmpty(gname) == false) {
+			layer.open({content: '商品名不能为空！'});
+			return false;
+		}
+		if (IsNotEmpty(gserial) == false) {
+			layer.open({content: '商品货号不能为空！'});
+			return false;
+		}
+		// 获得商品贷号是否存在，存在则不能增加，保证商品贷号的唯一性
+		var gs = $.trim($('#gserial').val());
+		var htmlobj=$.ajax({url:"product_gserial_ajax.html?gs="+gs,async:false,cache:false});
+		if(IsNotEmpty($.trim(htmlobj.responseText))){
+			layer.open({content: '商品货号不能重复！'});
+			return false;
+		}
+
+		var price1 = $("#price1").val()*100;
+		$("#price1").val(price1);
+		var price2 = $("#price2").val()*100;
+		$("#price2").val(price2);
+
+		$("#pform").submit()
+	}
+</script>
+</html>

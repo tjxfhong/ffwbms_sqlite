@@ -1,0 +1,325 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<!--{/* 手机 */}-->
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<title>表单样式表测试页</title>
+	<link rel="stylesheet" type="text/css" href="ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+
+	<script type="text/javascript" charset="utf-8" src="../ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../ueditor/editor_api.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="../ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body class="container">
+
+	<div class="flex flex-wsa">
+		<div style="width: 250px; border: 1px solid rgb(255, 0, 0);">模块一</div>
+		<div style="width: 250px; border: 1px solid rgb(255, 0, 0);">模块二</div>
+		<div style="width: 250px; border: 1px solid rgb(255, 0, 0);">模块三</div>
+		<div style="width: 250px; border: 1px solid rgb(255, 0, 0);">模块四</div>
+		<div style="width: 250px; border: 1px solid rgb(255, 0, 0);">模块五</div>
+	</div>
+
+<div class="s_nav_ico">手机</div>
+<div class="l_nav">电脑</div>
+<div id="ToolBarHead">头</div>
+<div id="ToolBarFoot">脚</div>
+#ToolBarHead {display: block;}
+#ToolBarFoot {display: block;}
+
+<div class="leftnav">
+<table class="dxt"  style="width: 90%;">
+	<tr>
+		<th>Month</th>
+		<th>Savings</th>
+	  </tr>
+	  <tr>
+		<td>January</td>
+		<td>$100</td>
+	  </tr>
+</table>
+</div>
+<div id="lnav" class="leftnav">
+<ul>
+    <li>
+        <a href="javascript:;">网站模板管理<f class="ff ff-solid-lower"></f></a>
+        <ul style="display: none;"> 
+            <li class="dli ">
+                <a href="javascript:;">模板管理</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="javascript:;">网站文章分类管理<f class="ff ff-solid-lower"></f></a>
+        <ul style="display: none;">
+            <li class="dli ">
+                <a href="javascript:;">分类管理</a>
+            </li>
+            <li class="dli ">
+                <a href="javascript:;">网站文章管理</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="javascript:;">产品管理<f class="ff ff-solid-lower"></f></a>
+        <ul style="display: none;">
+            <li>
+                <a href="javascript:;">筛选分类管理</a>
+            </li>
+            <li>
+                <a href="javascript:;">产品分类管理</a>
+            </li>
+            <li>
+                <a href="javascript:;">产品管理<f class="ff ff-solid-lower"></f></a>
+				<ul style="display: none;">
+					<li>
+						<a href="javascript:;">产品一</a>
+					</li>
+					<li>
+						<a href="javascript:;">产品二<f class="ff ff-solid-lower"></f></a>
+						<ul style="display: none;">
+							<li>
+								<a href="javascript:;">产品一</a>
+							</li>
+							<li>
+								<a href="javascript:;">产品二</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="javascript:;">产品三</a>
+					</li>
+				</ul>
+			</li>
+        </ul>
+    </li>
+    <li>
+        <a href="javascript:;">广告管理</a>transform: rotate(180deg)
+    </li>
+</ul>
+</div>
+<script type="text/javascript" >
+$(document).ready(function() {
+	$('#lnav a').click(function(){/*菜单点击事件*/
+		/*/console.log($(this).parent().children("ul").children("li").length); // 子UL是否为空*/
+		if($(this).parent().children("ul").children("li").length>0){
+			/*/console.log($(this).parent().children("a").html()); // 子UL是否为空*/
+			$(this).parent().siblings().children("ul").hide(); /*/ 父 -> 同级元素 -> UL，全部 隐藏*/
+			$(this).parent().siblings().children("a").removeClass("active"); /*/ 父 -> 同级元素 -> A，全部 背景*/
+			$(this).parent().siblings().children("a").children("f").css("transform",""); /*/ 父 -> 同级元素全部 箭头*/
+			if($(this).parent().children("ul").is(":visible")){ /*/ 元件是否可见*/
+				$(this).parent().children("ul").hide(); /*/ 父 -> 子UL隐藏*/
+				$(this).toggleClass("active"); /*/ 背景 */
+				/*/console.log($(this).children("f").html())*/
+				$(this).children("f").css("transform",""); /*/ 父 -> 箭头*/
+			}else{
+				$(this).parent().children("ul").show(); /*/ 父 -> 子UL显示*/
+				$(this).toggleClass("active"); /*/ 背景 */
+				/*/console.log($(this).children("f").html())*/
+				$(this).children("f").css("transform","rotate(180deg)"); /*/ 父 -> 箭头*/
+			}
+		}else{
+			$(this).parent().siblings().children("ul").hide(); /*/ 父 -> 同级元素 -> UL，全部 隐藏*/
+			$(this).parent().siblings().children("a").removeClass("active"); /*/ 父 -> 同级元素 -> A，全部 背景*/
+			$(this).parent().siblings().children("a").children("f").css("transform",""); /*/ 父 -> 同级元素全部 箭头*/
+			$(this).toggleClass("active"); /*/ 背景 */
+		}
+	});
+
+	/*A链接增加eq状态号*/
+	var leftsort = $('#lnav').find('a');
+	for(var i = 0; i < leftsort.length; i++){
+		leftsort.eq(i).attr('id',i);
+		if(leftsort.eq(i).attr('href')!='javascript:;'){
+			if(leftsort.eq(i).attr('href').indexOf('?')>0){
+				leftsort.eq(i).attr('href',leftsort.eq(i).attr('href') + '&eq=' + i);
+			}else{
+				leftsort.eq(i).attr('href',leftsort.eq(i).attr('href') + '?eq=' + i);
+			}
+		}
+	}
+
+	leftsort.eq(/*<!--{$get['eq']}-->*/).parent().css({"background-color":"#cbf8fb","display":"block","margin-right":"2rem"});
+	leftsort.eq().parent().parent().prev().css("font-weight","bold");
+	leftsort.eq().parent().parent().show();
+
+	//$('#lnav').height($(document).height()-$('header').height());
+});
+</script>
+
+
+	<div style="width: calc(100% - 4em - 2px);margin: 1em;padding: 1em; border: 1px solid rgb(255, 0, 0);">
+		<h1>表单定义</h1>
+		<form id="testform" class="ffwbms_form" action="" method="post" enctype="multipart/form-data">
+			<input type="search" placeholder="搜索输入框" value="" style="width:80px;" /><br />
+			<input type="search" placeholder="搜索输入框" value="" /><br />
+
+			<input type="submit" value="提交按钮" style="width:80px;" /><br />
+			<input type="submit" value="提交按钮" /><br />
+
+			<input type="reset" value="清空按钮" style="width:80px;" /><br />
+			<input type="reset" value="清空按钮" /><br />
+
+			<input type="button" value="按钮" style="width:80px;" /><br />
+			<input type="button" value="按钮" /><br />
+
+			<input name="test1" type="text" style="width:150px;" placeholder="文本输入框" /><br />
+			<input name="test2" type="text" placeholder="文本输入框" /><br />
+
+			<input type="number" style="width:150px;" placeholder="数字输入框" /><br />
+			<input type="number" onkeypress="return (/^d*(?:.d{0,2})?$/.test(String.fromCharCode(event.keyCode)))"
+				placeholder="数字输入框，可以输入小数，只能小数点后2位" /><br />
+
+			<input type="checkbox" name="checkboxG1" id="checkboxG1" value="checkbox1" />
+			<label for="checkboxG1" class="ffwbms_checkbox-label">多选框1</label>
+			<input type="checkbox" name="checkboxG2" id="checkboxG2" value="checkbox2" checked />
+			<label for="checkboxG2" class="ffwbms_checkbox-label">多选框2</label>
+			<input type="checkbox" name="checkboxG3" id="checkboxG3" value="checkbox3" />
+			<label for="checkboxG3" class="ffwbms_checkbox-label">多选框3</label><br />
+
+			<input type="radio" name="radio1" id="radio1" value="radio1" /><label for="radio1"
+				class="ffwbms_radio-label radGroup1">Option 1</label>
+			<input type="radio" name="radio1" id="radio2" value="radio2" checked="checked" /><label for="radio2"
+				class="ffwbms_radio-label radGroup1">Option 2</label>
+			<input type="radio" name="radio1" id="radio3" value="radio3" /><label for="radio3"
+				class="ffwbms_radio-label radGroup1">Option 3</label><br />
+
+			<div class="ffwbms_select" style="width:150px;">
+				<select name="select1">
+					<option value="select1">select1</option>
+					<option value="select2">select2</option>
+					<option value="select3" selected>select3</option>
+					<option value="select4">select4</option>
+				</select>
+			</div>
+			<div class="ffwbms_select">
+				<select name="select2">
+					<option value="select21">select1</option>
+					<option value="select22">select2</option>
+					<option value="select23" selected>select3</option>
+					<option value="select24">select4</option>
+				</select>
+			</div>
+			<a href="javascript:;" class="ffwbms_upfile">选择文件
+				<input type="file" name="upfile1" />
+			</a><br />
+			<script type="text/javascript" src="../js/layerdate/pc.laydate.js"></script>
+			<input type="text" name="stdt" id="stdt" class="laydate-icon" readonly onclick="laydate()" value="" />
+			<textarea name="textarea"></textarea><br />
+			<script id="editor" type="text/plain" style="max-width:1024px;height:500px;"></script>
+			<div class="ffwbms_select" style="width:150px;">
+				<select name="selverify" id="selverifyID">
+					<option value="username" selected>用户名</option>
+					<option value="password">密码</option>
+					<option value="enhancepassword">高强度密码</option>
+					<option value="email">email地址</option>
+					<option value="telephone" selected="selected">电话号码</option>
+					<option value="date">日期：XXXX-XX-XX</option>
+					telephone
+					date
+				</select>
+			</div>
+			<input id="teststring" name="test2" type="text" verify="email" placeholder="输入框"
+				value="+8613072270323" /><br />
+			<input type="button" value="表单提交" style="width:80px;" onclick="yz();" /><br />
+		</form>
+	</div>
+	<br /><br /><br />
+	<input class="ffwbms_button" value="提交" style="width:80px;" /><br />
+	<input class="ffwbms_button" value="提交" /><br />
+	<input class="ffwbms_text" style="width:150px;" placeholder="输入框" /><br />
+	<input class="ffwbms_text" placeholder="输入框" /><br />
+	<input class="ffwbms_checkbox" type="checkbox" name="checkboxG4" id="checkboxG4" /><label for="checkboxG4"
+		class="ffwbms_checkbox-label">多选框</label>
+	<input class="ffwbms_checkbox" type="checkbox" name="checkboxG5" id="checkboxG5" /><label for="checkboxG5"
+		class="ffwbms_checkbox-label">多选框</label><br />
+	<input class="ffwbms_radio" type="radio" name="radiog_lite1" id="radio4" /><label for="radio4"
+		class="ffwbms_radio-label radGroup4">Option 1</label>
+	<input class="ffwbms_radio" type="radio" name="radiog_lite1" id="radio5" checked="checked" /><label for="radio5"
+		class="ffwbms_radio-label radGroup5">Option 2</label>
+	<input class="ffwbms_radio" type="radio" name="radiog_lite1" id="radio6" /><label for="radio6"
+		class="ffwbms_radio-label radGroup6">Option 3</label><br />
+	<div class="ffwbms_select">
+		<select name="select3">
+			<option value="select1">select1</option>
+			<option value="select2">select2</option>
+			<option value="select3" selected>select3</option>
+			<option value="select4">select4</option>
+		</select>
+	</div>
+	<a href="javascript:;" class="ffwbms_upfile">选择文件
+		<input type="file" name="" id="">
+	</a><br />
+
+
+	<br /><br /><br />
+
+	<br />
+	<br />
+	<!--script type="text/javascript" src="ffwbms.js/jquery-1.9.1.min.js"></script-->
+	<script type="text/javascript" src="ffwbms.js/ffwbms_verify.js"></script>
+	<script language="javascript">
+		
+		$(document).ready(function() {
+			var ue = UE.getEditor('editor');// 实例化编辑器
+		});
+
+		function yz() {
+			/*
+				var strObj = document.getElementById('teststring');
+				var _verify = strObj.getAttribute("verify");
+				//var _verify = $("#teststring").attr("verify");
+			alert(_verify);
+			*/
+
+
+			var ss = false;
+			$(".lrf_form input").each(function () {
+				var _verify = $(this).attr("verify");
+				if (_verify != undefined) {
+					if (ffwbms_verify($(this).val(), _verify)) {
+						//alert('真，验证成功');
+						ss = true;
+					} else {
+						var aa = new Array();
+						var aa = ffwbms_verify_note(_verify);
+						layer.msg(aa["name"] + "验证失败，正确的写法应该是：<br />" + aa["value"]);
+						ss = false;
+						return false;
+					}
+				}
+			});
+			if (ss) {
+				layer.msg('登录成功');
+			}
+
+			var strObj = document.getElementById('selverifyID');
+			var _index = strObj.selectedIndex; // 选中索引，只能用getElementById，不能用getElementsByName
+			var _seltext = strObj.options[_index].text; // 选中文本
+			var _selval = strObj.options[_index].value; // 选中值
+
+			var strObj = document.getElementById('teststring');
+			strObj.setAttribute("verify", _selval);
+
+			var _verify = strObj.getAttribute("verify");
+			if (_verify != 'null') {
+				if (ffwbms_verify(strObj.value, _verify)) {
+					alert('真，验证成功');
+				} else {
+					alert("假，验证失败\n\r" + ffwbms_verify_note(_verify));
+				}
+			}
+			/**/
+			//var formObj = document.getElementById('testform');
+			//formObj.submit();
+		}
+	</script>
+</body>
+</html>

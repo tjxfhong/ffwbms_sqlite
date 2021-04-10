@@ -1,0 +1,276 @@
+<!--{if getcookie(uid)==""}-->
+	<!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="../access/css/admin_style.css"/>
+    <script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script src="../access/ffwbms/ffwbms.js/ffwbms_verify.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../access/js/layer/mobile/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+        <div class="right_nav">
+            当前位置：
+            <a href="index.html?<!--{if $get['developer']=='1'}-->developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">文章分类管理</a>
+        </div>
+        <div class="right_cont">
+            <div class="sortlist" style="float: left;">
+				<h3 class="mt-50">文章分类列表</h3>
+            	<ul>
+            		<!--{ffwbms ffm_art_sort_list,vtemp,"pid=0"}-->
+            		<!---{ffwbms_see $vtemp}-->
+					<!--{loop $vtemp $ary}-->
+					<!--{$aa=$ary["id"]}-->
+            		<li>
+            			<a href="javascript:;" id="del" onclick="edit('<!--{$aa}-->','1',this)">
+            				<!--{$ary["sname"]}-->
+            			</a>
+						<ul>
+							<!--{ffwbms ffm_art_sort_list,vtemp2,"pid=".$ary["id"]}-->
+							<!--{loop $vtemp2 $ary2}-->
+							<!--{$bb=$ary2["id"]}-->
+							<li>
+								<a href="javascript:;" id="del" onclick="edit('<!--{$bb}-->','1',this)">
+									<!--{$ary2["sname"]}-->
+								</a>
+								<ul>
+									<!--{ffwbms ffm_art_sort_list,vtemp3,"pid=".$ary2["id"]}-->
+									<!--{loop $vtemp3 $ary3}-->
+									<!--{$cc=$ary3["id"]}-->
+									<li>
+										<a href="javascript:;" id="del" onclick="edit('<!--{$cc}-->','0',this)">
+											<!--{$ary3["sname"]}-->
+										</a>
+										<ul>
+											<!--{ffwbms ffm_art_sort_list,vtemp4,"pid=".$ary3["id"]}-->
+											<!--{/*ffwbms_see $vtemp4*/}-->
+											<!--{loop $vtemp4 $ary4}-->
+											<!--{$dd=$ary4["id"]}-->
+											<li>
+												<a href="javascript:;" id="del" onclick="edit('<!--{$dd}-->','0',this)">
+													<!--{$ary4["sname"]}-->
+												</a>
+											</li>
+											<!--{/loop}-->
+											<!--{$vtemp4=""}-->
+										</ul>
+									</li>
+									<!--{/loop}-->
+									<!--{$vtemp3=""}-->
+								</ul>
+							</li>
+							<!--{/loop}-->
+							<!--{$vtemp2=""}-->
+						</ul>
+					</li>
+            		<!--{/loop}-->
+            	</ul>
+				注：分类下有子分类时，<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不可以在此分类下管<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;理文章
+            </div>
+            <div class="sortform" style="float: left;">
+				<span id="sort_note"></span><br>
+				<button type="button" class="sortadd" id="newadd" onclick="newadd()">新增根分类</button>
+				<button type="button" class="sortadd" id="newsub" style="display: none;" onclick="newsub()">新增子分类</button>
+				<form action="art_sort_addok.html?<!--{if $get['developer']=='1'}-->developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" method="post" id="artsortform">
+					<input name="id" id="id" type="hidden" value="0" />
+					<input name="pid" id="pid" type="hidden" value="0" />
+					<input name="uid" id="uid" type="hidden" value="0" />
+					<div>
+						<p>分类名：</p>
+						<input class="ffwbms_text" type="text" name="sname" id="sname" maxlength="50" ffwbms_verify="true" data-ffv="nonull"/>
+					</div>
+					<div>
+						<p>短分类名：</p>
+						<input class="ffwbms_text" type="text" name="mname" id="mname" maxlength="20"/>
+					</div>
+					<div>
+						<p>模板文件名：</p>
+						<input class="ffwbms_text" type="text" name="spage" id="spage" maxlength="20"/>
+					</div>
+					<div>
+						<p>分类类型：</p>
+						<input type="hidden" name="sart" id="sart" value="0"/>
+						<input class="ffwbms_radio" type="radio" name="styp" id="styp1" value="0" /><label for="styp1"
+							class="ffwbms_radio-label radGroup4">空</label>
+						<input class="ffwbms_radio" type="radio" name="styp" id="styp2" value="1" /><label for="styp2"
+							class="ffwbms_radio-label radGroup5">单页分类</label>
+						<input class="ffwbms_radio" type="radio" name="styp" id="styp3" value="2" checked="checked" /><label for="styp3"
+							class="ffwbms_radio-label radGroup6">列表分类</label>
+						<input class="ffwbms_radio" type="radio" name="styp" id="styp4" value="3" /><label for="styp4"
+							class="ffwbms_radio-label radGroup7">单页+分类</label>
+					</div>
+					<div>
+						<p>是否可用：</p>
+						<input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn1" value="1" /><label for="ifyn1"
+							class="ffwbms_radio-label radGroup1">暂停</label>
+						<input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn2" checked="checked" value="2"/><label for="ifyn2"
+							class="ffwbms_radio-label radGroup1">正常</label>
+					</div>
+				</form>
+				
+					
+				<button type="button" class="sortcofirm" onclick="artadd()" id="btn">确认新增</button>
+				<button type="button" class="sortdel" onclick="artdel()">删除分类</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	//提交分类
+	function artadd(){
+		var styp = $("input[name='styp']:checked").val();
+		if(styp==1 || styp==3){
+			//alert("单页分类文章处理处理");
+			var sname = $.trim($("#sname").val())
+			// 增加分类单页文章
+			var htmlobj = $.ajax({
+				type: "POST",
+				url: "art_sort_add_singleok.html",
+				data: { atyp: 2, atit: sname },
+				success: function (result) { htmlobj = result },
+				async: false,
+				cache: false
+			});
+			//alert(htmlobj.responseText);
+			var jsonVal = $.parseJSON(htmlobj.responseText);
+			//alert(jsonVal.id);//新增加的文章号
+			$("#sart").val(jsonVal.id);
+		}
+		//var btn = document.getElementById("btn").innerText = "确认新增"
+		$("#artsortform").submit()
+	}
+	//新增分类
+	function newadd(){
+		$("#newsub").hide();
+		document.getElementById("btn").innerText = "确认新增"
+		$("#id").val(0)
+		$("#pid").val("")	
+		$("#sname").val("")	
+		$("#mname").val("")	
+		$("#spage").val("")	
+		$("#sart").val("0")	
+		for (var i = 1; i < 5; i++) {
+			$("#styp" + i).get(0).checked = false;
+		}
+		$("#styp3").get(0).checked = true;;
+		for (var i = 1; i < 3; i++) {
+			$("#ifyn" + i).get(0).checked = false;
+		}
+		$("#ifyn2").get(0).checked = true;;
+		$("#artsortform").attr("action","art_sort_addok.html?<!--{if $get['developer']=='1'}-->developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->")
+
+	}
+	//新增子节点
+	function newsub(){
+		var pid = $("#id").val();
+		$("#newsub").hide();
+		document.getElementById("btn").innerText = "新增子节点"
+		$("#id").val(0)
+		$("#pid").val(pid)	
+		$("#sname").val("")	
+		$("#mname").val("")	
+		$("#spage").val("")	
+		$("#sart").val("0")	
+		for (var i = 1; i < 5; i++) {
+			$("#styp" + i).get(0).checked = false;
+		}
+		$("#styp3").get(0).checked = true;;
+		for (var i = 1; i < 3; i++) {
+			$("#ifyn" + i).get(0).checked = false;
+		}
+		$("#ifyn2").get(0).checked = true;;
+		$("#artsortform").attr("action","art_sort_addok.html?<!--{if $get['developer']=='1'}-->developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->")
+
+	}
+	//编辑文章分类
+	function edit(id,sub,obj) {
+		$(".sortlist a").removeClass('curr');
+		$(obj).addClass('curr');
+		// 是否可增加子分类
+		if(sub==1){
+			$("#newsub").show();
+		}else{
+			$("#newsub").hide();
+		}
+		document.getElementById("btn").innerText = "确认编辑"
+		// $("#add").css('display','none');
+		var htmlobj = $.ajax({ url: "art_sort_db_ajax.html?id=" + id, async: false, cache: false });
+		//alert(htmlobj.responseText);
+		var dataObj = $.parseJSON(htmlobj.responseText);
+		//alert(dataObj.sname)
+		$("#id").val(dataObj.id)
+		$("#pid").val(dataObj.pid)	
+		$("#sname").val(dataObj.sname)	
+		$("#mname").val(dataObj.mname)
+		$("#spage").val(dataObj.spage)
+		$("#sart").val(dataObj.sart)	
+		for (var i = 1; i < 5; i++) {
+			$("#styp" + i).get(0).checked = false;
+		}
+		if(dataObj.styp==0)$("#styp1").get(0).checked = true;;
+		if(dataObj.styp==1)$("#styp2").get(0).checked = true;;
+		if(dataObj.styp==2)$("#styp3").get(0).checked = true;;
+		if(dataObj.styp==3)$("#styp4").get(0).checked = true;;
+		for (var i = 1; i < 3; i++) {
+			$("#ifyn" + i).get(0).checked = false;
+		}
+		if(dataObj.ifyn==1)$("#ifyn1").get(0).checked = true;;
+		if(dataObj.ifyn==2)$("#ifyn2").get(0).checked = true;;
+		$("#artsortform").attr("action","art_sort_editok.html?<!--{if $get['developer']=='1'}-->developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->")
+	}
+	//删除文章分类
+	function artdel() {
+		var id = $("#id").val();
+		if(id==0){
+			layer.open({content: '未选择分类，不能删除！'});
+			return false;
+		}
+        layer.open({
+            content:"确认删除文章分类吗?", 
+            btn: ['确定','放弃'] ,
+            yes: function(index){ // 确定
+				var htmlobj = $.ajax({ url: "art_sort_issort_ajax.html?id=" + id , async: false, cache: false });
+				if($.trim(htmlobj.responseText)==0){
+					var htmlobj = $.ajax({ url: "art_sort_isart_ajax.html?id=" + id , async: false, cache: false });
+					if($.trim(htmlobj.responseText)==0){
+						var styp = $("input[name='styp']:checked").val();
+						if(styp==1 || styp==3){
+							alert("单页分类文章处理处理"+"[]");
+						}
+						window.location.href = "art_sort_delok.html?<!--{if $get['developer']=='1'}-->developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->&id=" + id
+					}else{
+						layer.open({content: '分类下有文章，不能删除分类！'});
+					}
+				}else{
+					layer.open({content: '分类下有子分类，不能删除分类！'});
+				}
+		    },
+            no: function(index){ // 放弃
+                layer.close(index)
+            }
+        });
+	}
+	
+</script>
+</html>

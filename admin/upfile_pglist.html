@@ -1,0 +1,124 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站上传文件管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="../access/css/admin_style.css"/>
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script src="../access/js/layer/mobile/layer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../access/ffwbms/ffwbms.js/ffwbms_upfileimg.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_upfile_sort_db,upfile_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+			<a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">上传文件管理</a> - <a href="javascript:;"><!--{$upfile_db["sname"]}--></a>
+        </div>
+        <div class="right_cont">
+			<!--{$aa=$get['pid']}-->
+			<button type="button"  class="linkbtn listadd mb-20" onclick="upfileadd('<!--{$aa}-->')">新增上传文件</button>
+				<!--{ffwbms ffm_upfile_pg_list,upfile,"pid=".$get["pid"]."|pg=".$get["pg"]."|ps=10"}-->
+				<!--{/*ffwbms_see $upfile*/}-->
+				<table class="dxt filels">
+				<tr>
+					<td style="width: 7rem;">文件标题</td>
+					<td style="width: 9rem;">原文件名</td>
+					<td style="width: 9rem;">文件在线地址</td>
+					<td style="width: 5rem;">类型</td>
+					<td style="width: 5rem;">文件大小</td>
+					<td style="width: 3rem;">动作</td>
+				</tr>
+				<!--{loop $upfile["0"] $ary}-->
+				<tr>
+					<td style="width: 7rem;"><a href="upfile_edit.html?id=<!--{$ary['id']}-->&pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$ary["ftit"]}--></a></td>
+					<td style="width: 9rem;"><!--{$ary['fnote']}--></td>
+					<td style="width: 9rem;"><!--{$ary['furl']}--></td>
+					<td style="width: 5rem;"><!--{$ary['fext']}--></td>
+					<td class="file_size" style="width: 5rem;"><!--{$ary['sta3']}--></td>
+					<td style="width: 3rem;"><span class="ffwbms_button" onclick="upfiledels('<!--{$bb}-->')">删除</span></td>
+				</tr>
+				<!--{/loop}-->
+				<!--{/*"ftxt":"",
+				"ftit":"上传文件标题1",
+				"pid":"1240",
+				"fnote":"飞鸿产品网络宣传平台.pdf",
+				"furl":"/upfiles/202102/20210215235221iIvXNk.pdf",
+				"fext":"pdf",
+				"ifyn":"2",
+				"id":"1238",
+				"sta3":"211270"*/}-->
+			</table>
+			<!--{if $upfile['1']['pages']>1}-->
+			<div class="admin_page">
+				<!--{if $upfile['1']['curr']>1}-->
+				<a href="upfile_pglist.html?pid=<!--{$get['pid']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">首页</a>
+				<!--{/if}-->
+
+				<!--{loop $upfile["1"]['p_list'] $ary}-->
+				<a href="upfile_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">
+					<!--{$ary}-->
+				</a>
+				<!--{/loop}-->
+
+				<a href="javascript:;" class="admin_pages pages_acitve">
+					<!--{$upfile['1']['curr']}-->
+				</a>
+
+				<!--{loop $upfile["1"]['n_list'] $ary}-->
+				<a href="upfile_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">
+					<!--{$ary}-->
+				</a>
+				<!--{/loop}-->
+
+				<!--{if $upfile['1']['curr']<$upfile['1']['pages']}-->
+				<a href="upfile_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$upfile['1']['pages']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">尾页</a>
+				<!--{/if}-->
+			</div>
+			<!--{/if}-->
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	$(".file_size").each(function(){
+		//console.log($(this).html());
+		$(this).html(ffwbms_bindupChange_conver($(this).html()));
+	});
+	function upfileadd(pid){
+		location.href="upfile_add.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+	}
+	function upfiledels(id){
+        layer.open({
+            content:"确认删除此文件吗?", 
+            btn: ['确定','放弃'] ,
+            yes: function(index){ // 确定
+				window.location.href="upfile_delok.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}-->&id="+id + "<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+			},
+			no: function(index){ // 放弃
+                layer.close(index)
+            }
+        });
+	}
+</script>
+</html>

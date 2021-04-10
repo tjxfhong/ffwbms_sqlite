@@ -1,0 +1,185 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    //window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp["keywords"]}-->">
+    <meta name="description" content="<!--{$seo_vtemp["description"]}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+    <script type="text/javascript" src="../access/js/jquery-1.7.2.min.js"></script>
+	<script src="../access/ffwbms/ffwbms.js/ffwbms_verify.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_indate.js"></script>
+	<script src="../access/yhhtmledit/jquery-1.7.2.min.js"  charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../access/yhhtmledit/jquery.yhHtmlEdit1.css"/>
+		<script src="../access/yhhtmledit/jquery.yhHtmlEdit1.js"  charset="utf-8"></script>
+		<script language="JavaScript">
+			$(document).ready(function() {
+			    $("#ahtml").cleditor({controls:"bold italic underline strikethrough subscript superscript | font size style | color highlight removeformat | bullets numbering | outdent indent | alignleft center alignright justify | rule image link unlink | cut copy paste | source",  width:730, height: 500, useCSS:true})[0].focus();
+			});
+		</script>
+
+</head>
+<body class="container" style="opacity: 15;">
+	<div class="navbar">
+		<div class="navimg"><img src="../access/image/user.png" style="width: 3%;"></div>
+		<h1>
+			企业后台管理系统
+		</h1>
+		<h3>
+			<span>admin</span>
+		</h3>
+		<div class="menu-notify">
+			<button id="showLeftPush"><span class="ff ff-navicon nav"></span></button>
+		</div>
+	</div>
+	<script>
+	        var show = false;
+	        showLeftPush.onclick = function() {
+				if(show){
+					disableOther();
+					show=false
+					return;
+				}
+				var menuLeft = document.getElementById('12nav'),
+				    showLeftPush = document.getElementById('showLeftPush'),
+				    body = document.body;
+				menuLeft.style.display="block";
+				show=true;
+	            // classie.toggle(this, 'active');
+	            // classie.toggle(body, 'cbp-spmenu-push-toright');
+	            // classie.toggle(menuLeft, '12nav');
+	            disableOther('showLeftPush');
+	        };
+	
+	        function disableOther(button) {
+				var menuLeft = document.getElementById('12nav'),
+				    showLeftPush = document.getElementById('showLeftPush'),
+				    body = document.body;
+	            if (button !== 'showLeftPush') {
+					document.getElementById("12nav").style.display="none";
+	                // classie.toggle(showLeftPush, 'disabled');
+	            }
+	        }
+	    </script>
+    <div class="l2nav" id="12nav" >
+        <ul style="height: 764px;">
+            <li >
+                <a href="javascript:;" class="coa">网站设置<f class="ff ff-solid-lower"></f></a>
+                <ul class="dul" style="display: none;">
+                    <li class="dli ">
+                        <a href="setconfig.html?tname=config">网站设置</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="coa">网站文章分类管理<f class="ff ff-solid-lower"></f></a>
+                <ul class="dul" style="display: none;">
+                    <li class="dli ">
+                        <a href="art_sort.html?tname=sort">分类管理</a>
+                    </li>
+                    <li class="dli ">
+                        <a href="art_list.html?tname=art_list">网站文章管理</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;" class="coa">网站产品管理<f class="ff ff-solid-lower"></f></a>
+                <ul class="dul" >
+                    <li class="dli ">
+                        <a href="screen_sort.html?tname=screen_sort">筛选分类管理</a>
+                    </li>
+                    <li class="dli ">
+                        <a href="product_sort.html?tname=product_sort">产品分类管理</a>
+                    </li>
+                    <li class="dli ">
+                        <a href="product_list.html?tname=product_list">产品管理</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+        		<a href="javascript:;"  class="coa">网站广告管理<f class="ff ff-solid-lower"></f></a>
+        		<ul class="dul">
+        			<li class="dli ">
+        				<a href="ad_sort.html?tname=ad_sort">广告分类管理</a>
+        			</li>
+        			<li class="dli ">
+        				<a href="ad_list.html?tname=ad_list">广告管理</a>
+        			</li>
+        		</ul>
+            </li>
+        	<li>
+        		<a href="javascript:;"  class="coa">网站友情管理<f class="ff ff-solid-lower"></f></a>
+        		<ul class="dul">
+        			<li class="dli ">
+        				<a href="links_list.html?tname=links_list">友情链接管理</a>
+        			</li>
+        			
+        		</ul>
+        	</li>
+        	<li>
+        		<a href="javascript:;"  class="coa">修改密码<f class="ff ff-solid-lower"></f></a>
+        		<ul class="dul">
+        			<li class="dli ">
+        				<a href="cypher.html?tname=cypher">修改密码</a>
+        			</li>
+        			
+        		</ul>
+        	</li>
+        	<li>
+        		<a href="quit.html?tname=quit"  class="coa">退出登录</a>
+        	</li>
+        </ul>
+        <script type="text/javascript">
+        $(function() {
+            //菜单动作
+            $('a').on('click', function() {
+                $(this).parent().toggleClass('active');
+                $(this).parent().siblings().removeClass('active');
+                $(this).next().slideToggle();
+                $(this).parent().siblings().find('.dul').slideUp();
+            });
+        });
+        </script>
+        
+    </div>
+    <div class="right">
+        <div class="right_nav">
+            当前位置：
+            <a href="index.html">广告增加</a>
+        </div>
+        <div class="right_cont">
+           <form action="" method="post" enctype="multipart/form-data">
+			<p class="mb-20">广告名称：</p><input type="text" class="ffwbms_text mb-10" id="aname" name="aname" value="" ffwbms_verify="true" data-ffv="nonull" />
+           	<p class="mb-20">广告标题：</p><input type="text" class="ffwbms_text mb-10" id=""  name="atitle" value="" />
+			<p class="mb-20">广告合同号：</p><input type="text" class="ffwbms_text mb-10" id="" name="pactno" value="" />
+			<p class="mb-20">广告图片：</p><a href="javascript:;" class="ffwbms_upfile">选择文件<input type="file" name="aimg" /></a>
+			<p class="mb-20 mt-10">广告跳转地址：</p><input type="text" class="ffwbms_text mb-10" id="" name="aurl" value="" />
+			<p class="mb-20">正文：</p><textarea name="ahtml" id="ahtml" class="mb-10"></textarea>
+			<p class="mb-20 mt-20">开始时间：</p><input name="astart" class="mb-10 ml-80" type="text" id="sdate" style="width:100px" onfocus="ffcms_setDate(this,2020,2049)"value="2018-08-05" readonly><br />
+			<p class="mb-20 mt-20">结束时间：</p><input name="astop" class="mb-10 ml-80" type="text" id="sdate" style="width:100px" onfocus="ffcms_setDate(this,2020,2049)"value="2018-08-05" readonly><br />
+			<p class="mb-20">是否可用：</p>
+			<input class="ffwbms_radio " type="radio" name="ifyn" id="radio4" value="2" checked="checked"/><label for="radio4"class="ffwbms_radio-label radGroup4 ml-80">正常</label>
+			<input class="ffwbms_radio" type="radio" name="ifyn" id="radio5" value="1" /><label for="radio5"class="ffwbms_radio-label radGroup5">暂停</label>
+           </form>
+		   <button type="button" class="mt-40">确认新增</button>
+        </div>
+    </div>
+	<!-- <div class="s_nav_ico">手机</div> -->
+	<!-- <div class="l_nav">电脑</div> -->
+	<!-- <div id="ToolBarHead">头</div>
+	<div id="ToolBarFoot">脚</div> -->
+</body>
+
+</html>

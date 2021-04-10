@@ -1,0 +1,21 @@
+<!--{if getcookie(uid)==""}-->
+    <!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>文章删除OK</title>
+</head>
+
+<body>
+	<!--{if $get['id']!=""}-->
+		<!--{ffwbms ffm_art_del,vtemp,"id=".$get['id']}-->
+		<!--{/*ffwbms_see $vtemp*/}-->
+	<!--{/if}-->
+	<!--{if $get['developer']=='1'}--><!--{$developer='&developer=1'}--><!--{else}--><!--{$developer=''}--><!--{/if}-->
+	<!--{ffwbms_redirect 307,aaa,"art_pglist.html?pid=".$get['pid']."&pg=".$get['pg'].$developer."&eq=".$get['eq']}-->
+</body>
+</html>

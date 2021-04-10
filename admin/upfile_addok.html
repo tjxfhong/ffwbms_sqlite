@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>上传文件增加OK</title>
+</head>
+
+<body>
+<!--{/*ffwbms_see $post*/}-->
+<!--{/*ffwbms_see $upfile*/}-->
+<!--{if $upfile!=""}-->
+	<!--{$post["fext"]=$upfile["furl"]["fext"]}-->	
+	<!--{$post["fnote"]=$upfile["furl"]["fnote"]}-->
+	<!--{$post["sta1"]=0}-->
+	<!--{$post["sta2"]=0}-->
+	<!--{$post["sta3"]=$upfile["furl"]["sta3"]}-->
+<!--{/if}-->
+<!--{/*ffwbms_see $post*/}-->
+
+<!--{ffwbms ffm_upfile_add,vtemp,""}-->
+<!--{/*ffwbms_see $vtemp*/}-->
+<script language="JavaScript">
+	window.location.href="upfile_pglist.html?pid=<!--{$post['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"
+</script>
+</body>
+</html>

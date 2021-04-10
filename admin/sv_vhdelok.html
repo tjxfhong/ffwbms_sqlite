@@ -1,0 +1,33 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title>虚拟主机管理 - 网站上传文件管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="../access/css/admin_style.css"/>
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script src="../access/js/layer/mobile/layer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../access/ffwbms/ffwbms.js/ffwbms_upfileimg.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="container">
+
+	<!--{ffwsvmanage delvhost,vtemp,"json=1|vhn=".$get['vhn']}-->
+	<!--{ffwbms_see $vtemp}-->
+	<!--{ffwbms_redirect 307,,"sv_vhlist.html?pg=".$get["pg"]."&developer=".$get["developer"]."&eq=".$get["eq"]}-->
+
+</body>
+</html>

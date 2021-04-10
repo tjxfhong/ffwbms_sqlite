@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="access/js/jquery-3.5.1.js" type="text/javascript" charset="utf-8"></script>
+	<title>文章分类增加OK</title>
+</head>
+
+<body>
+
+	<!--{ffwbms ffm_art_sort_add,vtemp/*vtemp是返回变量*/,""/*分类增加*/}-->
+	<!--{/*ffwbms_see $vtemp*/}-->
+	<script language="Javascript">
+		window.location.href = "art_sort.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"
+	</script>
+</body>
+
+</html>

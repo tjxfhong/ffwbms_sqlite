@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"><!--{/* 手机 */}-->
+
+    <title>css外层DIV半透明内层div不透明-弹出层效果的实现【实例】</title>
+    <style type="text/css">
+        <!--
+        body,td,th {
+            font-size: 12px; padding:0; margin:0;
+        }
+        .tanchuang_wrap{ width:100%; height:100%;position:absolute;left: 0px;top: 0px;z-index:100; display:none;}
+        .lightbox{width:100%;z-index:101; height:100%;background-color:red;filter:alpha(Opacity=20);-moz-opacity:0.2;opacity:0.2; position:absolute;top:0px;left:0px;}
+        .tanchuang_neirong{width:353px;height:153px;border:solid 1px #f7dd8c;background-color:#FFF;position:absolute;z-index:105;left: 123px;top: 123px;}
+        -->
+    </style>
+    <script language="javascript">
+		function bodyScroll(event){  
+		    event.preventDefault();  
+		} 
+        function closeDiv(divId){
+			document.getElementById(divId).style.display = 'none';
+            document.documentElement.style.overflow='auto'; //开启页面滚动
+        }
+        function displayDiv(divId){
+			document.getElementById(divId).style.display = 'block';
+            document.documentElement.style.overflow='hidden'; //禁止页面滚动
+			//document.body.style.overflow='hidden';//手机版设置这个。
+        }
+    </script>
+</head>
+<body>
+<div >
+	<script>
+		if (window.applicationCache) {
+			alert('支持HTML5');
+		} else {
+			alert("你的浏览器不支持HTML5");
+		}/**/
+	</script>
+
+    <div class="tanchuang_wrap" id="aaaa">
+        <div class="lightbox"></div>
+        <div class="tanchuang_neirong">
+            <p><span onClick="closeDiv('aaaa')" style=" cursor:pointer;">关闭</span></p>
+            这里是弹窗内容
+        </div>
+    </div>
+    <span onclick="displayDiv('aaaa')" style="cursor:pointer;">点击我</span>
+    <p>测试通过，兼容IE6.0、IE7.0、火狐3.6、遨游等各大浏览器</p>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+	测试通过，兼容IE6.0、IE7.0、火狐3.6、遨游等各大浏览器
+</div>
+</body>
+</html>

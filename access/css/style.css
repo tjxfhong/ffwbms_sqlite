@@ -1,0 +1,432 @@
+*{font-size: 16px;}
+
+:root{ /* color: var(--color-1); */
+	--color-0: #FFFFFF; /*页面背景色 1*/
+	--color-1: #FBFCFD; /*背景色 1*/
+	--color-2: #353535; /*主文字色 2*/
+	--color-3: #7479A2; /*内容 3*/
+	--color-4: #474E74; /*标题色 4*/
+	--color-5: #5E658E; /*副标题色 5*/
+	--color-6: #5E87FE; /*按钮1 6*/
+	--color-7: #3061E4; /*按钮2 7*/
+	--color-8: #e6f0ff; /*配色 8*/
+	--color-9: #04285B; /*导航 9*/
+}
+
+body{background: var(--color-0); position: relative;}
+a{color: var(--color-8);}
+strong{font-weight: bold;}
+.indent2{text-indent: 2rem;}
+
+/* TOP */
+.top{width: 100%; height: 5.625rem; border-bottom: 2px solid var(--color-8); overflow: hidden;}
+.top2{max-width: 75rem; height: 5.625rem; line-height: 5.625rem; font-size: 1.25rem; margin: 0 auto;}
+.top a{color: var(--color-9); padding: 0 1rem;}
+.top .logo{float: left; width: 160px; height: 50px; text-align: center; margin: 20px 0 0 1rem; line-height: 50px;}
+.top .logo span{font-size: 34px; line-height: 50px; 
+	text-shadow: var(--color-6) 6px 6px 6px;/*文字加阴影，颜色可以根据需要修改，包括阴影的像素值*/
+	background-image: linear-gradient(0deg,var(--color-7),rgb(49, 49, 167)); -webkit-background-clip: text; color: transparent;/*文字渐变色*/
+	/*color: transparent; -webkit-text-fill-color: #ffdaa6;文字的填充色*//*-webkit-text-stroke: 3px rgb(175, 65, 65);边框*/
+}
+.top .logo span.s1{text-shadow: var(--color-3) 6px 6px 6px;; background-image: none; -webkit-background-clip: unset; color: var(--color-7);}
+.top .logo span.s2{text-shadow: var(--color-3) 6px 6px 6px;; background-image: none; -webkit-background-clip: unset; color: var(--color-6);}
+.top .logo img{max-width: 100%; max-height: 100%;}
+.top ul{overflow: hidden;}
+.top ul li{display: block; float: left;  line-height: 5.625rem;}
+.top ul li:hover,.top ul li.curr{background: var(--color-8);}
+.top .r{float: right; line-height: 50px; text-align: center; margin: 20px 1rem 0 1rem;}
+.top .r a{ padding: 0 0.5rem;}
+
+.ind_1{width: 1562px; max-width: 1920px; height: 875px; margin: 0 auto; overflow: hidden; position: relative;}
+.ind_1 .ind_1_1{max-width: 1200px; height: 875px; overflow: hidden;}
+.ind_1 .dl{width: 642px; height: 512px; overflow: hidden; position: absolute; top: 190px; left: 70px; padding: 0 1.5rem; font-size: 1.3125rem; line-height: 2.5rem;}
+.ind_1 .dl h3{font-size: 3.25rem; line-height: 10rem; text-align: center;}
+.ind_1 .dl button{width: 216px; height: 67px; line-height: 67px; text-align: center; color: var(--color-0); background: var(--color-6);}
+.ind_1 .dl button:hover{background: var(--color-7);}
+.ind_1 .dr{width: 50%; height: 875px; overflow: hidden; float: left;}
+
+.ind_2{width: 100%; height: 666px; overflow: hidden; background: var(--color-1); position: relative;}
+
+.ind_3{max-width: 1200px; overflow: hidden; margin: 0 auto;}
+.ind_3 h3{font-size: 1.5rem; line-height: 7rem; color: var(--color-4); text-align: center;}
+.ind_3 .prog{max-width: 380px; overflow: hidden; text-align: center; float: left; margin: 0 10px 1rem 10px;}
+.ind_3 .prog img{width: 100%; }
+.ind_3 .prog a{color: var(--color-5); line-height: 40px;}
+
+.ind_4{max-width: 1200px; overflow: hidden; margin: 0 auto; margin-bottom: 2rem;}
+.ind_4 h3{font-size: 1.5rem; line-height: 7rem; color: var(--color-4); text-align: center;}
+.ind_4 .link{max-width: 380px; overflow: hidden; text-align: center; float: left; margin: 0 10px 1rem 10px;}
+.ind_4 .link img{color: var(--color-5); max-width: 100%; max-height: 100%;}
+
+.footer{width: 100%; height: 158px; background: #f7f9fc; color: var(--color-3); text-align: center;}
+.footer .na{max-width: 1200px; line-height: 105px; margin: 0 auto; border-bottom: 1px solid var(--color-3);}
+.footer .na a{margin: 0 1rem; color: var(--color-3);}
+.footer .cp{line-height: 50px; font-size: 0.75rem; text-align: center;}
+.footer .cp a{margin: 0 1rem; color: var(--color-3); white-space:nowrap;}
+.footer .cp span{white-space:nowrap;}
+.footer .cp span a{margin: 0; color: var(--color-7); font-weight: bold;}
+
+.pages a{background-color: var(--color-4); border-radius: 1rem;}
+
+.art{max-width: 1200px; margin: 0 auto; font-size: .875rem; overflow: hidden; padding: 1rem; color: var(--color-2); text-align: center;}
+.art h3{text-align: center; font-size: 1.5rem; line-height: 3rem; color: var(--color-4);}
+.art p{color: var(--color-2); text-align: left;}
+.art img{max-width: 100%;}
+.art ul{overflow: hidden;}
+.art li{width: calc(100% - 0.8rem); display: block; line-height: 3rem; border-bottom: 1px solid var(--color-2); padding: 0 0.3rem; text-align: left;}
+.art li a{width: calc(100% - 12rem); color: var(--color-2); font-size: 1.1rem; line-height: 3rem; display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;}
+.art li span{float: right; line-height: 3rem;}
+.art li:hover{background: var(--color-8);}
+
+.soft-ban{width: 100%; height: 500px; background-color:#0b83f7;background-image:linear-gradient(141deg,#4727cc 0%,#304adc 51%,#0b83f7 75%);color:white;opacity:0.95;}
+.soft-ban .ban{max-width: 1200px; height: 500px; margin: 0 auto; background: url(../image/soft_top_bg.png) center right no-repeat;}
+.soft-ban .ban .content{max-width: 460px; height: 320px; margin: 70px 0 0 70px; padding: 20px;; float: left; color: var(--color-9); background: rgba(255,255,255,0.8);}
+
+.temp{max-width: 1200px; margin: 0 auto; overflow: hidden;}
+.t-sort{width: 100%; overflow: hidden; margin-top: 2.5rem;}
+.t-sort h3{color: var(--color-9); font-size: 1.125rem; text-indent: .875rem;}
+.t-sort a{display: block; width: 4.8125rem; line-height: 1.375rem; border: 1px solid var(--color-3); border-radius: .625rem; font-size: .75rem; color: var(--color-9); background: var(--color-8); text-align: center; margin: .625rem .875rem; float: left; box-shadow: 0 0 .4375rem var(--color-3);}
+.t-sort a:hover,.t-sort a.curr{color: var(--color-8); background: var(--color-7);}
+.t-list{width: 100%; overflow: hidden;}
+.t-list li{display: block; width: 17.5rem; height: 16.0625rem; border: 1px solid var(--color-3); font-size: .875rem; color: var(--color-9); background: var(--color-8); text-align: center; margin: .625rem .5rem; float: left;}
+.t-list li .img{width: 17.125rem; height: 14rem; margin: .1875rem; text-align: center;}
+.t-list li .img img{max-width: 17.125rem; max-height: 14rem;}
+.t-list li span{display: block; width: 13.375rem; line-height: 1.625rem; font-size: .875rem; color: var(--color-9); margin: 0 .3125rem; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; float: left;}
+.t-list li button{display: block; width: 2.1875rem; height: 1rem; float: left; font-size: .75rem; padding: 0.2rem; margin: 2px 0 0 .3125rem;box-shadow: 0 0 0.4375rem var(--color-3);}
+
+.temp h2{color: var(--color-9); font-size: 1.125rem; text-indent: .875rem; border-bottom: 1px solid var(--color-8); line-height: 36px; margin: 20px 0 10px 0;}
+.t-info{width: calc(100% - 2px); max-height: 465px; overflow: hidden; font-size: .875rem; color: var(--color-3); margin-top: 2.5rem; border: 1px solid var(--color-3); background: var(--color-8);}
+.t-info .img{width: 42.3%; margin: 1.25%; float: left; overflow: hidden; text-align: center;}
+.t-info .img img{max-width: 100%; max-height: 100%;}
+.t-info .info_d{width: 54.75%; float: left; overflow: hidden;}
+.info_d h3{color: var(--color-9); font-size: 1.25rem; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; margin: 1.625rem 0 0 0;}
+.info_d .time{color: #c1c1c1; font-size: .75rem; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; margin: .625rem 0 0 0;}
+.info_d .details{ height: 6rem; overflow: hidden; margin: 1.75rem 0 0 0;}
+
+.info_d ul{overflow: hidden; margin: .625rem 0;}
+.info_d ul span{float: left; line-height: 43px; color: var(--color-9); font-weight: bold;}
+.info_d li{display: block; line-height: 1.375rem; border: 1px solid var(--color-3); border-radius: .625rem; font-size: .75rem; color: var(--color-9); background: var(--color-8); text-align: center; margin: .625rem .3125rem; padding: 0.15rem 0.5rem; float: left; box-shadow: 0 0 .4375rem #4E4E4E;}
+.info_d li:hover{color: var(--color-8); background: var(--color-7);}
+.info_d button{display: block; width: 8.875rem; height: 2.8125rem; float: left; font-size: 1.25rem; padding: 0.2rem; margin: 1.25rem;color: var(--color-0); background: var(--color-6);}
+.info_d button:hover{background: var(--color-7);}
+
+.t-details{text-align: center; color: var(--color-2); margin: 1.25rem 0;}
+.t-details p{text-align: left; margin: .625rem;}
+.t-details p#img{text-align: center;}
+.t-details p#img img{max-width: 100%;}
+
+.school{max-width: 1200px; margin: 0 auto; overflow: hidden;}
+.school .s-menu{width: 360px; margin: 1.125rem 0; overflow: hidden; float: left;}
+.s-menu ul{}
+.s-menu li{width: 100%; color: var(--color-9); margin-left: 1.875rem; overflow: hidden; float: left;}
+.s-menu li f{width: 1.875rem; line-height: 1.875rem; text-align: center; cursor: pointer; float: left;}
+.s-menu li a{width: calc(100% - 1.875rem); color: var(--color-9); line-height: 1.875rem; overflow: hidden; float: left; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;}
+.s-menu li a:hover{background:  var(--color-8);}
+.s-menu li a.curr{background:  var(--color-8);}
+.school .s-content{width: 100%; max-width: 800px; margin: 1.125rem 0 1.125rem 1.125rem; overflow: hidden; float: left;}
+.s-content h3{text-align: center; font-size: 1.3rem; line-height: 3rem; color: var(--color-4);}
+.s-content a{color: var(--color-4);}
+.s-content a:hover{color: var(--color-7);}
+
+
+.dxt td{font-size:.875rem; width: calc(100% - 4.5rem);}
+.dxt td.t{width:4.5rem;font-size:.875rem; font-weight:bold;text-align:center;text-indent:0px; color:#666;}
+#red{ color:#FF0000;}
+.dxt td h3,
+.dxt td h3 a{text-decoration:none; font-size:.875rem; font-weight:bold;text-indent:0px;color: #003366; text-align: left;}
+.dxt td p{text-indent: 2rem;}
+.dxt td h4{color: #579cd8;}
+
+.ffwbms{max-width: 1200px; margin: 1rem auto; overflow: hidden;}
+.ffwbms h2{font-size: 1.5rem; width: 100%; line-height: 5rem; text-align: center;}
+.f-rjjs{width: 16.75rem; height: 19.25rem; text-align: center; font-size: 0.85rem; padding: 1rem; color: var(--color-6); overflow: hidden;}
+.f-rjjs h4{font-size: 1rem; line-height: 2rem;}
+.f-rjjs img{margin: 1.5rem auto;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 动画 */
+.move-1-10{
+	position: absolute;
+	top: 356px;
+	left: 954px;
+	z-index: 9;
+}
+
+.move-1-01{
+	position:absolute;
+
+	animation: move-1-01 1s alternate;
+	animation-fill-mode: forwards; /*表示动画结束保持当前状态*/
+
+	-moz-animation: move-1-01 1s alternate; /* Firefox */
+
+	-webkit-animation: move-1-01 1s alternate; /* Safari and Chrome */
+	-webkit-animation-fill-mode: forwards; /* Safari and Chrome 表示动画结束保持当前状态，这行要放在后面*/
+
+	-o-animation: move-1-01 1s alternate; /* Opera */
+	z-index: 10;
+}
+
+@keyframes move-1-01{ /* Chrome */
+	from {top:-390px; left: 620px;}
+	to {top:183px; left: 990px;}
+}
+
+@-moz-keyframes move-1-01{ /* Firefox */
+	from {top:-390px; left: 620px;}
+	to {top:183px; left: 990px;}
+}
+
+@-webkit-keyframes move-1-01{ /* Safari and Chrome */
+	from {top:-390px; left: 620px;}
+	to {top:183px; left: 990px;}
+}
+
+@-o-keyframes move-1-01{ /* Opera */
+	from {top:-390px; left: 620px;}
+	to {top:183px; left: 990px;}
+}
+
+.move-1-02{
+	position:absolute;
+	animation: move-1-02 1.5s alternate;
+	animation-fill-mode: forwards;
+	-moz-animation: move-1-02 1.5s alternate;
+	-webkit-animation: move-1-02 1.5s alternate;
+	-webkit-animation-fill-mode: forwards;
+	-o-animation: move-1-02 1.5s alternate;
+	z-index: 10;
+}
+@keyframes move-1-02{
+	from {top:-390px; left: 620px;}
+	to {top:197px; left: 1007px;}
+}
+@-moz-keyframes move-1-02{
+	from {top:-390px; left: 620px;}
+	to {top:197px; left: 1007px;}
+}
+@-webkit-keyframes move-1-02{
+	from {top:-390px; left: 620px;}
+	to {top:197px; left: 1007px;}
+}
+@-o-keyframes move-1-02{
+	from {top:-390px; left: 620px;}
+	to {top:197px; left: 1007px;}
+}
+
+.move-1-03{
+	position:absolute;
+	animation: move-1-03 2s alternate;
+	animation-fill-mode: forwards;
+	-moz-animation: move-1-03 2s alternate;
+	-webkit-animation: move-1-03 2s alternate;
+	-webkit-animation-fill-mode: forwards;
+	-o-animation: move-1-03 2s alternate;
+	z-index: 10;
+}
+@keyframes move-1-03{
+	from {top:-390px; left: 620px;}
+	to {top:202px; left: 1026px;}
+}
+@-moz-keyframes move-1-03{
+	from {top:-390px; left: 620px;}
+	to {top:202px; left: 1026px;}
+}
+@-webkit-keyframes move-1-03{
+	from {top:-390px; left: 620px;}
+	to {top:202px; left: 1026px;}
+}
+@-o-keyframes move-1-03{
+	from {top:-390px; left: 620px;}
+	to {top:202px; left: 1026px;}
+}
+
+.move-1-04{
+	position:absolute;
+	animation: move-1-04 2.5s alternate;
+	animation-fill-mode: forwards;
+	-moz-animation: move-1-04 2.5s alternate;
+	-webkit-animation: move-1-04 2.5s alternate;
+	-webkit-animation-fill-mode: forwards;
+	-o-animation: move-1-04 2.5s alternate;
+	z-index: 10;
+}
+@keyframes move-1-04{
+	from {top:-390px; left: 620px;}
+	to {top:195px; left: 1050px;}
+}
+@-moz-keyframes move-1-04{
+	from {top:-390px; left: 620px;}
+	to {top:195px; left: 1050px;}
+}
+@-webkit-keyframes move-1-04{
+	from {top:-390px; left: 620px;}
+	to {top:195px; left: 1050px;}
+}
+@-o-keyframes move-1-04{
+	from {top:-390px; left: 620px;}
+	to {top:195px; left: 1050px;}
+}
+
+.move-1-05{
+	position:absolute;
+	animation: move-1-05 1s alternate;
+	animation-fill-mode: forwards;
+	-moz-animation: move-1-05 3s alternate;
+	-webkit-animation: move-1-05 1s alternate;
+	-webkit-animation-fill-mode: forwards;
+	-o-animation: move-1-05 3s alternate;
+	z-index: 10;
+}
+@keyframes move-1-05{
+	from {top:-112px; left: 1470px;}
+	to {top:222px; left: 1305px;}
+}
+@-moz-keyframes move-1-05{
+	from {top:-112px; left: 1470px;}
+	to {top:222px; left: 1305px;}
+}
+@-webkit-keyframes move-1-05{
+	from {top:-112px; left: 1470px;}
+	to {top:222px; left: 1305px;}
+}
+@-o-keyframes move-1-05{
+	from {top:-112px; left: 1470px;}
+	to {top:222px; left: 1305px;}
+}
+
+
+.move-1-06{
+	position:absolute;
+
+	animation: move-1-06 1s alternate;
+	animation-fill-mode: forwards; /*表示动画结束保持当前状态*/
+
+	-moz-animation: move-1-06 3s alternate; /* Firefox */
+
+	-webkit-animation: move-1-06 1s alternate; /* Safari and Chrome */
+	-webkit-animation-fill-mode: forwards; /* Safari and Chrome 表示动画结束保持当前状态，这行要放在后面*/
+
+	-o-animation: move-1-06 3s alternate; /* Opera */
+	z-index: 10;
+}
+
+@keyframes move-1-06{ /* Chrome */
+	from {top:1352px; left: 0px;}
+	to {top:787px; left: 928px;}
+}
+
+@-moz-keyframes move-1-06{ /* Firefox */
+	from {top:1352px; left: 0px;}
+	to {top:787px; left: 928px;}
+}
+
+@-webkit-keyframes move-1-06{ /* Safari and Chrome */
+	from {top:1352px; left: 0px;}
+	to {top:787px; left: 928px;}
+}
+
+@-o-keyframes move-1-06{ /* Opera */
+	from {top:1352px; left: 0px;}
+	to {top:787px; left: 928px;}
+}
+
+.move-1-07{
+	position:absolute;
+	animation: move-1-07 1s alternate;
+	animation-fill-mode: forwards;
+	-moz-animation: move-1-07 3s alternate;
+	-webkit-animation: move-1-07 1s alternate;
+	-webkit-animation-fill-mode: forwards;
+	-o-animation: move-1-07 3s alternate;
+	z-index: 10;
+}
+@keyframes move-1-07{
+	from {top:0px; left: 147px;}
+	to {top:608px; left: 899px;}
+}
+@-moz-keyframes move-1-07{
+	from {top:0px; left: 147px;}
+	to {top:608px; left: 899px;}
+}
+@-webkit-keyframes move-1-07{
+	from {top:0px; left: 147px;}
+	to {top:608px; left: 899px;}
+}
+@-o-keyframes move-1-07{
+	from {top:0px; left: 147px;}
+	to {top:608px; left: 899px;}
+}
+
+.move-1-08{
+	position:absolute;
+	animation: move-1-08 1s alternate;
+	animation-fill-mode: forwards;
+	-moz-animation: move-1-08 3s alternate;
+	-webkit-animation: move-1-08 1s alternate;
+	-webkit-animation-fill-mode: forwards;
+	-o-animation: move-1-08 3s alternate;
+	z-index: 10;
+}
+@keyframes move-1-08{
+	from {top:1050px; left: 1250px;}
+	to {top:760px; left: 1233px;}
+}
+@-moz-keyframes move-1-08{
+	from {top:1050px; left: 1250px;}
+	to {top:760px; left: 1233px;}
+}
+@-webkit-keyframes move-1-08{
+	from {top:1050px; left: 1250px;}
+	to {top:760px; left: 1233px;}
+}
+@-o-keyframes move-1-08{
+	from {top:1050px; left: 1250px;}
+	to {top:760px; left: 1233px;}
+}
+
+.move-1-09{
+	position:absolute;
+	animation: move-1-09 1s alternate;
+	animation-fill-mode: forwards;
+	-moz-animation: move-1-09 3s alternate;
+	-webkit-animation: move-1-09 1s alternate;
+	-webkit-animation-fill-mode: forwards;
+	-o-animation: move-1-09 3s alternate;
+	z-index: 10;
+}
+@keyframes move-1-09{
+	from {top:1150px; left: 1920px;}
+	to {top:658px; left: 1333px;}
+}
+@-moz-keyframes move-1-09{
+	from {top:1150px; left: 1920px;}
+	to {top:658px; left: 1333px;}
+}
+@-webkit-keyframes move-1-09{
+	from {top:1150px; left: 1920px;}
+	to {top:658px; left: 1333px;}
+}
+@-o-keyframes move-1-09{
+	from {top:1150px; left: 1920px;}
+	to {top:658px; left: 1333px;}
+}

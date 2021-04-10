@@ -1,0 +1,103 @@
+<!--{if getcookie(uid)==""}-->
+	<!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!--{if $post!=""}-->
+	<!--{ffwbms ffm_mark_edit,vtemp,""}-->
+	<!--{if $get['developer']=='1'}--><!--{$developer="&developer=1"}--><!--{else}--><!--{$developer=""}--><!--{/if}-->
+	<!--{ffwbms_redirect 307,aaa,"ffm_mark_edit.html?pg=".$get['pg']."&pid=".$get['pid'].$developer."&eq=".$get['eq']}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/ffwbms/ffwbms.js/ffwbms_verify.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+</head>
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_mark_sort_db,mark_db,"id=".$get["pid"]}-->
+		<div class="right_nav">
+            当前位置：
+            <a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">特殊标识定义管理</a> - 
+			<a href="mark_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->"><!--{$mark_db["sname"]}--></a> - <a href="javascript:;">特殊标识定义编辑</a>
+        </div>
+        <div class="right_cont">
+            <form class="ffwbms_form" style="line-height: 2.5rem;" action="mark_editok.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}-->&id=<!--{$get['id']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" id="markedit" method="post">
+			<!--{ffwbms ffm_mark_db,vtemp,"id=".$get["id"]}-->
+			<!--{/*ffwbms_see $vtemp*/}-->
+			<input type="hidden" name="id" id="id" value="<!--{$vtemp['id']}-->" />
+			<input type="hidden" name="pid" id="pid" value="<!--{$vtemp['pid']}-->" />
+			<!--{if $get["developer"]=="1"}-->
+			<p class="mt-20 mb-10">标识名：</p><input type="text" id="mkey" name="mkey" maxlength="100" ffwbms_verify="true" data-ffv="nonull" value="<!--{$vtemp['mkey']}-->" />
+		    <p class="mt-20 mb-10">标识值：</p><input type="text" id="mval" name="mval" maxlength="200" value="<!--{$vtemp['mval']}-->" />
+			<!--{else}-->
+			<p class="mt-20 mb-10">标识名：<!--{$vtemp["mkey"]}--></p>
+		    <p class="mt-20 mb-10">标识值：<input type="text" id="mval" name="mval" maxlength="200" value="<!--{$vtemp['mval']}-->" /></p>
+			<!--{/if}-->
+			<!--{if $vtemp["isdeve"]==1}--><!--{$isdeve=checked}--><!--{/if}-->
+			<!--{if $get["developer"]=="1"}-->
+				<input type="hidden" name="isdeve" value="<!--{$vtemp['isdeve']}-->" />
+				<input class="ffwbms_checkbox" type="checkbox" id="isdeve1" value="1" <!--{$isdeve}--> /><label for="isdeve1" class="ffwbms_checkbox-label">是否管理员操作：</label>
+			<!--{/if}-->
+		    <p class="mt-20 mb-10">是否可用：</p>
+            <input class="ffwbms_radio " type="radio" name="ifyn" id="ifyn2" value="2" checked="checked" <!--{if $vtemp["ifyn"]==2}--> checked<!--{/if}-->/><label for="ifyn2"class="ffwbms_radio-label radGroup4 ml-80">正常</label>
+            <input class="ffwbms_radio" type="radio" name="ifyn" id="ifyn1" value="1"<!--{if $vtemp["ifyn"]==1}--> checked<!--{/if}--> /><label for="ifyn1"class="ffwbms_radio-label radGroup5">暂停</label>
+		    </form>
+		    <button type="submit" class="add" onclick="markedit()">确认编辑</button>
+		  
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	
+	function markedit(){
+		var verify_ok = true;
+		// 循环验证
+		$('input[ffwbms_verify="true"]').each(function(){
+			var re =ffwbms_verify($.trim($(this).val()),$(this).attr("data-ffv"));
+			if(re["val"]==false){
+				$(this).css("border-color","#e53935");
+				//提示
+				layer.open({content: re["note"]});
+				verify_ok = false;
+			}
+		});
+
+		if(verify_ok){
+			<!--{if $get["developer"]=="1"}-->
+			//标识名是否存在，存在则不能增加，保证标识名的唯一性
+			var id = $.trim($('#id').val());
+			var htmlobj=$.ajax({url:"mark_mkey_ajax.html?mk="+mkey+"&id="+id,async:false,cache:false});
+			if(IsNotEmpty($.trim(htmlobj.responseText))){
+				layer.alert('标识名不能重复'+htmlobj.responseText, {icon: 2});
+				return false;
+			}
+			<!--{/if}-->
+			if($('#isdeve1').is(':checked')) {
+				$("input[name='isdeve']").val(1);
+			}else{
+				$("input[name='isdeve']").val(0);
+			}
+			$("#markedit").submit()
+		}
+	}
+</script>
+</html>

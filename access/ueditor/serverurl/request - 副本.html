@@ -1,0 +1,63 @@
+<!--{if $get["action"]=='config'}-->
+{
+    "savePath":"/upload/"<!--{/*存储文件夹 */}-->
+    ,"maxSize":1000<!--{/*允许的文件最大尺寸，单位KB */}-->
+    ,"allowFiles:[".gif",".png",".jpg",".jpeg",".bmp"]<!--{/*允许的文件格式 */}-->
+    ,Path = "upload/"
+}
+<!--{elseif $get["action"]=='uploadimage'}--><!--{/*上传图片*/}-->
+    
+<!--{elseif $get["action"]=='uploadscrawl'}--><!--{/*上传涂鸦*/}-->
+    
+<!--{elseif $get["action"]=='uploadvideo'}--><!--{/*上传视频*/}-->
+    
+<!--{elseif $get["action"]=='uploadfile'}--><!--{/*上传文件*/}-->
+    
+<!--{elseif $get["action"]=='listimage'}--><!--{/*列出图片*/}-->
+    
+<!--{elseif $get["action"]=='listfile'}--><!--{/*列出文件*/}-->
+    
+<!--{elseif $get["action"]=='catchimage'}--><!--{/*抓取远程文件*/}-->
+
+<!--{else}--><!--{/*其它*/}-->
+    {"state":"\u8bf7\u6c42\u5730\u5740\u51fa\u9519"}
+    <!--{/*{"state":"请求地址出错"}*/}-->
+<!--{/if}-->
+<!--{/*
+switch ($action) {
+    case 'config':
+        $result =  json_encode($CONFIG);
+        break;
+ 
+    /* 上传图片 */
+    case 'uploadimage':
+    /* 上传涂鸦 */
+    case 'uploadscrawl':
+    /* 上传视频 */
+    case 'uploadvideo':
+    /* 上传文件 */
+    case 'uploadfile':
+        $result = include("action_upload.php");
+        break;
+ 
+    /* 列出图片 */
+    case 'listimage':
+        $result = include("action_list.php");
+        break;
+    /* 列出文件 */
+    case 'listfile':
+        $result = include("action_list.php");
+        break;
+ 
+    /* 抓取远程文件 */
+    case 'catchimage':
+        $result = include("action_crawler.php");
+        break;
+ 
+    default:
+        $result = json_encode(array(
+            'state'=> '请求地址出错'
+        ));
+        break;
+}
+*/}-->

@@ -1,0 +1,407 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+		<!--{/*解决LOOP循环中，嵌套IF语句容易出错的问题，先搞一个变量，处理好IF，后面只要把这个变量写入相应位置即可*/}-->
+		<ul  class="leftnav" style="height: 764px;" id="sorting">
+            <li >
+                <a href="javascript:;" class="rot">网站设置<f class="ff ff-solid-lower"></f></a>
+                <ul style="display: none;">
+                    <li>
+                        <a href="setconfig.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">网站设置</a>
+                    </li>
+					<!--{if $get["developer"]=="1"}-->
+					<li>
+                        <a href="mark_sort.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">特殊标识分类管理</a>
+					</li>
+					<!--{/if}-->
+                    <li>
+                        <a href="mark_pglist.html?pid=1&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">通用标识定义</a>
+                    </li>
+					<!--{ffwbms ffm_mark_sort_list,markvtemp,"id>1200"}-->
+					<!--{/*ffwbms_see $markvtemp*/}-->
+					<!--{loop $markvtemp $ary}-->
+					<li>
+						<a href="mark_pglist.html?pid=<!--{$ary['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">
+							<!--{$ary["sname"]}--> - 标识定义
+						</a>
+					</li>
+					<!--{/loop}-->
+                </ul>
+            </li>
+			<li>
+			    <a href="javascript:;" class="rot">文章管理<f class="ff ff-solid-lower"></f></a>
+			    <ul style="display: none;">
+					<!--{if $get["developer"]=="1"}-->
+					<li>
+						<a href="art_sort.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">分类管理</a>
+					</li>
+					<!--{/if}-->
+					<!--{ffwbms ffm_art_sort_list,advtemp,"pid=0"}-->
+					<!--{/*ffwbms_see $advtemp*/}-->
+					<!--{loop $advtemp $ary}-->
+					<li>
+						<!--{ffwbms ffm_art_sort_list,advtemp2,"pid=".$ary["id"]}-->
+						<!--{if $ary["styp"]=="0"}-->
+							<!--{if $advtemp2==""}-->	
+							<a href="javascript:;">[空] <!--{$ary["sname"]}--></a>
+							<!--{else}-->
+							<a href="javascript:;">[空] <!--{$ary["sname"]}--><f class="ff ff-solid-lower"></f></a>
+							<!--{/if}-->
+						<!--{elseif $ary["styp"]=="1"}-->
+							<!--{if $advtemp2==""}-->
+							<a href="art_edit_single.html?id=<!--{$ary['id']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">[单] <!--{$ary["sname"]}--></a>
+							<!--{else}-->
+							<a href="javascript:;">[单] <!--{$ary["sname"]}--><f class="ff ff-solid-lower"></f></a>
+							<!--{/if}-->
+						<!--{elseif $ary["styp"]=="2"}-->
+							<!--{if $advtemp2==""}-->
+							<a href="art_pglist.html?pid=<!--{$ary['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">[列] <!--{$ary["sname"]}--></a>
+							<!--{else}-->
+							<a href="javascript:;">[列] <!--{$ary["sname"]}--><f class="ff ff-solid-lower"></f></a>
+							<!--{/if}-->
+						<!--{elseif $ary["styp"]=="3"}-->
+							<!--{if $advtemp2==""}-->
+							<a href="art_pglist.html?pid=<!--{$ary['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">[单+列] <!--{$ary["sname"]}--></a>
+							<!--{else}-->
+							<a href="javascript:;">[单+列] <!--{$ary["sname"]}--><f class="ff ff-solid-lower"></f></a>
+							<!--{/if}-->
+						<!--{/if}-->
+						<!--{if $advtemp2!=""}-->
+						<ul style="display: none;">
+							<!--{loop $advtemp2 $ary2}-->
+							<li>
+								<!--{ffwbms ffm_art_sort_list,advtemp3,"pid=".$ary2["id"]}-->
+								<!--{if $ary2["styp"]=="0"}-->
+									<!--{if $advtemp3==""}-->
+									<a href="javascript:;">[空] <!--{$ary2["sname"]}--></a>
+									<!--{else}-->
+									<a href="javascript:;">[空] <!--{$ary2["sname"]}--><f class="ff ff-solid-lower"></f></a>
+									<!--{/if}-->
+								<!--{elseif $ary2["styp"]=="1"}-->
+									<!--{if $advtemp3==""}-->
+									<a href="art_edit_single.html?id=<!--{$ary2['id']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">[单] <!--{$ary2["sname"]}--></a>
+									<!--{else}-->
+									<a href="javascript:;">[单] <!--{$ary2["sname"]}--><f class="ff ff-solid-lower"></f></a>
+									<!--{/if}-->
+								<!--{elseif $ary2["styp"]=="2"}-->
+									<!--{if $advtemp3==""}-->
+									<a href="art_pglist.html?pid=<!--{$ary2['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">[列] <!--{$ary2["sname"]}--></a>
+									<!--{else}-->
+									<a href="javascript:;">[列] <!--{$ary2["sname"]}--><f class="ff ff-solid-lower"></f></a>
+									<!--{/if}-->
+								<!--{elseif $ary2["styp"]=="3"}-->
+									<!--{if $advtemp3==""}-->
+									<a href="art_pglist.html?pid=<!--{$ary2['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">[单+列] <!--{$ary2["sname"]}--></a>
+									<!--{else}-->
+									<a href="javascript:;">[单+列] <!--{$ary2["sname"]}--><f class="ff ff-solid-lower"></f></a>
+									<!--{/if}-->
+								<!--{/if}-->
+								<!--{if $advtemp3!=""}-->
+								<ul style="display: none;">
+									<!--{loop $advtemp3 $ary3}-->
+									<li>
+										<!--{ffwbms ffm_art_sort_list,advtemp4,"pid=".$ary3["id"]}-->
+										<!--{if $ary3["styp"]=="0"}-->
+											<!--{if $advtemp4==""}-->
+											<a href="javascript:;">[空] <!--{$ary3["sname"]}--></a>
+											<!--{else}-->
+											<a href="javascript:;">[空] <!--{$ary3["sname"]}--><f class="ff ff-solid-lower"></f></a>
+											<!--{/if}-->
+										<!--{elseif $ary3["styp"]=="1"}-->
+											<!--{if $advtemp4==""}-->
+											<a href="art_edit_single.html?id=<!--{$ary3['id']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">[单] <!--{$ary3["sname"]}--></a>
+											<!--{else}-->
+											<a href="javascript:;">[单] <!--{$ary3["sname"]}--><f class="ff ff-solid-lower"></f></a>
+											<!--{/if}-->
+										<!--{elseif $ary3["styp"]=="2"}-->
+											<!--{if $advtemp4==""}-->
+											<a href="art_pglist.html?pid=<!--{$ary3['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">[列] <!--{$ary3["sname"]}--></a>
+											<!--{else}-->
+											<a href="javascript:;">[列] <!--{$ary3["sname"]}--><f class="ff ff-solid-lower"></f></a>
+											<!--{/if}-->
+										<!--{elseif $ary3["styp"]=="3"}-->
+											<!--{if $advtemp4==""}-->
+											<a href="art_pglist.html?pid=<!--{$ary3['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">[单+列] <!--{$ary3["sname"]}--></a>
+											<!--{else}-->
+											<a href="javascript:;">[单+列] <!--{$ary3["sname"]}--><f class="ff ff-solid-lower"></f></a>
+											<!--{/if}-->
+										<!--{/if}-->
+										<!--{if $advtemp4!=""}-->
+										<ul style="display: none;">
+											<!--{loop $advtemp4 $ary4}-->
+											<li>
+												<!--{if $ary4["styp"]=="0"}-->
+													<a href="javascript:;">[空] <!--{$ary4["sname"]}--></a>
+												<!--{elseif $ary4["styp"]=="1"}-->
+													<a href="art_edit_single.html?id=<!--{$ary4['id']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">[单] <!--{$ary4["sname"]}--></a>
+												<!--{elseif $ary4["styp"]=="2"}-->
+													<a href="art_pglist.html?pid=<!--{$ary4['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">[列] <!--{$ary4["sname"]}--></a>
+												<!--{elseif $ary4["styp"]=="3"}-->
+													<a href="art_pglist.html?pid=<!--{$ary4['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">[单+列] <!--{$ary4["sname"]}--></a>
+												<!--{/if}-->
+											</li>
+											<!--{/loop}-->
+											<!--{$advtemp4=""}-->
+										</ul>
+										<!--{/if}-->
+									</li>
+									<!--{/loop}-->
+									<!--{$advtemp3=""}-->
+								</ul>
+								<!--{/if}-->
+							</li>
+							<!--{/loop}-->
+							<!--{$advtemp2=""}-->
+						</ul>
+						<!--{/if}-->
+					</li>
+					<!--{/loop}-->
+					<!--{$advtemp=""}-->
+			    </ul>
+			</li>
+			<li>
+                <a href="javascript:;" class="rot">产品分类管理<f class="ff ff-solid-lower"></f></a>
+                <ul style="display: none;">
+					<!--{if $get["developer"]=="1"}-->
+					<li>
+                        <a href="product_sort.html?pid=0<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">产品分类管理</a>
+					</li>
+					<!--{/if}-->
+					<li>
+					    <a href="screen_sort.html?pid=11<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">筛选分类一管理</a>
+					</li>
+					<li>
+					    <a href="screen_sort.html?pid=12<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">筛选分类二管理</a>
+					</li>
+					<li>
+					    <a href="screen_sort.html?pid=13<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">筛选分类三管理</a>
+					</li>
+					<li>
+					    <a href="screen_sort.html?pid=14<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">筛选分类四管理</a>
+					</li>
+                </ul>
+			</li>
+			<li>
+			    <a href="javascript:;" class="rot">产品管理<f class="ff ff-solid-lower"></f></a>
+			    <ul style="display: none;">
+					<!--{ffwbms ffm_mall_gsort_list,vtemp,"pid=0|id>1230"}-->
+					<!--{loop $vtemp $ary}-->
+					<li>
+						<!--{ffwbms ffm_mall_gsort_list,vtemp2,"pid=".$ary["id"]}-->
+						<!--{if $vtemp2==""}-->
+							<a href="product_pglist.html?pid=<!--{$ary['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->"><!--{$ary["sname"]}--></a>
+						<!--{else}-->
+							<a href="javascript:;"><!--{$ary["sname"]}--><f class="ff ff-solid-lower"></f></a>
+						<!--{/if}-->
+						<ul style="display: none;">
+							<!--{if $vtemp2!=""}-->
+							<!--{loop $vtemp2 $ary2}-->
+							<li>
+								<!--{ffwbms ffm_mall_gsort_list,vtemp3,"pid=".$ary2["id"]}-->
+								<!--{if $vtemp3==""}-->
+									<a href="product_pglist.html?pid=<!--{$ary2['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->"><!--{$ary2["sname"]}--></a>
+								<!--{else}-->
+									<a href="javascript:;"><!--{$ary2["sname"]}--><f class="ff ff-solid-lower"></f></a>
+								<!--{/if}-->
+								<ul style="display: none;">
+								<!--{if $vtemp3!=""}-->
+								<!--{loop $vtemp3 $ary3}-->
+								<li>
+									<!--{ffwbms ffm_mall_gsort_list,vtemp4,"pid=".$ary3["id"]}-->
+									<!--{if $vtemp4==""}-->
+										<a href="product_pglist.html?pid=<!--{$ary3['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->"><!--{$ary3["sname"]}--></a>
+									<!--{else}-->
+										<a href="javascript:;"><!--{$ary3["sname"]}--><f class="ff ff-solid-lower"></f></a>
+									<!--{/if}-->
+									<ul style="display: none;">
+									<!--{if $vtemp4!=""}-->
+									<!--{loop $vtemp4 $ary4}-->
+									<li>
+											<a href="product_pglist.html?pid=<!--{$ary4['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->"><!--{$ary4["sname"]}--></a>
+									</li>
+									<!--{/loop}-->
+									<!--{/if}-->
+									<!--{$vtemp4=""}-->
+									</ul>
+								</li>
+								<!--{/loop}-->
+								<!--{$vtemp3=""}-->
+								<!--{/if}-->
+								</ul>
+							</li>
+							<!--{/loop}-->
+							<!--{$vtemp2=""}-->
+							<!--{/if}-->
+						</ul>
+					</li>
+					<!--{/loop}-->
+			    </ul>
+			</li>
+			<li>
+				<a href="javascript:;"  class="rot">留言管理<f class="ff ff-solid-lower"></f></a>
+				<ul style="display: none;">
+					<!--{if $get["developer"]=="1"}-->
+					<li>
+						<a href="msg_sort.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">留言分类管理</a>
+					</li>
+					<!--{/if}-->
+					<!--{ffwbms ffm_msg_sort_list,advtemp,"uid=0"}-->
+					<!--{loop $advtemp $ary}-->
+					<li>
+						<a href="msg_pglist.html?pid=<!--{$ary['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">
+							<!--{$ary["sname"]}-->
+						</a>
+					</li>
+					<!--{/loop}-->
+				</ul>
+			</li>
+			<li>
+				<a href="javascript:;"  class="rot">友情链接管理<f class="ff ff-solid-lower"></f></a>
+				<ul style="display: none;">
+					<!--{if $get["developer"]=="1"}-->
+					<li>
+						<a href="links_sort.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">分类管理</a>
+					</li>
+					<!--{/if}-->
+					<!--{ffwbms ffm_flink_sort_list,advtemp,"uid=0"}-->
+					<!--{loop $advtemp $ary}-->
+					<li>
+						<a href="links_pglist.html?pid=<!--{$ary['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">
+							<!--{$ary["sname"]}-->
+						</a>
+					</li>
+					<!--{/loop}-->
+				</ul>
+			</li>
+			<li>
+				<a href="javascript:;"  class="rot">广告管理<f class="ff ff-solid-lower"></f></a>
+				<ul style="display: none;">
+					<!--{if $get["developer"]=="1"}-->
+					<li>
+						<a href="ad_sort.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">分类管理</a>
+					</li>
+					<!--{/if}-->
+					<!--{ffwbms ffm_ad_sort_list,advtemp,"uid=0"}-->
+					<!--{loop $advtemp $ary}-->
+					<li>
+						<a href="ad_pglist.html?pid=<!--{$ary['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">
+							<!--{$ary["sname"]}-->
+						</a>
+					</li>
+					<!--{/loop}-->
+				
+				</ul>
+			</li>
+			<li>
+				<a href="javascript:;"  class="rot">上传文件管理<f class="ff ff-solid-lower"></f></a>
+				<ul style="display: none;">
+					<!--{if $get["developer"]=="1"}-->
+					<li>
+						<a href="upfile_sort.html?pid=101<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">上传文件分类</a>
+					</li>
+					<!--{/if}-->
+					<!--{ffwbms ffm_upfile_sort_list,advtemp,"pid=101"}-->
+					<!--{loop $advtemp $ary}-->
+					<li>
+						<a href="upfile_pglist.html?pid=<!--{$ary['id']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->">
+							<!--{$ary["sname"]}-->
+						</a>
+					</li>
+					<!--{/loop}-->
+				
+				</ul>
+			</li>
+			<li>
+				<a href="javascript:;"  class="rot">修改密码<f class="ff ff-solid-lower"></f></a>
+				<ul style="display: none;">
+					<li>
+						<a href="cypher.html<!--{if $get["developer"]=="1"}-->?developer=1<!--{/if}-->">修改密码</a>
+					</li>
+					
+				</ul>
+			</li>
+			<li>
+				<a href="/logout.html"  class="rot">退出登录</a>
+			</li>
+			<!--{/*服务器管理员菜单*/}-->
+			<li >
+                <a href="javascript:;" class="rot">服务器管理<f class="ff ff-solid-lower"></f></a>
+                <ul style="display: none;">
+                    <li>
+                        <a href="sv_reload.html?developer=1">重新装载服务器设置</a>
+                    </li>
+                    <li>
+                        <a href="sv_set.html?developer=1">服务器设置</a>
+                    </li>
+                    <li>
+                        <a href="sv_vhlist.html?pg=1&developer=1">虚拟主机管理</a>
+                    </li>
+                </ul>
+            </li>
+			<li>
+				<a href="javascript:;"  class="rot">空间管理</a>
+			</li>
+			<li>
+				<a href="javascript:;"  class="rot">FTP管理</a>
+			</li>
+		</ul>
+<script type="text/javascript">
+
+	$('#sorting a').click(function(){/*菜单点击事件*/
+		/*/console.log($(this).parent().children("ul").children("li").length); // 子UL是否为空*/
+		if($(this).parent().children("ul").children("li").length>0){
+			/*/console.log($(this).parent().children("a").html()); // 子UL是否为空*/
+			$(this).parent().siblings().children("ul").hide(); /*/ 父 -> 同级元素 -> UL，全部 隐藏*/
+			$(this).parent().siblings().children("a").removeClass("active"); /*/ 父 -> 同级元素 -> A，全部 背景*/
+			$(this).parent().siblings().children("a").children("f").css("transform",""); /*/ 父 -> 同级元素全部 箭头*/
+			if($(this).parent().children("ul").is(":visible")){ /*/ 元件是否可见*/
+				$(this).parent().children("ul").hide(); /*/ 父 -> 子UL隐藏*/
+				$(this).toggleClass("active"); /*/ 背景 */
+				/*/console.log($(this).children("f").html())*/
+				$(this).children("f").css("transform",""); /*/ 父 -> 箭头*/
+			}else{
+				$(this).parent().children("ul").show(); /*/ 父 -> 子UL显示*/
+				$(this).toggleClass("active"); /*/ 背景 */
+				/*/console.log($(this).children("f").html())*/
+				$(this).children("f").css("transform","rotate(180deg)"); /*/ 父 -> 箭头*/
+			}
+		}else{
+			$(this).parent().siblings().children("ul").hide(); /*/ 父 -> 同级元素 -> UL，全部 隐藏*/
+			$(this).parent().siblings().children("a").removeClass("active"); /*/ 父 -> 同级元素 -> A，全部 背景*/
+			$(this).parent().siblings().children("a").children("f").css("transform",""); /*/ 父 -> 同级元素全部 箭头*/
+			$(this).toggleClass("active"); /*/ 背景 */
+		}
+	});
+
+	$(document).ready(function() {
+	/*A链接增加eq状态号*/
+	var leftsort = $('#sorting').find('a');
+	for(var i = 0; i < leftsort.length; i++){
+		leftsort.eq(i).attr('id',i);
+		if(leftsort.eq(i).attr('href')!='javascript:;'){
+			if(leftsort.eq(i).attr('href').indexOf('?')>0){
+				leftsort.eq(i).attr('href',leftsort.eq(i).attr('href') + '&eq=' + i);
+			}else{
+				leftsort.eq(i).attr('href',leftsort.eq(i).attr('href') + '?eq=' + i);
+			}
+		}
+	}
+
+	/*点亮选中*/
+	function setEQ(eq,){
+		leftsort.eq(eq).addClass('active');
+		leftsort.eq(eq).parent().parent().show();
+		if (leftsort.eq(eq).parent().parent().attr("id")==undefined){
+			setEQ(leftsort.eq(eq).parent().parent().prev().attr("id"))
+		}
+	}
+
+	<!--{if $get['eq']==""}--><!--{$get['eq']=0}--><!--{/if}-->
+		setEQ(<!--{$get['eq']}-->);
+
+	$('#sorting').height($(document).height()-$('header').height());/*左菜单与右侧等高*/
+
+	});
+</script>

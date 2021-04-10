@@ -1,0 +1,119 @@
+<!--{if getcookie(uid)==""}-->
+    <!--{ffwbms_redirect 307,aaa,"/login.html"}-->
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,config_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	
+    <link rel="icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$config_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$config_vtemp['description']}-->">
+    <title><!--{$config_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+    <script type="text/javascript" src="../access/js/jquery-1.7.2.min.js"></script>
+
+</head>
+<body class="container">
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,config_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	
+        <link rel="icon" href="/favicon.ico">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$config_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$config_vtemp['description']}-->">
+    <title><!--{$config_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+    <link rel="stylesheet" type="text/css" href="../access/css/admin_style.css">
+
+    <script type="text/javascript" src="../access/js/jquery-1.7.2.min.js"></script>
+
+</head>
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+        <div class="right_nav">
+            当前位置：
+            <a href="javascript:;">首页</a>
+        </div>
+        <div class="right_cont">
+            网站到期时间：<!--{$wset["endtime"]}--><br><br>
+            网站备案号：<a href="<!--{$config_vtemp['relink']}-->" target="_blank"><!--{$config_vtemp["recordation"]}--></a><br><br>
+            网站域名：<!--{$config_vtemp["domain"]}--><br><br>
+            网站上传文件目录：<!--{$wset["upload_path"]}--><br><br>
+            网站默认头像图片地址：<!--{$wset["def_head"]}--><br><br>
+            网站默认图片地址：<!--{$wset["def_pict"]}--><br><br>
+
+            <!--{ffwbms ffa_table_list,vtemp,""}-->
+            <!--{ffwbms_see $vtemp}-->
+            <!--{ffwbms ffa_table_fields,vtemp,"tabname=upfile"}-->
+            <!--{loop $vtemp $ary}-->
+                <!--{$ary["name"]}--> - <!--{$ary["type"]}--> - <!--{$ary["dflt_value"]}--><br>
+            <!--{/loop}-->
+            <!--{ffwbms ffm_msg_list,link,""}-->
+            <!--{ffwbms_see $link}-->
+            <!--{/*ffwbms_see $config_vtemp
+    "amdt":"2020-11-06T16:25:51Z",
+    "img4":"",
+    "relink":"",
+    "description":"",
+    "user1":"",
+    "ifyn":"2",
+    "uid":"0",
+    "scdt":"2020-11-06T16:25:51Z",
+    "telephone":"",
+    "qq1":"",
+    "address":"",
+    "atxt":"",
+    "phone":"",
+    "auth":"",
+    "phone1":"",
+    "keywords":"",
+    "img1":"",
+    "recordation":"",
+    "img2":"",
+    "qq":"",
+    "id":"1",
+    "sname":"网站名称",
+    "img3":"",
+    "address1":"",
+    "domain":"",
+    "user":"",
+    "img":""
+            */}-->
+        </div>
+    </div>
+</body>
+
+</html></body>
+
+</html>

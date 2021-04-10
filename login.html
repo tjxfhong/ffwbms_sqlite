@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>登录</title>
+	<link rel="stylesheet" href="access/ffwbms/ffwbms.css">
+	<script src="access/js/jquery-3.5.1.js" charset="utf-8"></script>
+	<script src="access/js/layer/mobile/layer.js" charset="utf-8"></script>
+	<script src="access/ffwbms/ffwbms.js/ffwbms_verify.js" charset="utf-8"></script>
+</head>
+<body>
+<!--{if $post!=""}-->
+	<!--{ffwbms ffa_user_login,vtemp,"uname=".$post['uname']."|pword=".md5(post['pword'])}-->
+	<!--{/*ffwbms_see $vtemp*/}-->
+	<!--{if $vtemp["id"]!=""}-->
+		<!--{$uid=$vtemp["id"]}-->
+		<!--{$sid=$vtemp["sid"]}-->
+		<!--{$utype=$vtemp["utype"]}-->
+		<!--{ffwbms ffa_user_login_uconn1,vtemp,"s=".$uid}-->
+		<!--{$uname=$vtemp["s1"]}-->
+		<!--{$uhead=$vtemp["s9"]}-->
+		<!--{$usex=$vtemp["i11"]}-->
+
+		<!--{$post=""}-->
+		<!--{$post["uid"]=$uid}-->
+		<!--{$post["ldm"]=$wset["host"]}-->
+		<!--{$post["ldt"]=""}-->
+		<!--{$post["lip"]=""}-->
+		<!--{ffwbms ffa_user_log_add,vtemp,""/*写登录日志*/}-->
+		<!--{/*ffwbms_see $vtemp*/}-->
+		<!--{/*ffwbms_post vpost,json,"http://".$wset["host"]."/loginok_ulog.html|uid=".$uid."|ldm=".$wset["host"]."|ldt=|=lip"*/}-->
+		<!--{/*ffwbms_see $vpost*/}-->
+
+		<!--{if $sid=="10"}-->
+			<!--{setcookies "uid",$uid}-->
+			<!--{setcookies "uid2",$sid}-->
+			<!--{setcookies "uid3",$utype}-->
+			<!--{setcookies "uname",$uname}-->
+			<!--{setcookies "uhead",$uhead}-->
+			<!--{setcookies "usex",$usex}-->
+			<!--{ffwbms_redirect 307,aaa,"admin/index.html"/*跳转到管理后台首页*/}-->
+		<!--{elseif $sid=="103"}-->
+			<!--{setcookies "uid",$uid}-->
+			<!--{setcookies "uid2",$sid}-->
+			<!--{setcookies "uid3",$utype}-->
+			<!--{setcookies "uname",$uname}-->
+			<!--{setcookies "uhead",$uhead}-->
+			<!--{setcookies "usex",$usex}-->
+			<!--{ffwbms_redirect 307,aaa,"user/index.html"/*跳转到用户后台首页*/}-->
+		<!--{/if}-->
+	<!--{else}-->
+	<div class="horizon-vertical-center-box">
+		<div class="logreg" style=" margin-top: -191px;">
+			<div class="regfon">
+				<h3>
+					登录错误
+				</h3>
+			</div>
+			<div class="ffwbms_form">
+				用户名或密码错误，不能登录！
+				<br>
+				<a href="/login.html">重新登录</a><span style="margin: 0 1rem;">|</span><a href="/">返回首页</a>
+			</div>
+			<h4>
+				&copy; <!--{$wset["currY"]}--> FFWBMS.COM
+			</h4>
+		</div>
+	</div>
+	<!--{/if}-->
+<!--{/*上面是登录界面提交后的处理动作*/ else /*下面是登录界面*/}-->
+	<div class="horizon-vertical-center-box">
+		<div class="logreg" style=" margin-top: -191px;">
+			<h3>用户登录</h3>
+			<form class="ffwbms_form" action="login.html" method="post" id="loginform">
+				<label for="usr">用户名<input type="text" class="focus" name="uname" id="uname" placeholder="请输入用户名" ffwbms_verify="true" data-ffv="username"></label>
+				<label for="pwd">登录密码<input type="password" class="focus" name="pword" id="pword" ffwbms_verify="true" data-ffv="password"></label>
+				<button class="block" type="button" id="subm" onclick="yz()">登录</button>
+				<a href="reg.html">用户注册</a><span style="margin: 0 1rem;">|</span><a href="/">返回首页</a>
+			</form>
+			<h4>
+				&copy; <!--{$wset["currY"]}--> <a href="/">FFWBMS.COM</a>
+			</h4>
+		</div>
+	</div>
+<!--{/if}-->
+</body>
+<script>
+	function yz() {
+		var thit;
+		var re;
+		thit = $("#uname");
+		re =ffwbms_verify($.trim(thit.val()),"nonull");
+        if(!re["val"]){
+			show_ffwbms_verify_popup("登录帐号不可为空！") // 返回提示
+			return false;
+        }else{
+			re =ffwbms_verify($.trim(thit.val()),thit.attr("data-ffv"));
+			if(!re["val"]){
+				show_ffwbms_verify_popup(re["note"]) // 返回提示
+				return false;
+			}
+		}
+
+		thit = $("#pword");
+		re =ffwbms_verify($.trim(thit.val()),"nonull");
+        if(!re["val"]){
+			show_ffwbms_verify_popup("登录密码不可为空！") // 返回提示
+			return false;
+        }else{
+			re =ffwbms_verify($.trim(thit.val()),thit.attr("data-ffv"));
+			if(!re["val"]){
+				show_ffwbms_verify_popup(re["note"]) // 返回提示
+				return false;
+			}
+		}
+		$("#loginform").submit()
+	}
+</script>
+</html>

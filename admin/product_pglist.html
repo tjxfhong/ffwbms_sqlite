@@ -1,0 +1,119 @@
+<!--{if getcookie(uid)==""}-->
+<script type="text/javascript">
+    //window.location.href = "/login.html";
+</script>
+<!--{/if}-->
+<!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <!--{ffwbms ffa_get_config_db,seo_vtemp,"id=1"}-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="<!--{$seo_vtemp['keywords']}-->">
+    <meta name="description" content="<!--{$seo_vtemp['description']}-->">
+    <title><!--{$seo_vtemp["sname"]}--> - 网站后台管理</title>
+    <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../access/ffwbms/ffwbms.css">
+	<link rel="stylesheet" type="text/css" href="../access/css/admin_style.css"/>
+
+	<script type="text/javascript" src="../access/js/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="../access/js/layer/mobile/layer.js"></script>
+</head>
+
+<body class="container">
+	<div class="navbar">
+		<!--{include "inc_navbar.html"}-->
+	</div>
+    <div class="l2nav">
+        <!--{include "inc_lmenu.html"}-->
+    </div>
+    <div class="right">
+		<!--{ffwbms ffm_mall_gsort_db,gsort_db,"id=".$get["pid"]}-->
+		<!--{/*ffwbms_see $gsort_db*/}-->
+		<div class="right_nav">
+            当前位置：
+            <a href="index.html<!--{if $get['developer']=='1'}-->?developer=1<!--{/if}-->">后台首页</a> - <a href="javascript:;">产品管理</a> - 
+			<a href="javascript:;"><!--{$gsort_db["sname"]}--></a>
+        </div>
+        <div class="right_cont">
+            <div class="artlist">
+				<a class="ffwbms_button a-btn" href="product_add.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->">新增产品</a>
+            	<table class="dxt">
+            		<tr>
+						<th>商品号</th>
+						<th>商品图片</th>
+						<th>商品名</th>
+						<th>现价</th>
+						<th>浏览次数</th>
+						<th>操作</th>
+					</tr>
+					<!--{ffwbms ffm_mall_pg_list,mall,"pid=".$get["pid"]."|pg=".$get["pg"]."|ps=10"}-->
+            		<!--{/*ffwbms_see $mall*/}-->
+					<!--{loop $mall["0"] $ary}-->
+						<tr>
+							<td><!--{$ary["id"]}--></td>
+							<td>
+								<a href="product_edit.html?id=<!--{$ary['id']}-->&pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->">
+									<img style="max-width: 200px; max-height: 150px;"  src="<!--{$ary["gimg1"]}-->"  >
+								</a>
+							</td>
+							<td>
+								<a href="product_edit.html?id=<!--{$ary['id']}-->&pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->">
+								<!--{$ary["gname"]}-->
+								</a>
+							</td>
+							<td><!--{$price2=$ary["price2"]/100}--><!--{$price2}--></td>
+							<td><!--{$ary["gcou"]}--></td>
+							<td><button type="button" class="list_delbtn" onclick="gooddel('<!--{$ary['id']}-->')">删除</button></td>
+						</tr>
+					<!--{/loop}-->
+            	</table>
+            </div>
+			<!--{if $mall['1']['pages']>1}-->
+			<div class="admin_page">
+				<!--{if $mall['1']['curr']>1}-->
+				<a href="product_pglist.html?pid=<!--{$get['pid']}-->&pg=1<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">首页</a>
+				<!--{/if}-->
+
+				<!--{loop $mall["1"]['p_list'] $ary}-->
+				<a href="product_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">
+					<!--{$ary}-->
+				</a>
+				<!--{/loop}-->
+
+				<a href="javascript:;" class="admin_pages pages_acitve">
+					<!--{$mall['1']['curr']}-->
+				</a>
+
+				<!--{loop $mall["1"]['n_list'] $ary}-->
+				<a href="product_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$ary}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">
+					<!--{$ary}-->
+				</a>
+				<!--{/loop}-->
+
+				<!--{if $mall['1']['curr']<$mall['1']['pages']}-->
+				<a href="product_pglist.html?pid=<!--{$get['pid']}-->&pg=<!--{$mall['1']['pages']}--><!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->" class="admin_pages">尾页</a>
+				<!--{/if}-->
+			</div>
+			<!--{/if}-->
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	// 删除商品
+	function gooddel(id){
+        layer.open({
+            content:"确认删除商品吗?", 
+            btn: ['确定','放弃'] ,
+            yes: function(index){ // 确定
+				window.location.href="product_delok.html?pid=<!--{$get['pid']}-->&pg=<!--{$get['pg']}-->&id=" + id + "<!--{if $get['developer']=='1'}-->&developer=1<!--{/if}-->&eq=<!--{$get['eq']}-->";
+			},
+			no: function(index){ // 放弃
+                layer.close(index)
+            }
+        });
+	}
+</script>
+</html>

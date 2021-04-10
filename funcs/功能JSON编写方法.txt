@@ -1,0 +1,215 @@
+功能扩展使用JSON格式定义结构
+
+JSON文件中使用/*开始，*/结束，编写的注释放在里面，例：/*这里是注释*/
+
+系统内部可用数据库函数定义如下：
+	GetTableList 获得数据库中所有数据表列表
+	GetTableFieldsInfo 获得数据表中所有数据字段信息列表
+	SqlCreateTable 创建数据表
+	InsertRow 增加记录
+	UpdateRow 更新(编辑)记录
+	DeleteRow 删除记录
+	GetRecord 获得单条记录数据
+	GetList 获得列表记录数据
+	GetListRand 获得随机列表记录数据
+	GetPgList 获得分页列表记录数据
+
+类JSON格式范例：
+{/*创建数据表*/
+	"dbname":"", 				/*选填，指定要操作的数据库文件名，数据库驱动为sqlite时必填并有效*/
+	"funcname":"GetTableList", 	/*必填，不可为空，指定数据库函数名*/
+	"tablename":"user", 		/*必填，数据表名，GetTableList时为空*/
+	"column":"id,pid", 			/*选填，要列表的默认字段，多个用英文逗号分隔，模板语句中列参数为空时使用这个值，为空时默认列全部字段*/
+	"wherestr":"id=5", 			/*选填，查询条件语句，多个用英文括号和逻辑运算符处理，逻辑运算符可用如后：and,or*/
+	"order":"ORDER BY id DESC", /*选填，默认排序规则，模板语句中排序规则参数为空时使用这个值，为空时默认ID倒序，ORDER BY id DESC，GetList和GetPgList时可用*/
+	"pagesize":"20", 			/*选填，为设置每一页显示的记录数，模板语句中排序规则参数为空时使用这个值，为空时默认20，GetList和GetPgList时可用*/
+	"optionalsize":"", 			/*选填，为设置前后可选页数，模板语句中排序规则参数为空时使用这个值，为空时默认5，GetPgList时可用*/
+	"fields":{ 					/*选填，字段集，创建表时使用，必填*/
+		"id":{ 					/*字段名*/
+			"type":"bigint", 	/*字段类型，可用类型如后：int,bigint,float,varchar,text,longtext,blob,longblob,date,time,datetime*/
+			"typelen":"11", 	/*字段类型长度，varchar时必填，写明字符串长度，数字为位长，可不填，可用类型如后：int,bigint, varchar*/
+			"default":"", 		/*字段默认值，可用默认值如后：NOT NULL，其它自定义值，不允许有默认值的类型如后：text", "longtext", "blob", "longblob*/
+			"comment":"用户号", /*字段说明*/
+			"prikey":"1", 		/*字段是否主键，1=是，其它=否*/
+			"autoinc":"1", 		/*字段是否自增长，只用在ID字段*/
+			"unikey":"1" 		/*字段是否唯一性约束*/
+		},
+		"uname":{
+			"type":"varchar", 	/*字段类型，可用类型如后：int,bigint,float,varchar,text,longtext,blob,longblob,date,time,datetime*/
+			"typelen":"50", 	/*字段类型长度，varchar时必填，写明字符串长度，数字为位长，可不填，可用类型如后：int,bigint, varchar*/
+			"default":"", 		/*字段默认值，可用默认值如后：NOT NULL，其它自定义值，要对应类型，如是数字类型就不可以有字符，只能是数字组合*/
+			"comment":"用户名", /*字段说明*/
+			"prikey":"1", 		/*字段是否主键，1=是，其它=否*/
+			"autoinc":"1", 		/*字段是否自增长，只用在ID字段*/
+			"unikey":"1" 		/*字段是否唯一性约束*/
+		}
+		......
+	}
+}
+
+创建函数后在页面中的使用说明：
+
+	GetTableList 获得数据库中所有数据表列表
+		页面无参数
+		定义文件无参数
+
+	SqlCreateTable 创建数据表
+		页面无参数
+		定义文件中，funcname，tablename，fields为必有，参见上面类JSON格式范例
+
+ 	GetTableFieldsInfo 获得数据表中所有数据字段信息列表
+ 		页面参数：
+		 	tabname = 必选，要获得字段信息的表名
+			json = 可选，是否返回JSON格式：1=是，其它=否，否返回数组
+		定义文件中，funcname为必有，参见上面类JSON格式范例
+		返回值SQLite和MYSQL不同，见下例：
+              SQLite返回：map[cid:16 dflt_value: name:id notnull:0 pk:1 type:integer]
+                            map[cid:3 dflt_value: name:sname notnull:0 pk:0 type:varchar(200)]
+                MYSQL返回： map[datatype:bigint fdesc:文章类型号 fname:id isnull:NO slength:0]
+                            map[datatype:varchar fdesc:分类名 fname:sname isnull:YES slength:50]
+
+	InsertRow 增加记录
+		页面参数：
+			json = 可选，是否返回JSON格式：1=是，其它=否，否返回数组
+		页面FORM表单：
+			所有要增加的字段名和值，注意值的类型，表单中不可以有ID字段
+			例：
+			<input name="username" value="admin" />
+		定义文件中：参见上面类JSON格式范例
+			"funcname":"InsertRow", 	/*必填，不可为空，指定数据库函数名*/
+			"tablename":"user", 		/*必填，数据表名*/
+			"column":{
+				"id":[2,0],		/*必填，要增加的字段，多个用英文逗号分隔，确保对应数据表中存在的字段*/
+						/*参数1：必填，对应字段的类型，多个用英文逗号分隔，1=boolean，2=int,bigint，3=float，4=varchar,date,time,datetime,text,longtext*/
+						/*参数2：必填，对应字段定义，0=原值不处理，1=字符串解密，2=字符串加密，3=当前日期时间，4=用户IP，5=MD5加密，大小写敏感*/
+				"s1":[4,1]
+				}
+
+		
+	UpdateRow 更新(编辑)记录
+		页面参数：
+			id：必填，要删除的记录ID号，为空或为0时，返回空
+			json = 可选，是否返回JSON格式：1=是，其它=否，否返回数组
+		页面FORM表单：
+			所有要编辑的字段名和值，注意值的类型，表单中不可以有ID字段
+			例：
+			<input name="username" value="admin" />
+		定义文件中：参见上面类JSON格式范例
+			"funcname":"UpdateRow", 	/*必填，不可为空，指定数据库函数名*/
+			"tablename":"user", 		/*必填，数据表名*/
+			"column":{
+				"id":[2,0],		/*必填，要增加的字段，多个用英文逗号分隔，确保对应数据表中存在的字段*/
+						/*参数1：必填，对应字段的类型，多个用英文逗号分隔，1=boolean，2=int,bigint，3=float，4=varchar,date,time,datetime,text,longtext*/
+						/*参数2：必填，对应字段定义，0=原值不处理，1=字符串解密，2=字符串加密，3=当前日期时间，4=用户IP，5=MD5加密，大小写敏感*/
+				"s1":[4,1]
+				}
+
+
+	DeleteRow 删除记录
+		页面参数：
+			id：必填，要删除的记录ID号，为空或为0时，返回空
+			json = 可选，是否返回JSON格式：1=是，其它=否，否返回数组
+		定义文件中：参见上面类JSON格式范例
+			"funcname":"DeleteRow", 	/*必填，不可为空，指定数据库函数名*/
+			"tablename":"user", 		/*必填，数据表名，GetTableList时为空*/
+	
+	GetRecord 获得单条记录数据
+		页面参数：
+			json = 可选，是否返回JSON格式：1=是，其它=否，否返回数组
+			注：页面参数中带getcookie或md5时，函数里面的变量不带$符
+		定义文件中：参见上面类JSON格式范例
+			"funcname":"GetRecord", 	/*必填，不可为空，指定数据库函数名*/
+			"tablename":"user", 		/*必填，数据表名，GetTableList时为空*/
+			"column":{
+				"id":[2,0],		/*必填，要增加的字段，多个用英文逗号分隔，确保对应数据表中存在的字段*/
+						/*参数1：必填，对应字段的类型，多个用英文逗号分隔，1=boolean，2=int,bigint，3=float，4=varchar,date,time,datetime,text,longtext*/
+						/*参数2：必填，对应字段定义，0=原值不处理，1=字符串解密，2=字符串加密，3=当前日期时间，4=用户IP，5=MD5加密，大小写敏感*/
+				"s1":[4,1]
+				}
+		说明：column参数三态，1. 无，输出全部字段。2. 字符串，如"column":"id,s1"，输出指定字段。3. 字段类型定义，如"column":{"id":[2,0],"s1":[4,1]}，输出指定字段，并可解密指定字段值
+
+	GetList 获得列表记录数据
+		页面参数：
+			pid：可选，父分类号，为空或为0时，列根分类
+			top：可选，前X条记录，为空或为0时，列全部记录，最多列100条
+			json = 可选，是否返回JSON格式：1=是，其它=否，否返回数组
+			注：页面参数中带getcookie或md5时，函数里面的变量不带$符
+		定义文件中：参见上面类JSON格式范例
+			"funcname":"GetList", 	/*必填，不可为空，指定数据库函数名*/
+			"tablename":"user", 		/*必填，数据表名，GetTableList时为空*/
+			"column":{
+				"id":[2,0],		/*必填，要增加的字段，多个用英文逗号分隔，确保对应数据表中存在的字段*/
+						/*参数1：必填，对应字段的类型，多个用英文逗号分隔，1=boolean，2=int,bigint，3=float，4=varchar,date,time,datetime,text,longtext*/
+						/*参数2：必填，对应字段定义，0=原值不处理，1=字符串解密，2=字符串加密，3=当前日期时间，4=用户IP，5=MD5加密，大小写敏感*/
+				"s1":[4,1]
+				}
+			"wherestr":"id=5", 		/*选填，查询条件语句，多个用英文括号和逻辑运算符处理，逻辑运算符可用如后：and,or*/
+			"limit":"20",	 /*选填，默认排序规则，模板语句中排序规则参数为空时使用这个值，为空时默认ID倒序，ORDER BY id DESC*/
+			"order":"ORDER BY id DESC",	 /*选填，默认排序规则，模板语句中排序规则参数为空时使用这个值，为空时默认ID倒序，ORDER BY id DESC*/
+		说明：column参数三态，1. 无，输出全部字段。2. 字符串，如"column":"id,s1"，输出指定字段。3. 字段类型定义，如"column":{"id":[2,0],"s1":[4,1]}，输出指定字段，并可解密指定字段值
+	
+	GetListRand 获得随机列表记录数据
+		页面参数：
+			pid：可选，父分类号，为空或为0时，列根分类
+			top：可选，前X条记录，为空或为0时，列全部记录，最多列100条
+			json = 可选，是否返回JSON格式：1=是，其它=否，否返回数组
+			注：页面参数中带getcookie或md5时，函数里面的变量不带$符
+		定义文件中：参见上面类JSON格式范例
+			"funcname":"GetList", 	/*必填，不可为空，指定数据库函数名*/
+			"tablename":"user", 		/*必填，数据表名，GetTableList时为空*/
+			"column":{
+				"id":[2,0],		/*必填，要增加的字段，多个用英文逗号分隔，确保对应数据表中存在的字段*/
+						/*参数1：必填，对应字段的类型，多个用英文逗号分隔，1=boolean，2=int,bigint，3=float，4=varchar,date,time,datetime,text,longtext*/
+						/*参数2：必填，对应字段定义，0=原值不处理，1=字符串解密，2=字符串加密，3=当前日期时间，4=用户IP，5=MD5加密，大小写敏感*/
+				"s1":[4,1]
+				}
+			"wherestr":"id=5", 		/*选填，查询条件语句，多个用英文括号和逻辑运算符处理，逻辑运算符可用如后：and,or*/
+			"order":"ORDER BY id DESC",	 /*选填，默认排序规则，模板语句中排序规则参数为空时使用这个值，为空时默认ID倒序，ORDER BY id DESC*/
+		说明：column参数三态，1. 无，输出全部字段。2. 字符串，如"column":"id,s1"，输出指定字段。3. 字段类型定义，如"column":{"id":[2,0],"s1":[4,1]}，输出指定字段，并可解密指定字段值
+	
+	GetPgList 获得分页列表记录数据
+		页面参数：
+			pid：必选项，指定分类号，为空或为0时，为空或为0时，返回空
+			pg = 可选，要显示的页数，为空或为0时，显示第一页
+			ps = 可选，每页要显示的记录数，为空或为0时，记录数为20
+			os = 可选，多页时分页选项前后可选数，为空或为0时，可选数为5
+			json = 可选，是否返回JSON格式：1=是，其它=否，否返回数组
+			注：页面参数中带getcookie或md5时，函数里面的变量不带$符
+		定义文件中：参见上面类JSON格式范例
+			"funcname":"GetPgList", 	/*必填，不可为空，指定数据库函数名*/
+			"tablename":"user", 		/*必填，数据表名，GetTableList时为空*/
+			"column":{
+				"id":[2,0],		/*必填，要增加的字段，多个用英文逗号分隔，确保对应数据表中存在的字段*/
+						/*参数1：必填，对应字段的类型，多个用英文逗号分隔，1=boolean，2=int,bigint，3=float，4=varchar,date,time,datetime,text,longtext*/
+						/*参数2：必填，对应字段定义，0=原值不处理，1=字符串解密，2=字符串加密，3=当前日期时间，4=用户IP，5=MD5加密，大小写敏感*/
+				"s1":[4,1]
+				}
+			"wherestr":"ifyn=2", 		/*选填，查询条件语句，多个用英文括号和逻辑运算符处理，逻辑运算符可用如后：and,or*/
+			"order":"ORDER BY id DESC",	 /*选填，默认排序规则，模板语句中排序规则参数为空时使用这个值，为空时默认ID倒序，ORDER BY id DESC*/
+			"pagesize":"20", 		/*选填，为设置每一页显示的记录数，模板语句中排序规则参数为空时使用这个值，为空时默认20，GetList和GetPgList时可用*/
+			"optionalsize":"",		/*选填，为设置前后可选页数，模板语句中排序规则参数为空时使用这个值，为空时默认5，GetPgList时可用*/
+		说明：column参数三态，1. 无，输出全部字段。2. 字符串，如"column":"id,s1"，输出指定字段。3. 字段类型定义，如"column":{"id":[2,0],"s1":[4,1]}，输出指定字段，并可解密指定字段值
+
+	SetCOOKIES
+		例子：
+			<!--{setcookies "c1",$post["s1"]}-->
+			<!--{setcookies "c2","s测试网页2"}-->
+
+	GetCOOKIE
+		例子：
+			c1: <!--{getcookie c1}--><br />
+			c2: <!--{getcookie "cww2" }--><br /><br />
+
+
+接口函数命名规则：
+	管理员：ffm_表名_功能
+		例：ffm_art_top_list		网站文章前X条列表
+		   ffm_art_edit			网站文章编辑
+
+	用户管理：ffu_表名_功能
+		例：ffu_art_top_list		网站文章前X条列表
+		   ffu_art_edit			网站文章编辑
+
+	通用函数：ffa_表名_功能
+		例：ffa_art_top_list		网站文章前X条列表
+		   ffa_art_edit			网站文章编辑
